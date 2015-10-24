@@ -98,22 +98,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Finish initializing
         self.statusok('Initialized', self.lineno())
 
-        self.tabsDisable(True)
+        self.tabWidget.setEnabled(True)
 
-    # START: TabWidget functions
-
-    # Disable & Enable tabs
-    def tabsDisable(self, state, keylogger=False):
-
-        # If state == True disable tabs and change to first tab
-        if state:
-            self.tabWidget.setDisabled(state)
-            if not keylogger:
-                self.tabWidget.setCurrentIndex(0)
-
-        # if state == False enable tabs
-        else:
-            self.tabWidget.setDisabled(state)
 
     # Detect tabs switch
     def tabDetector(self):
@@ -135,7 +121,10 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.activeWindowTitle = None
 
         # Turn off tabs
-        self.tabsDisable(True, keylogger=True)
+        self.tabWidget.setTabEnabled(0, False)
+        self.tabWidget.setTabEnabled(1, False)
+        self.tabWidget.setTabEnabled(2, False)
+        self.tabWidget.setCurrentIndex(3)
 
         self.Send('StartLogging')
         self.Receive()
@@ -221,7 +210,9 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.KeyLoggingState = False
         self.Send('StopLogging')
         self.startloggingButton.setChecked(False)
-        self.tabsDisable(False)
+        self.tabWidget.setTabEnabled(0, True)
+        self.tabWidget.setTabEnabled(1, True)
+        self.tabWidget.setTabEnabled(2, True)
 
     # END: Keylogger
     
@@ -251,7 +242,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Buttons
         if not self.stopserverButton.isChecked():
             self.stopserverButton.setChecked(True)
-            self.tabsDisable(True)
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
         else:
 
             # Close all connection and terminate socket
@@ -275,7 +267,8 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.displayText(msg=credits.credit)
             self.setWindowTitle('Mad Spider - Client')
             #self.stopServer()
-            self.tabsDisable(True)
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
 
 
     # make new variables, clear all text
@@ -371,7 +364,7 @@ class MainDialog(QWidget, gui.Ui_Form):
                     self.displayText(msg=self.data.split('XORXORXOR13')[0])
                     self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                     self.statusok('Connected to {}'.format(str(self.sockItems[self.sockind])), self.lineno())
-                    self.tabsDisable(False)
+                    self.tabWidget.setEnabled(True)
             except socket.error:
                 self.statusno('Error while recieve message from target', self.lineno())
                 self.statusok('Close connection', self.lineno())
@@ -435,7 +428,8 @@ class MainDialog(QWidget, gui.Ui_Form):
                     self.gui()
                     l = self.socks[self.sockind].recv(1024)
         except socket.timeout:
-            self.tabsDisable(True)
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
             self.displayText()
             self.statusno('Connection lost with ' + self.sockItems[self.sockind][0], self.lineno())
             return 'ConnectionError'
