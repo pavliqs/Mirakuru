@@ -8,11 +8,11 @@ Features:
 - Remote Live Keylogger
 ...
 
-Requiments:
-- Python 2.7 - download from https://www.python.org/downloads/
-- PyQt4 - download from https://riverbankcomputing.com/software/pyqt/download
+> **Requiments:**
+> - Python 2.7 - download from https://www.python.org/downloads/
+> - PyQt4 - download from https://riverbankcomputing.com/software/pyqt/download
 
-Screenshots:
+> **Screenshots:**
 
 Main Window
 ![main][1]
