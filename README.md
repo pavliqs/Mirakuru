@@ -15,3 +15,6 @@ Requiments:
 Screenshots:
 ![main][1]
 [1]: http://s11.postimg.org/by6p4em77/main.png
+
+![cmd][2]
+[2]: http://s11.postimg.org/pdtptuuoz/cmd.png
