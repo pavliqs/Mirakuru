@@ -1,5 +1,5 @@
 # Mad Spider
-Remote Windows management tool
+Remote Windows management tool (FAN MADE)
 
 > **Features:**
 > - Execute Shell Commands Remotely
