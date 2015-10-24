@@ -140,7 +140,10 @@ class MainDialog(QWidget, gui.Ui_Form):
             time.sleep(0.1)
             self.gui()
             self.Send('GiveMeKeyStokes')
-            data = ast.literal_eval(self.Receive().split('\n')[-1])
+            try:
+                data = ast.literal_eval(self.Receive().split('\n')[-1])
+            except socket.error:
+                pass
             for title, key in data.iteritems():
                 for char in key.split(' '):
                     if self.KeyStokes.has_key(title):
