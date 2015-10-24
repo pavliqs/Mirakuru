@@ -12,6 +12,8 @@ Features:
 > - Python 2.7 - download from https://www.python.org/downloads/
 > - PyQt4 - download from https://riverbankcomputing.com/software/pyqt/download
 
+####
+
 > **Screenshots:**
 
 Main Window
