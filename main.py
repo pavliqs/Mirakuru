@@ -381,6 +381,7 @@ class MainDialog(QWidget, gui.Ui_Form):
     def closeEvent(self, event):
         if self.acceptthreadState:
             self.acceptthreadState = False
+            self.KeyLoggingState = False
 
             self.statusok('Initializing shutdown signal socket', self.lineno())
             # Initializing shutdown signal socket
