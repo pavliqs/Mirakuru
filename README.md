@@ -16,9 +16,9 @@ Features:
 
 > **Screenshots:**
 
-Main Window
-![main][1]
-[1]: http://s11.postimg.org/by6p4em77/main.png
+> Main Window
+> ![main][1]
+> [1]: http://s11.postimg.org/by6p4em77/main.png
 
 Remote Shell
 ![cmd][2]
