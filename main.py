@@ -134,6 +134,9 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.BObjects = {}
         self.activeWindowTitle = None
 
+        # Turn off tabs
+        self.tabsDisable(True, keylogger=True)
+
         self.Send('StartLogging')
         self.Receive()
 
@@ -218,6 +221,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.KeyLoggingState = False
         self.Send('StopLogging')
         self.startloggingButton.setChecked(False)
+        self.tabsDisable(False)
 
     # END: Keylogger
     
