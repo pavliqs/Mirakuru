@@ -271,13 +271,11 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 if self.data != '':
                     if self.data == 'Access Denied':
-                        self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Access Denied</font></p>',
-                                         error='Authentication Error')
+                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>Access Denied</font></p>')
                         continue
-                    elif self.data == 'iamactive':
+                    else:
                         self.active = True
-                        self.displayText(msg='<br><br><p align="center"><font size=42 color=green>Access Success</font></p>',
-                                        header='Authentication Succes')
+                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#2ECC71>Access Success</font></p>')
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])
@@ -302,8 +300,7 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.socketListUpdate()
             self.tabWidget.setEnabled(False)
             self.tabWidget.setCurrentIndex(0)
-            self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Connection Lost</font></p>',
-                            error='Disconected')
+            self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>Connection Lost</font></p>')
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
@@ -597,9 +594,9 @@ class MainDialog(QWidget, gui.Ui_Form):
     # display console text
     def displayText(self, msg='', header='', error=''):
         self.consoleText.setHtml('''
-        <p align="center" style="color: #ffffff; background-color: #7d0e0e">%s</p>
-        <p align="center" style="color: #ffffff; background-color: green">%s</p>
-        <p align="left" style="color: #ffffff;">%s</p>
+        <p align="center" style="color: #ffffff; background-color: #CC2E2E">%s</p>
+        <p align="center" style="color: #2ecc71; background-color: #194759">%s</p>
+        <p align="center" style="color: #ffffff;">%s</p>
         ''' % (error, header, msg.replace('\n', '<br>').replace('\t', '   ')))
 
     # run shell command
