@@ -285,6 +285,19 @@ class MainDialog(QWidget, gui.Ui_Form):
                 break
             break
 
+    def terminateSock(self):
+        self.Send('terminate')
+        data = self.Receive()
+        if data == 'quitted':
+            self.socks[self.sockind].close()
+            del self.socks[self.sockind]
+            del self.sockItems[self.sockind]
+            self.socketsList.removeItemWidget(self.socketsList.takeItem(self.sockind))
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
+            self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Connection Lost</font></p>',
+                            error='Disconected')
+
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
         if self.acceptthreadState:
@@ -632,7 +645,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.sMenu.addAction(QIcon('assets\\python.png'), 'Remote Python', self.remotePython)
         self.sMenu.addAction(QIcon('assets\\file_manager.png'), 'Remote File Manager', self.remoteExplorer)
         self.sMenu.addSeparator()
-        self.sMenu.addAction(QIcon('assets\\stop.png'), 'Terminate', self.createFolder)
+        self.sMenu.addAction(QIcon('assets\\stop.png'), 'Terminate', self.terminateSock)
 
 
         # Check if server selected
