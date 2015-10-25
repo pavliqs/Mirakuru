@@ -249,19 +249,6 @@ border-radius: 2px;</string>
           <string/>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QSplitter" name="splitter">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <widget class="QWidget" name="verticalLayoutWidget">
-             <layout class="QVBoxLayout" name="LeditorLayout"/>
-            </widget>
-            <widget class="QWidget" name="">
-             <layout class="QVBoxLayout" name="ReditorLayout"/>
-            </widget>
-           </widget>
-          </item>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
@@ -310,54 +297,6 @@ QPushButton#executeButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="clearoutputButton">
-              <property name="minimumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Clear output</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton#clearoutputButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#clearoutputButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="RESOURCE.qrc">
-                <normaloff>:/img/assets/clear.png</normaloff>:/img/assets/clear.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -371,6 +310,85 @@ QPushButton#clearoutputButton:pressed {
              </spacer>
             </item>
            </layout>
+          </item>
+          <item row="1" column="0">
+           <widget class="QSplitter" name="splitter">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <widget class="QWidget" name="">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QLabel" name="remoteScriptLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>14</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>14</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:#194759;
+border-radius: none;</string>
+                </property>
+                <property name="text">
+                 <string>Remote Script</string>
+                </property>
+                <property name="textFormat">
+                 <enum>Qt::AutoText</enum>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="LeditorLayout"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QLabel" name="localScriptLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>14</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>14</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:#194759;
+border-radius: none;</string>
+                </property>
+                <property name="text">
+                 <string>Local Script</string>
+                </property>
+                <property name="textFormat">
+                 <enum>Qt::AutoText</enum>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="ReditorLayout"/>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </item>
          </layout>
         </widget>
