@@ -265,7 +265,8 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 if self.data != '':
                     if self.data == 'Access Denied':
-                        self.displayText(header='Access Denied')
+                        self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Access Denied</font></p>',
+                                         error='Authentication Error')
                         continue
                     else:
                         self.active = True
