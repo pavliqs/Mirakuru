@@ -616,7 +616,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.sMenu.addAction(QIcon('assets\\terminal.png'), 'Remote CMD', self.remoteCMD)
         self.sMenu.addAction(QIcon('assets\\python.png'), 'Remote Python', self.remotePython)
         self.sMenu.addAction(QIcon('assets\\file_manager.png'), 'Remote File Manager', self.remoteExplorer)
-        self.sMenu.addAction(QIcon('assets\\keylogger.png'), 'Remote Keylogger', self.remoteKeylogger)
         self.sMenu.addSeparator()
         self.sMenu.addAction(QIcon('assets\\stop.png'), 'Terminate', self.createFolder)
 
@@ -640,10 +639,6 @@ class MainDialog(QWidget, gui.Ui_Form):
     # Switch to File Manager tab
     def remoteExplorer(self):
         self.tabWidget.setCurrentIndex(2)
-
-    # Switch to Keylogger tab
-    def remoteKeylogger(self):
-    	self.tabWidget.setCurrentIndex(3)
     
     # START: messages functions
     # popup message
