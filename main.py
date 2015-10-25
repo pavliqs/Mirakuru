@@ -97,7 +97,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Finish initializing
         self.statusok('Initialized', self.lineno())
 
-        self.tabWidget.setEnabled(True)
+        self.tabWidget.setEnabled(False)
 
 
     # Detect tabs switch
