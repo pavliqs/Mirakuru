@@ -70,7 +70,7 @@ def fromAutostart():
             data = Receive(s)
             if data == passKey:
                 active = True
-                Send(s, '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>')
+                Send(s, 'iamactive')
 
                 while active:
                     data = Receive(s)
