@@ -274,11 +274,19 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 if self.data != '':
                     if self.data == 'Access Denied':
-                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>%s<br>Access Denied</font></p>' % self.sockItems[self.sockind][0])
+                        self.displayText(msg='<br><br><p align="center">'
+                                             '<table style="border-color: #CC2E2E; border-style: solid;" border="1" width="300" cellpadding="5">'
+                                             '<tr><td><font size=42 color=#CC2E2E><p align="center">'
+                                             'ACCESS DENIED'
+                                             '</p></font></td></tr></table></p>')
                         continue
                     else:
                         self.active = True
-                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#2ECC71>%s<br>Access Success</font></p>' % self.sockItems[self.sockind][0])
+                        self.displayText(msg='<br><br><p align="center">'
+                                             '<table style="border-color: #2ECC71; border-style: solid;" border="1" width="300" cellpadding="5">'
+                                             '<tr><td><font size=42 color=#2ECC71><p align="center">'
+                                             'ACCESS GRANTED'
+                                             '</p></font></td></tr></table></p>')
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])
