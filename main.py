@@ -74,7 +74,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.removeexplorerButton.clicked.connect(self.deleteContent)
         self.explorerPathEntry.returnPressed.connect(self.openPath)
         self.executeButton.clicked.connect(self.executeScript)
-        self.clearoutputButton.clicked.connect(self.clearOutput)
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
@@ -347,14 +346,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Update output', self.lineno())
         # Update output console
-        self.outputConsole.setHtml(data.split('</p>')[-1])
-
-
-    # clear output from executed script
-    def clearOutput(self):
-        self.statusok('Clear IDLE output', self.lineno())
-        # clear output
-        self.outputConsole.clear()
+        #self.outputConsole.setHtml(data.split('</p>')[-1])
         
     # END: remote scripting functions
 
