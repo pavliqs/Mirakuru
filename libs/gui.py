@@ -43,20 +43,6 @@ class Ui_Form(object):
 "font: 10pt \"MS Shell Dlg 2\";"))
         self.gridLayout = QtGui.QGridLayout(Form)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.byLabel = QtGui.QLabel(Form)
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("MS Shell Dlg 2"))
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.byLabel.setFont(font)
-        self.byLabel.setStyleSheet(_fromUtf8("color: rgb(230, 230, 230);\n"
-"background: none;\n"
-""))
-        self.byLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.byLabel.setObjectName(_fromUtf8("byLabel"))
-        self.gridLayout.addWidget(self.byLabel, 1, 0, 1, 1)
         self.splitter_7 = QtGui.QSplitter(Form)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("MS Shell Dlg 2"))
@@ -187,38 +173,20 @@ class Ui_Form(object):
         self.tabWidget.addTab(self.shellTab, icon1, _fromUtf8(""))
         self.remotepythonTab = QtGui.QWidget()
         self.remotepythonTab.setObjectName(_fromUtf8("remotepythonTab"))
-        self.gridLayout_6 = QtGui.QGridLayout(self.remotepythonTab)
-        self.gridLayout_6.setObjectName(_fromUtf8("gridLayout_6"))
+        self.gridLayout_2 = QtGui.QGridLayout(self.remotepythonTab)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.splitter = QtGui.QSplitter(self.remotepythonTab)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName(_fromUtf8("splitter"))
         self.verticalLayoutWidget = QtGui.QWidget(self.splitter)
         self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
-        self.editorLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
-        self.editorLayout.setObjectName(_fromUtf8("editorLayout"))
-        self.splitter_2 = QtGui.QSplitter(self.splitter)
-        self.splitter_2.setStyleSheet(_fromUtf8("border: 1px outset;\n"
-"border-color: #0F2D40;\n"
-"border-radius: 2px;"))
-        self.splitter_2.setFrameShape(QtGui.QFrame.NoFrame)
-        self.splitter_2.setLineWidth(0)
-        self.splitter_2.setMidLineWidth(0)
-        self.splitter_2.setOrientation(QtCore.Qt.Vertical)
-        self.splitter_2.setOpaqueResize(False)
-        self.splitter_2.setHandleWidth(1)
-        self.splitter_2.setChildrenCollapsible(False)
-        self.splitter_2.setObjectName(_fromUtf8("splitter_2"))
-        self.outputConsole = QtGui.QTextEdit(self.splitter_2)
-        self.outputConsole.setStyleSheet(_fromUtf8("background-position: center;\n"
-"border: 0px outset;\n"
-"border-color: #0F2D40;\n"
-"border-radius: 2px;\n"
-"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);"))
-        self.outputConsole.setUndoRedoEnabled(False)
-        self.outputConsole.setLineWrapMode(QtGui.QTextEdit.NoWrap)
-        self.outputConsole.setReadOnly(True)
-        self.outputConsole.setObjectName(_fromUtf8("outputConsole"))
-        self.gridLayout_6.addWidget(self.splitter, 1, 0, 1, 1)
+        self.LeditorLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.LeditorLayout.setObjectName(_fromUtf8("LeditorLayout"))
+        self.widget = QtGui.QWidget(self.splitter)
+        self.widget.setObjectName(_fromUtf8("widget"))
+        self.ReditorLayout = QtGui.QVBoxLayout(self.widget)
+        self.ReditorLayout.setObjectName(_fromUtf8("ReditorLayout"))
+        self.gridLayout_2.addWidget(self.splitter, 1, 0, 1, 1)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.executeButton = QtGui.QPushButton(self.remotepythonTab)
@@ -271,7 +239,7 @@ class Ui_Form(object):
         self.horizontalLayout_3.addWidget(self.clearoutputButton)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
-        self.gridLayout_6.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
+        self.gridLayout_2.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/python.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.remotepythonTab, icon4, _fromUtf8(""))
@@ -387,7 +355,8 @@ class Ui_Form(object):
 "border-radius: none;\n"
 "height: 15px;\n"
 "font-size: 12px;\n"
-"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);"))
+"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
+"padding-left: 5px;"))
         self.explorerPathEntry.setText(_fromUtf8(""))
         self.explorerPathEntry.setObjectName(_fromUtf8("explorerPathEntry"))
         self.gridLayout_8.addWidget(self.explorerPathEntry, 1, 0, 1, 11)
@@ -471,82 +440,6 @@ class Ui_Form(object):
         icon10 = QtGui.QIcon()
         icon10.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/file_manager.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.explorerTab, icon10, _fromUtf8(""))
-        self.keyTab = QtGui.QWidget()
-        self.keyTab.setObjectName(_fromUtf8("keyTab"))
-        self.gridLayout_2 = QtGui.QGridLayout(self.keyTab)
-        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
-        self.windowsnamesLayout = QtGui.QVBoxLayout()
-        self.windowsnamesLayout.setObjectName(_fromUtf8("windowsnamesLayout"))
-        self.gridLayout_2.addLayout(self.windowsnamesLayout, 1, 0, 1, 1)
-        self.keystokesText = QtGui.QTextEdit(self.keyTab)
-        self.keystokesText.setStyleSheet(_fromUtf8("background-position: center;\n"
-"border: 1px outset;\n"
-"border-color: #0F2D40;\n"
-"border-radius: 2px;\n"
-"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);"))
-        self.keystokesText.setTextInteractionFlags(QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
-        self.keystokesText.setObjectName(_fromUtf8("keystokesText"))
-        self.gridLayout_2.addWidget(self.keystokesText, 1, 1, 1, 1)
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.startloggingButton = QtGui.QPushButton(self.keyTab)
-        self.startloggingButton.setMinimumSize(QtCore.QSize(32, 32))
-        self.startloggingButton.setMaximumSize(QtCore.QSize(32, 32))
-        self.startloggingButton.setStyleSheet(_fromUtf8("QPushButton#startloggingButton {\n"
-"            background: #194759;\n"
-"            color: #fafafa;\n"
-"            font-size: 12px;\n"
-"            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            text-decoration: none;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
-"            }\n"
-"\n"
-"QPushButton#startloggingButton:checked {\n"
-"            background: #1f5a70;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #1c1d28, stop:1 #1c1d28);\n"
-"            color: grey;\n"
-"            }"))
-        self.startloggingButton.setText(_fromUtf8(""))
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/record.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.startloggingButton.setIcon(icon11)
-        self.startloggingButton.setIconSize(QtCore.QSize(20, 20))
-        self.startloggingButton.setCheckable(True)
-        self.startloggingButton.setObjectName(_fromUtf8("startloggingButton"))
-        self.horizontalLayout_2.addWidget(self.startloggingButton)
-        self.stoploggingButton = QtGui.QPushButton(self.keyTab)
-        self.stoploggingButton.setMinimumSize(QtCore.QSize(32, 32))
-        self.stoploggingButton.setMaximumSize(QtCore.QSize(32, 32))
-        self.stoploggingButton.setStyleSheet(_fromUtf8("QPushButton#stoploggingButton {\n"
-"            background: #194759;\n"
-"            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            text-decoration: none;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
-"            }\n"
-"\n"
-"QPushButton#stoploggingButton:pressed {\n"
-"            background: #194759;\n"
-"            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
-"            }"))
-        self.stoploggingButton.setText(_fromUtf8(""))
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.stoploggingButton.setIcon(icon12)
-        self.stoploggingButton.setIconSize(QtCore.QSize(20, 20))
-        self.stoploggingButton.setCheckable(False)
-        self.stoploggingButton.setChecked(False)
-        self.stoploggingButton.setObjectName(_fromUtf8("stoploggingButton"))
-        self.horizontalLayout_2.addWidget(self.stoploggingButton)
-        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem2)
-        self.gridLayout_2.addLayout(self.horizontalLayout_2, 0, 0, 1, 2)
-        icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/keylogger.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.tabWidget.addTab(self.keyTab, icon13, _fromUtf8(""))
         self.logTab = QtGui.QWidget()
         self.logTab.setObjectName(_fromUtf8("logTab"))
         self.gridLayout_3 = QtGui.QGridLayout(self.logTab)
@@ -578,9 +471,9 @@ class Ui_Form(object):
         self.statusConsoleText.setCursorWidth(5)
         self.statusConsoleText.setObjectName(_fromUtf8("statusConsoleText"))
         self.gridLayout_3.addWidget(self.statusConsoleText, 0, 0, 1, 1)
-        icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/log.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.tabWidget.addTab(self.logTab, icon14, _fromUtf8(""))
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/log.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.tabWidget.addTab(self.logTab, icon11, _fromUtf8(""))
         self.clientsGroup = QtGui.QGroupBox(self.splitter_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -774,9 +667,9 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #1c1d28, stop:1 #1c1d28);\n"
 "            color: grey;\n"
 "            }"))
-        icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.runserverButton.setIcon(icon15)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.runserverButton.setIcon(icon12)
         self.runserverButton.setCheckable(True)
         self.runserverButton.setAutoExclusive(False)
         self.runserverButton.setObjectName(_fromUtf8("runserverButton"))
@@ -806,7 +699,9 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #1c1d28, stop:1 #1c1d28);\n"
 "            color: grey;\n"
 "            }"))
-        self.stopserverButton.setIcon(icon12)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.stopserverButton.setIcon(icon13)
         self.stopserverButton.setCheckable(True)
         self.stopserverButton.setChecked(True)
         self.stopserverButton.setAutoExclusive(False)
@@ -820,6 +715,20 @@ class Ui_Form(object):
         self.gridLayout_7.addWidget(self.label, 0, 0, 1, 2)
         self.gridLayout_5.addWidget(self.serverconfigGroup, 0, 0, 1, 2)
         self.gridLayout.addWidget(self.splitter_7, 0, 0, 1, 1)
+        self.byLabel = QtGui.QLabel(Form)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("MS Shell Dlg 2"))
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.byLabel.setFont(font)
+        self.byLabel.setStyleSheet(_fromUtf8("color: rgb(230, 230, 230);\n"
+"background: none;\n"
+""))
+        self.byLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.byLabel.setObjectName(_fromUtf8("byLabel"))
+        self.gridLayout.addWidget(self.byLabel, 1, 0, 1, 1)
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(0)
@@ -827,15 +736,12 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(_translate("Form", "Mad Spider Client", None))
-        self.byLabel.setText(_translate("Form", "Coded by Uri Patton 2014", None))
         self.clearoutputButton.setToolTip(_translate("Form", "Clear output", None))
         self.explorerTable.setSortingEnabled(True)
         item = self.explorerTable.horizontalHeaderItem(1)
         item.setText(_translate("Form", "Type", None))
         item = self.explorerTable.horizontalHeaderItem(2)
         item.setText(_translate("Form", "Name", None))
-        self.startloggingButton.setToolTip(_translate("Form", "Clear output", None))
-        self.stoploggingButton.setToolTip(_translate("Form", "Clear output", None))
         self.clientsLabel.setText(_translate("Form", "Servers", None))
         self.clientscountLabel.setText(_translate("Form", "0", None))
         self.ipaddressLabel.setText(_translate("Form", "Ip address", None))
@@ -845,5 +751,6 @@ class Ui_Form(object):
         self.runserverButton.setText(_translate("Form", "Start", None))
         self.stopserverButton.setText(_translate("Form", "Stop", None))
         self.label.setText(_translate("Form", "Client", None))
+        self.byLabel.setText(_translate("Form", "Coded by Uri Patton 2014", None))
 
 import res

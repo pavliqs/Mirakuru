@@ -36,30 +36,6 @@ border-radius: 3px;
 font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QLabel" name="byLabel">
-     <property name="font">
-      <font>
-       <family>MS Shell Dlg 2</family>
-       <pointsize>10</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(230, 230, 230);
-background: none;
-</string>
-     </property>
-     <property name="text">
-      <string>Coded by Uri Patton 2014</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QSplitter" name="splitter_7">
      <property name="font">
@@ -272,42 +248,17 @@ border-radius: 2px;</string>
          <attribute name="title">
           <string/>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_6">
+         <layout class="QGridLayout" name="gridLayout_2">
           <item row="1" column="0">
            <widget class="QSplitter" name="splitter">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
             <widget class="QWidget" name="verticalLayoutWidget">
-             <layout class="QVBoxLayout" name="editorLayout"/>
+             <layout class="QVBoxLayout" name="LeditorLayout"/>
             </widget>
-            <widget class="QSplitter" name="splitter_2">
-             <property name="styleSheet">
-              <string notr="true">border: 1px outset;
-border-color: #0F2D40;
-border-radius: 2px;</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="lineWidth">
-              <number>0</number>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="opaqueResize">
-              <bool>false</bool>
-             </property>
-             <property name="handleWidth">
-              <number>1</number>
-             </property>
-             <property name="childrenCollapsible">
-              <bool>false</bool>
-             </property>
+            <widget class="QWidget" name="">
+             <layout class="QVBoxLayout" name="ReditorLayout"/>
             </widget>
            </widget>
           </item>
@@ -420,9 +371,6 @@ QPushButton#clearoutputButton:pressed {
              </spacer>
             </item>
            </layout>
-          </item>
-          <item row="1" column="1">
-           <layout class="QVBoxLayout" name="verticalLayout_2"/>
           </item>
          </layout>
         </widget>
@@ -1321,6 +1269,30 @@ border: none;</string>
        </layout>
       </widget>
      </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="byLabel">
+     <property name="font">
+      <font>
+       <family>MS Shell Dlg 2</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(230, 230, 230);
+background: none;
+</string>
+     </property>
+     <property name="text">
+      <string>Coded by Uri Patton 2014</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>
