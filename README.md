@@ -5,7 +5,6 @@ Remote Windows management tool (FAN MADE)
 > - Execute Shell Commands Remotely
 > - Execute Python Code Remotely
 > - Remote File Manager
-> - Remote Live Keylogger
 > - To Be Continued...
 
 > **Requiments:**
@@ -29,10 +28,6 @@ Remote Windows management tool (FAN MADE)
 - Remote File Manager
 ![explorer][4]
 [4]: http://s11.postimg.org/51cirvpwj/explorer.png
-
-- Live Keylogger
-![live keylogger][5]
-[5]: http://s11.postimg.org/s431r1rdv/keylogger.png
 
 - Logs
 ![logs][6]
