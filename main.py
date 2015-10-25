@@ -254,6 +254,8 @@ class MainDialog(QWidget, gui.Ui_Form):
                     _hash = hashlib.md5()
                     _hash.update(str(dlg.textValue()))
                     self.Send(_hash.hexdigest())
+                else:
+                    break
 
             else:
                 self.Send('dir')
@@ -266,7 +268,6 @@ class MainDialog(QWidget, gui.Ui_Form):
                         self.displayText(header='Access Denied')
                         continue
                     else:
-                        print self.data
                         self.active = True
                         self.displayText(msg=self.data.split('[ENDOFMESSAGE]')[0])
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
