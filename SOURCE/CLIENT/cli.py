@@ -76,8 +76,7 @@ def fromAutostart():
                     data = Receive(s)
                     if data == '':
                         time.sleep(0.02)
-                    if data == "quit" or data == "terminate":
-                        print 'terminated'
+                    if data == "terminate":
                         Send(s, "quitted")
                         active = False
                         break
