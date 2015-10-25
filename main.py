@@ -36,8 +36,10 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Initializing Py IDLE', self.lineno())
         # init idle with lines
-        self.lines = linesnum.LineTextWidget()
-        self.editorLayout.addWidget(self.lines)
+        self.llines = linesnum.LineTextWidget()
+        self.LeditorLayout.addWidget(self.llines)
+        self.rlines = linesnum.LineTextWidget()
+        self.ReditorLayout.addWidget(self.rlines)
 
         self.statusok('Initializing tray', self.lineno())
         # init tray
@@ -337,7 +339,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Send script to remote host', self.lineno())
         # Send script to remote host for execute
-        self.Send('runscript ' + str(self.lines.getTextEdit()))
+        self.Send('runscript ' + str(self.llines.getTextEdit()))
 
         self.statusok('Recieve executed scripts output', self.lineno())
         # Recieve executed scripts output
