@@ -232,10 +232,8 @@ class MainDialog(QWidget, gui.Ui_Form):
             row = QListWidgetItem(' %s ' % __sock__[0])
             if __sock__ in self.unlockedSocks:
                 row.setIcon(QIcon(r'assets/unlocked.png'))
-                print 'unlocked'
             else:
                 row.setIcon(QIcon(r'assets/tick.png'))
-                print 'locked'
             self.socketsList.addItem(row)
             self.clientscountLabel.setText(str(self.socketsList.count()))
 
@@ -276,11 +274,11 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 if self.data != '':
                     if self.data == 'Access Denied':
-                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>Access Denied</font></p>')
+                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>%s<br>Access Denied</font></p>' % self.sockItems[self.sockind][0])
                         continue
                     else:
                         self.active = True
-                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#2ECC71>Access Success</font></p>')
+                        self.displayText(msg='<br><br><p align="center"><font size=42 color=#2ECC71>%s<br>Access Success</font></p>' % self.sockItems[self.sockind][0])
                         self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])
@@ -301,12 +299,12 @@ class MainDialog(QWidget, gui.Ui_Form):
         data = self.Receive()
         if data == 'quitted':
             self.socks[self.sockind].close()
+            self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>%s<br>Connection Lost</font></p>' % self.sockItems[self.sockind][0])
             del self.socks[self.sockind]
             del self.sockItems[self.sockind]
             self.socketListUpdate()
             self.tabWidget.setEnabled(False)
             self.tabWidget.setCurrentIndex(0)
-            self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>Connection Lost</font></p>')
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
