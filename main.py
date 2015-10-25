@@ -238,7 +238,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         # Update server index
         try:
-            self.sockind = int(self.socketsList.currentItem().text().split('-')[1]) - 1
+            self.sockind = self.socketsList.currentRow()
         except:
             return
 
@@ -302,6 +302,8 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.tabWidget.setCurrentIndex(0)
             self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Connection Lost</font></p>',
                             error='Disconected')
+            print self.sockItems
+            print self.sockItems[0]
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
