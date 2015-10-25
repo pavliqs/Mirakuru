@@ -5,7 +5,6 @@ import socket
 import time
 import os
 import subprocess
-import hashlib
 
 HOST = '127.0.0.1'
 PORT = 4434
@@ -62,9 +61,7 @@ def fromAutostart():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((HOST, PORT))
             data = Receive(s)
-            _hash = hashlib.md5()
-            _hash.update(data)
-            if _hash.hexdigest() == passKey:
+            if data == passKey:
                 active = True
                 Send(s, '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>')
                 print 'Access Success'
