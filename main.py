@@ -218,15 +218,20 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 # Save connected address
                 self.sockItems += [self.a]
-                self.counter += 1
 
                 # Add connection to servers list
-                itm = QListWidgetItem('[-%s-]  %s' % (str(self.counter), self.a[0]))
-                itm.setIcon(QIcon(r'assets/tick.png'))
-                self.socketsList.addItem(itm)
-                self.clientscountLabel.setText(str(self.socketsList.count()))
+                self.socketListUpdate()
+
                 self.statusok('New connection from {}'.format(str(self.sockItems[self.sockind])), self.lineno())
                 self.trayIcon.showMessage('New Connection', 'From {}'.format(str(self.sockItems[self.sockind])), self.lineno())
+
+    def socketListUpdate(self):
+        self.socketsList.clear()
+        for index, __sock__ in enumerate(self.sockItems):
+            row = QListWidgetItem('[-%s-] %s' % (str(index), __sock__))
+            row.setIcon(QIcon(r'assets/tick.png'))
+            self.socketsList.addItem(row)
+            self.clientscountLabel.setText(str(self.socketsList.count()))
 
     # connect to client
     def connectSocket(self):
@@ -292,7 +297,7 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.socks[self.sockind].close()
             del self.socks[self.sockind]
             del self.sockItems[self.sockind]
-            self.socketsList.removeItemWidget(self.socketsList.takeItem(self.sockind))
+            self.socketListUpdate()
             self.tabWidget.setEnabled(False)
             self.tabWidget.setCurrentIndex(0)
             self.displayText(msg='<br><br><p align="center"><font size=42 color=red>Connection Lost</font></p>',
