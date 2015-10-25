@@ -5,6 +5,7 @@ Remote Windows management tool (FAN MADE)
 > - Execute Shell Commands Remotely
 > - Execute Python Code Remotely
 > - Remote File Manager
+> - Server Password Protection
 > - To Be Continued...
 
 > **Requiments:**
