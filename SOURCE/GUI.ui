@@ -308,24 +308,6 @@ border-radius: 2px;</string>
              <property name="childrenCollapsible">
               <bool>false</bool>
              </property>
-             <widget class="QTextEdit" name="outputConsole">
-              <property name="styleSheet">
-               <string notr="true">background-position: center;
-border: 0px outset;
-border-color: #0F2D40;
-border-radius: 2px;
-background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);</string>
-              </property>
-              <property name="undoRedoEnabled">
-               <bool>false</bool>
-              </property>
-              <property name="lineWrapMode">
-               <enum>QTextEdit::NoWrap</enum>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
             </widget>
            </widget>
           </item>
@@ -438,6 +420,9 @@ QPushButton#clearoutputButton:pressed {
              </spacer>
             </item>
            </layout>
+          </item>
+          <item row="1" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_2"/>
           </item>
          </layout>
         </widget>
@@ -832,157 +817,6 @@ QPushButton#mkdirexplorerButton:pressed {
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="keyTab">
-         <attribute name="icon">
-          <iconset resource="RESOURCE.qrc">
-           <normaloff>:/img/assets/keylogger.png</normaloff>:/img/assets/keylogger.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string/>
-         </attribute>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <layout class="QVBoxLayout" name="windowsnamesLayout"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QTextEdit" name="keystokesText">
-            <property name="styleSheet">
-             <string notr="true">background-position: center;
-border: 1px outset;
-border-color: #0F2D40;
-border-radius: 2px;
-background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);</string>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QPushButton" name="startloggingButton">
-              <property name="minimumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Clear output</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton#startloggingButton {
-            background: #194759;
-            color: #fafafa;
-            font-size: 12px;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#startloggingButton:checked {
-            background: #1f5a70;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #1c1d28, stop:1 #1c1d28);
-            color: grey;
-            }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="RESOURCE.qrc">
-                <normaloff>:/img/assets/record.png</normaloff>:/img/assets/record.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="stoploggingButton">
-              <property name="minimumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="toolTip">
-               <string>Clear output</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QPushButton#stoploggingButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#stoploggingButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="RESOURCE.qrc">
-                <normaloff>:/img/assets/stop.png</normaloff>:/img/assets/stop.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>20</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>false</bool>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
           </item>
          </layout>
         </widget>
