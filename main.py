@@ -158,7 +158,7 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.stopserverButton.setChecked(True)
             self.socketsList.clear()
             self.displayText(msg=credits.credit)
-            self.setWindowTitle('Mad Spider - Client')
+            self.setWindowTitle('Mirakuru - Client')
             #self.stopServer()
             self.tabWidget.setEnabled(False)
             self.tabWidget.setCurrentIndex(0)
@@ -287,7 +287,7 @@ class MainDialog(QWidget, gui.Ui_Form):
                                              '<tr><td><font size=42 color=#2ECC71><p align="center">'
                                              'ACCESS GRANTED'
                                              '</p></font></td></tr></table></p>')
-                        self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
+                        self.setWindowTitle('Mirakuru - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])
                         self.socketListUpdate()
@@ -764,7 +764,7 @@ class SystemTrayIcon(QSystemTrayIcon, MainDialog):
         self.trExit.triggered.connect(self._exit)
 
     def welcome(self):
-        self.showMessage('Welcome', 'Welcome to Mad Spider\n2.02 beta', QSystemTrayIcon.Information)
+        self.showMessage('Welcome', 'Mirakuru\n1.0', QSystemTrayIcon.Information)
 
     def show(self):
         QSystemTrayIcon.show(self)
