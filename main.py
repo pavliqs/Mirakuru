@@ -457,9 +457,11 @@ class MainDialog(QWidget, gui.Ui_Form):
             if dic[i]['type']:
                 item.setTextColor(QColor(155, 89, 182))
                 item.setIcon(QIcon(QPixmap(r'assets\file.png')))
+                item.setSizeHint(QSize(100, 30))
             else:
                 item.setTextColor(QColor(0, 255, 255))
                 item.setIcon(QIcon(QPixmap(r'assets\folder.png')))
+                item.setSizeHint(QSize(100, 30))
             self.explorerTable.setItem(n, 0, item)
 
             # set content name
@@ -468,21 +470,23 @@ class MainDialog(QWidget, gui.Ui_Form):
                 item.setTextColor(QColor(155, 89, 182))
             else:
                 item.setTextColor(QColor(0, 255, 255))
-            self.explorerTable.setItem(n, 2, item)
+            self.explorerTable.setItem(n, 1, item)
 
             # set content modified date
             item = QTableWidgetItem(dic[i]['modified'])
-            self.explorerTable.setItem(n, 4, item)
+            item.setTextAlignment(Qt.AlignCenter)
+            item.setSizeHint(QSize(220, 30))
+            self.explorerTable.setItem(n, 2, item)
 
             # set file size
             item = QTableWidgetItem(sizeof_fmt(dic[i]['size'])) if dic[i]['type'] else QTableWidgetItem('')
             item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
             item.setTextColor(QColor(155, 89, 182))
-            self.explorerTable.setItem(n, 6, item)
+            self.explorerTable.setItem(n, 3, item)
 
         # update table
         self.explorerTable.resizeColumnsToContents()
-        self.explorerTable.horizontalHeaderItem(6).setTextAlignment(Qt.AlignCenter)
+        self.explorerTable.horizontalHeaderItem(3).setTextAlignment(Qt.AlignCenter)
 
         # count files & directories
         self.explorerContentLabel.setText('Directories: %s Files: %s' % (str(len([i for i in dic if dic[i]['type'] is False])), str(len([i for i in dic if dic[i]['type'] is True]))))
@@ -516,9 +520,9 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.statusok('Get folder name', self.lineno())
         # Get folder name
         type = self.explorerTable.item(self.explorerTable.currentItem().row(), 0).text()
-        name = self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text()
+        name = self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text()
 
-        if type == 'Folder':
+        if 'Folder' in type:
 
             self.statusok('Choose new folder', self.lineno())
             # Choose new folder
@@ -598,8 +602,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.eMenu = QMenu(self)
 
         try:
-            if self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text() == 'Folder':
-                self.eMenu.addAction(QIcon('assets\\extensions\\folder.png'), 'Open folder', self.openFolder)
+            if self.explorerTable.item(self.explorerTable.currentItem().row(), 0).text() == 'Folder':
+                self.eMenu.addAction(QIcon('assets\\folder.png'), 'Open folder', self.openFolder)
                 self.eMenu.addSeparator()
         except:
             pass

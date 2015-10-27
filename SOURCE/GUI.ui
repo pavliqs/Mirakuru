@@ -568,27 +568,12 @@ border: none;
             </column>
             <column>
              <property name="text">
-              <string/>
-             </property>
-            </column>
-            <column>
-             <property name="text">
               <string>Name</string>
              </property>
             </column>
             <column>
              <property name="text">
-              <string/>
-             </property>
-            </column>
-            <column>
-             <property name="text">
               <string>Date Modified</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string/>
              </property>
             </column>
             <column>
