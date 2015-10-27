@@ -739,14 +739,14 @@ class MainDialog(QWidget, gui.Ui_Form):
     def statusok(self, msg, line):
         self.statusConsoleText.moveCursor(QTextCursor.End)
         self.statusConsoleText.insertHtml(
-            '<br><font color="green">[+]</font> <font color=white>(%s)</font> <font color="green">[CODE:%s]</font> - <font color=white>%s</font>' % (
+            '<br>[+] (%s) [CODE:%s] - <font color=#f07e01>%s</font>' % (
                 datetime.datetime.now(), line, msg))
 
     # display status with error message
     def statusno(self, msg, line):
         self.statusConsoleText.moveCursor(QTextCursor.End)
         self.statusConsoleText.append(
-            '<br><font color="red">[-]</font> <font color=white>(%s)</font> <font color="red">[CODE:%s]</font> - <font color=white>%s</font>' % (
+            '<br><font color="red">[-]</font> (%s) <font color="red">[CODE:%s]</font> - <font color=#f07e01>%s</font>' % (
                 datetime.datetime.now(), line, msg))
         
     # END: messages function
