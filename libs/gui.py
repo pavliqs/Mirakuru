@@ -287,12 +287,19 @@ class Ui_Form(object):
 "    padding: 2px;\n"
 "}\n"
 "\n"
-"QTableWidget {\n"
+"QTableWidget#explorerTable {\n"
 "    background-position: center;\n"
 "    border: 1px outset;\n"
 "    border-color: #0F2D40;\n"
 "    border-radius: 2px;\n"
 "    background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);\n"
+"}\n"
+"\n"
+"QTableWidget#explorerTable:item:selected {\n"
+"background-color: #194759;\n"
+"height: 50px;\n"
+"color: #2ecc71;\n"
+"border: none;\n"
 "}"))
         self.explorerTable.setFrameShape(QtGui.QFrame.StyledPanel)
         self.explorerTable.setFrameShadow(QtGui.QFrame.Plain)
@@ -309,7 +316,7 @@ class Ui_Form(object):
         self.explorerTable.setWordWrap(False)
         self.explorerTable.setCornerButtonEnabled(True)
         self.explorerTable.setObjectName(_fromUtf8("explorerTable"))
-        self.explorerTable.setColumnCount(9)
+        self.explorerTable.setColumnCount(7)
         self.explorerTable.setRowCount(0)
         item = QtGui.QTableWidgetItem()
         self.explorerTable.setHorizontalHeaderItem(0, item)
@@ -325,10 +332,6 @@ class Ui_Form(object):
         self.explorerTable.setHorizontalHeaderItem(5, item)
         item = QtGui.QTableWidgetItem()
         self.explorerTable.setHorizontalHeaderItem(6, item)
-        item = QtGui.QTableWidgetItem()
-        self.explorerTable.setHorizontalHeaderItem(7, item)
-        item = QtGui.QTableWidgetItem()
-        self.explorerTable.setHorizontalHeaderItem(8, item)
         self.explorerTable.horizontalHeader().setVisible(False)
         self.explorerTable.horizontalHeader().setCascadingSectionResizes(True)
         self.explorerTable.horizontalHeader().setDefaultSectionSize(50)
@@ -755,13 +758,13 @@ class Ui_Form(object):
         self.remoteScriptLabel.setText(_translate("Form", "Remote Script", None))
         self.localScriptLabel.setText(_translate("Form", "Local Script", None))
         self.explorerTable.setSortingEnabled(False)
-        item = self.explorerTable.horizontalHeaderItem(2)
+        item = self.explorerTable.horizontalHeaderItem(0)
         item.setText(_translate("Form", "Type", None))
-        item = self.explorerTable.horizontalHeaderItem(4)
+        item = self.explorerTable.horizontalHeaderItem(2)
         item.setText(_translate("Form", "Name", None))
-        item = self.explorerTable.horizontalHeaderItem(6)
+        item = self.explorerTable.horizontalHeaderItem(4)
         item.setText(_translate("Form", "Date Modified", None))
-        item = self.explorerTable.horizontalHeaderItem(8)
+        item = self.explorerTable.horizontalHeaderItem(6)
         item.setText(_translate("Form", "Size", None))
         self.clientsLabel.setText(_translate("Form", "Servers", None))
         self.clientscountLabel.setText(_translate("Form", "0", None))

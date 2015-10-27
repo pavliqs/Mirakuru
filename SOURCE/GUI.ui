@@ -477,12 +477,19 @@ QPushButton#upexplorerButton:pressed {
     padding: 2px;
 }
 
-QTableWidget {
+QTableWidget#explorerTable {
 	background-position: center;
     border: 1px outset;
     border-color: #0F2D40;
     border-radius: 2px;
     background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
+}
+
+QTableWidget#explorerTable:item:selected {
+background-color: #194759;
+height: 50px;
+color: #2ecc71;
+border: none;
 }</string>
             </property>
             <property name="frameShape">
@@ -554,16 +561,6 @@ QTableWidget {
             <attribute name="verticalHeaderCascadingSectionResizes">
              <bool>false</bool>
             </attribute>
-            <column>
-             <property name="text">
-              <string/>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string/>
-             </property>
-            </column>
             <column>
              <property name="text">
               <string>Type</string>
