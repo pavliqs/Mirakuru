@@ -23,7 +23,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Mad Spider Client</string>
+   <string>Mirakuru Client</string>
   </property>
   <property name="windowIcon">
    <iconset resource="RESOURCE.qrc">
@@ -556,12 +556,12 @@ QTableWidget {
             </attribute>
             <column>
              <property name="text">
-              <string>   </string>
+              <string/>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>   </string>
+              <string/>
              </property>
             </column>
             <column>
@@ -581,7 +581,7 @@ QTableWidget {
             </column>
             <column>
              <property name="text">
-              <string>   </string>
+              <string/>
              </property>
             </column>
             <column>
@@ -591,7 +591,7 @@ QTableWidget {
             </column>
             <column>
              <property name="text">
-              <string>   </string>
+              <string/>
              </property>
             </column>
             <column>
@@ -1066,7 +1066,7 @@ color: #2ecc71;
           </property>
           <property name="styleSheet">
            <string notr="true">background: #0F2D40;
-border: 1px solid #2ecc71;</string>
+border: 1px solid #f07e01;</string>
           </property>
           <property name="title">
            <string/>
@@ -1316,7 +1316,7 @@ QPushButton#stopserverButton:checked {
 border: none;</string>
              </property>
              <property name="text">
-              <string>Client</string>
+              <string>Client Configuration</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>

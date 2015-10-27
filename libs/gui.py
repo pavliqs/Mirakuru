@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Mon Oct 26 13:57:24 2015
-#      by: PyQt4 UI code generator 4.11.2
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -211,7 +210,6 @@ class Ui_Form(object):
         self.layoutWidget = QtGui.QWidget(self.splitter)
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
-        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.remoteScriptLabel = QtGui.QLabel(self.layoutWidget)
         self.remoteScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
@@ -228,7 +226,6 @@ class Ui_Form(object):
         self.layoutWidget1 = QtGui.QWidget(self.splitter)
         self.layoutWidget1.setObjectName(_fromUtf8("layoutWidget1"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.layoutWidget1)
-        self.verticalLayout_2.setMargin(0)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.localScriptLabel = QtGui.QLabel(self.layoutWidget1)
         self.localScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
@@ -590,7 +587,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.serverconfigGroup.setFont(font)
         self.serverconfigGroup.setStyleSheet(_fromUtf8("background: #0F2D40;\n"
-"border: 1px solid #2ecc71;"))
+"border: 1px solid #f07e01;"))
         self.serverconfigGroup.setTitle(_fromUtf8(""))
         self.serverconfigGroup.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.serverconfigGroup.setFlat(False)
@@ -754,24 +751,16 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(_translate("Form", "Mad Spider Client", None))
+        Form.setWindowTitle(_translate("Form", "Mirakuru Client", None))
         self.remoteScriptLabel.setText(_translate("Form", "Remote Script", None))
         self.localScriptLabel.setText(_translate("Form", "Local Script", None))
         self.explorerTable.setSortingEnabled(False)
-        item = self.explorerTable.horizontalHeaderItem(0)
-        item.setText(_translate("Form", "   ", None))
-        item = self.explorerTable.horizontalHeaderItem(1)
-        item.setText(_translate("Form", "   ", None))
         item = self.explorerTable.horizontalHeaderItem(2)
         item.setText(_translate("Form", "Type", None))
         item = self.explorerTable.horizontalHeaderItem(4)
         item.setText(_translate("Form", "Name", None))
-        item = self.explorerTable.horizontalHeaderItem(5)
-        item.setText(_translate("Form", "   ", None))
         item = self.explorerTable.horizontalHeaderItem(6)
         item.setText(_translate("Form", "Date Modified", None))
-        item = self.explorerTable.horizontalHeaderItem(7)
-        item.setText(_translate("Form", "   ", None))
         item = self.explorerTable.horizontalHeaderItem(8)
         item.setText(_translate("Form", "Size", None))
         self.clientsLabel.setText(_translate("Form", "Servers", None))
@@ -782,7 +771,7 @@ class Ui_Form(object):
         self.ipaddressLine.setText(_translate("Form", "0.0.0.0", None))
         self.runserverButton.setText(_translate("Form", "Start", None))
         self.stopserverButton.setText(_translate("Form", "Stop", None))
-        self.label.setText(_translate("Form", "Client", None))
+        self.label.setText(_translate("Form", "Client Configuration", None))
         self.byLabel.setText(_translate("Form", "Coded by Uri Patton 2014", None))
 
 import res
