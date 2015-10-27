@@ -2,13 +2,10 @@
   <qresource prefix="img">
     <file>../assets/stop.png</file>
     <file>../assets/start.png</file>
-    <file>../assets/keylogger.png</file>
     <file>../assets/log.png</file>
     <file>../assets/remove.png</file>
     <file>../assets/new_file.png</file>
-    <file>../assets/record.png</file>
     <file>../assets/new_folder.png</file>
-    <file>../assets/logo.png</file>
     <file>../assets/terminal.png</file>
     <file>../assets/python.png</file>
     <file>../assets/icon.png</file>
