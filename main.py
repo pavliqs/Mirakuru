@@ -452,14 +452,21 @@ class MainDialog(QWidget, gui.Ui_Form):
                 self.statusno('Error while parsing directory', self.lineno())
                 ext = ''
 
+            if dic[i]['hidden']:
+                fileColor = QColor(235, 235, 235)
+                folderColor = QColor(201, 101, 101)
+            else:
+                fileColor = QColor(155, 89, 182)
+                folderColor = QColor(0, 255, 255)
+
             # set content type
             item = QTableWidgetItem('File') if dic[i]['type'] else QTableWidgetItem('Folder')
             if dic[i]['type']:
-                item.setTextColor(QColor(155, 89, 182))
+                item.setTextColor(fileColor)
                 item.setIcon(QIcon(QPixmap(r'assets\file.png')))
                 item.setSizeHint(QSize(100, 30))
             else:
-                item.setTextColor(QColor(0, 255, 255))
+                item.setTextColor(folderColor)
                 item.setIcon(QIcon(QPixmap(r'assets\folder.png')))
                 item.setSizeHint(QSize(100, 30))
             self.explorerTable.setItem(n, 0, item)
@@ -467,9 +474,9 @@ class MainDialog(QWidget, gui.Ui_Form):
             # set content name
             item = QTableWidgetItem(dic[i]['name'])
             if dic[i]['type']:
-                item.setTextColor(QColor(155, 89, 182))
+                item.setTextColor(fileColor)
             else:
-                item.setTextColor(QColor(0, 255, 255))
+                item.setTextColor(folderColor)
             self.explorerTable.setItem(n, 1, item)
 
             # set content modified date
