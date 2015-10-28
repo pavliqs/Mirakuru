@@ -13,7 +13,14 @@ import hashlib
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from libs import linesnum, gui, style, credits
+from libs import linesnum, gui, style, credits, screencast_ui
+
+
+class ScreencastDialog(QWidget, screencast_ui.Ui_Dialog):
+
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
+        self.setupUi(self)
 
 
 class MainDialog(QWidget, gui.Ui_Form):
