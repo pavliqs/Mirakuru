@@ -488,7 +488,7 @@ class MainDialog(QWidget, gui.Ui_Form):
             # set file size
             item = QTableWidgetItem(sizeof_fmt(dic[i]['size'])) if dic[i]['type'] else QTableWidgetItem('')
             item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
-            item.setTextColor(QColor(155, 89, 182))
+            item.setTextColor(fileColor)
             self.explorerTable.setItem(n, 3, item)
 
         # update table

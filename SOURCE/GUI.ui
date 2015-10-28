@@ -400,7 +400,7 @@ border-radius: none;</string>
          <attribute name="title">
           <string/>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_8">
+         <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0">
            <widget class="QComboBox" name="explorerDrivesDrop">
             <property name="minimumSize">
@@ -421,6 +421,51 @@ color: rgb(97, 163, 94);
 border: 1px outset;
 border-color: #0F2D40;
 background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="refreshexplorerButton">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#refreshexplorerButton {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            text-decoration: none;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+            }
+
+QPushButton#refreshexplorerButton:pressed {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            }</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="RESOURCE.qrc">
+              <normaloff>:/img/assets/refresh.png</normaloff>:/img/assets/refresh.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -469,7 +514,247 @@ QPushButton#upexplorerButton:pressed {
             </property>
            </widget>
           </item>
-          <item row="2" column="0" colspan="11">
+          <item row="0" column="3">
+           <widget class="QPushButton" name="mkfileexplorerButton">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#mkfileexplorerButton {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            text-decoration: none;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+            }
+
+QPushButton#mkfileexplorerButton:pressed {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            }</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="RESOURCE.qrc">
+              <normaloff>:/img/assets/new_file.png</normaloff>:/img/assets/new_file.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QPushButton" name="mkdirexplorerButton">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#mkdirexplorerButton {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            text-decoration: none;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+            }
+
+QPushButton#mkdirexplorerButton:pressed {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            }</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="RESOURCE.qrc">
+              <normaloff>:/img/assets/new_folder.png</normaloff>:/img/assets/new_folder.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="removeexplorerButton">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton#removeexplorerButton {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            text-decoration: none;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+            }
+
+QPushButton#removeexplorerButton:pressed {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            }</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="RESOURCE.qrc">
+              <normaloff>:/img/assets/remove.png</normaloff>:/img/assets/remove.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>220</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0" colspan="7">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(155, 89, 182)</string>
+              </property>
+              <property name="text">
+               <string>FIle</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(0, 255, 255)</string>
+              </property>
+              <property name="text">
+               <string>Directory</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(201, 101, 101)</string>
+              </property>
+              <property name="text">
+               <string>Hidden Directory</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="styleSheet">
+               <string notr="true">color: rgb(235, 235, 235)</string>
+              </property>
+              <property name="text">
+               <string>Hidden File</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="styleSheet">
+               <string notr="true">color: #2ecc71;</string>
+              </property>
+              <property name="text">
+               <string>Date Modified</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="explorerContentLabel">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0" colspan="7">
            <widget class="QTableWidget" name="explorerTable">
             <property name="styleSheet">
              <string notr="true">QHeaderView::section {
@@ -583,65 +868,7 @@ border: none;
             </column>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QPushButton" name="refreshexplorerButton">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton#refreshexplorerButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#refreshexplorerButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="RESOURCE.qrc">
-              <normaloff>:/img/assets/refresh.png</normaloff>:/img/assets/refresh.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="10">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>220</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="0" colspan="11">
+          <item row="1" column="0" colspan="7">
            <widget class="QLineEdit" name="explorerPathEntry">
             <property name="minimumSize">
              <size>
@@ -660,151 +887,6 @@ padding-left: 5px;</string>
             </property>
             <property name="text">
              <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="9">
-           <widget class="QPushButton" name="removeexplorerButton">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton#removeexplorerButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#removeexplorerButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="RESOURCE.qrc">
-              <normaloff>:/img/assets/remove.png</normaloff>:/img/assets/remove.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QPushButton" name="mkfileexplorerButton">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton#mkfileexplorerButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#mkfileexplorerButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="RESOURCE.qrc">
-              <normaloff>:/img/assets/new_file.png</normaloff>:/img/assets/new_file.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="6">
-           <widget class="QPushButton" name="mkdirexplorerButton">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton#mkdirexplorerButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#mkdirexplorerButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="RESOURCE.qrc">
-              <normaloff>:/img/assets/new_folder.png</normaloff>:/img/assets/new_folder.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="11">
-           <widget class="QLabel" name="explorerContentLabel">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
