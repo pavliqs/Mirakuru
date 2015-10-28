@@ -16,17 +16,6 @@ from PyQt4.QtCore import *
 from libs import linesnum, gui, style, credits
 
 
-class ImgWidget(QLabel):
-    def __init__(self, imagepath, parent=None):
-        super(ImgWidget, self).__init__(parent)
-
-        pic = QPixmap(imagepath)
-        out = pic.scaled(QSize(32, 32), Qt.KeepAspectRatio)
-        self.setAlignment(Qt.AlignCenter)
-        self.setStyleSheet(style.fileExplorerImg)
-        self.setPixmap(out)
-
-
 class MainDialog(QWidget, gui.Ui_Form):
     # noinspection PyUnresolvedReferences
     def __init__(self, parent=None):
