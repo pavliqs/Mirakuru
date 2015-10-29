@@ -49,7 +49,7 @@ def Exec(cmde):
             cmdoutput = execproc.stdout.read() + execproc.stderr.read()
             return cmdoutput
         except Exception as e:
-            return '<font color="red">SERVER ERROR: </font>' + str(e)
+            return str(e)
 
     else:
         return "Enter a command.\n"

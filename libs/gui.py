@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Wed Oct 28 12:48:11 2015
+# Created: Thu Oct 29 14:09:06 2015
 #      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,8 +42,8 @@ class Ui_Form(object):
 "color: #2ecc71;\n"
 "border-radius: 3px;\n"
 "font: 10pt \"MS Shell Dlg 2\";"))
-        self.gridLayout = QtGui.QGridLayout(Form)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.verticalLayout_3 = QtGui.QVBoxLayout(Form)
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.splitter_7 = QtGui.QSplitter(Form)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("MS Shell Dlg 2"))
@@ -125,50 +125,11 @@ class Ui_Form(object):
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.shellTab = QtGui.QWidget()
         self.shellTab.setObjectName(_fromUtf8("shellTab"))
-        self.gridLayout_4 = QtGui.QGridLayout(self.shellTab)
-        self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
-        self.consoleText = QtGui.QTextEdit(self.shellTab)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Ignored, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.consoleText.sizePolicy().hasHeightForWidth())
-        self.consoleText.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("MS Shell Dlg 2"))
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.consoleText.setFont(font)
-        self.consoleText.setAutoFillBackground(True)
-        self.consoleText.setStyleSheet(_fromUtf8("background-position: center;\n"
-"border: 1px outset;\n"
-"border-color: #0F2D40;\n"
-"border-radius: 2px;\n"
-"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);"))
-        self.consoleText.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.consoleText.setFrameShadow(QtGui.QFrame.Plain)
-        self.consoleText.setLineWidth(1)
-        self.consoleText.setUndoRedoEnabled(False)
-        self.consoleText.setReadOnly(True)
-        self.consoleText.setCursorWidth(5)
-        self.consoleText.setObjectName(_fromUtf8("consoleText"))
-        self.gridLayout_4.addWidget(self.consoleText, 0, 0, 1, 1)
-        self.commandLine = QtGui.QLineEdit(self.shellTab)
-        self.commandLine.setMinimumSize(QtCore.QSize(0, 40))
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("MS Shell Dlg 2"))
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.commandLine.setFont(font)
-        self.commandLine.setStyleSheet(_fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);\n"
-"border: 1px ridge;\n"
-"border-color: #0F2D40;\n"
-"border-radius: 2px;"))
-        self.commandLine.setObjectName(_fromUtf8("commandLine"))
-        self.gridLayout_4.addWidget(self.commandLine, 1, 0, 1, 1)
+        self.gridLayout = QtGui.QGridLayout(self.shellTab)
+        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.shellLayout = QtGui.QVBoxLayout()
+        self.shellLayout.setObjectName(_fromUtf8("shellLayout"))
+        self.gridLayout.addLayout(self.shellLayout, 0, 0, 1, 1)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/terminal.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.shellTab, icon1, _fromUtf8(""))
@@ -760,7 +721,7 @@ class Ui_Form(object):
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout_7.addWidget(self.label, 0, 0, 1, 2)
         self.gridLayout_5.addWidget(self.serverconfigGroup, 0, 0, 1, 2)
-        self.gridLayout.addWidget(self.splitter_7, 0, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.splitter_7)
         self.byLabel = QtGui.QLabel(Form)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("MS Shell Dlg 2"))
@@ -774,7 +735,7 @@ class Ui_Form(object):
 ""))
         self.byLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.byLabel.setObjectName(_fromUtf8("byLabel"))
-        self.gridLayout.addWidget(self.byLabel, 1, 0, 1, 1)
+        self.verticalLayout_3.addWidget(self.byLabel)
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(0)

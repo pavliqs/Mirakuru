@@ -1,19 +1,23 @@
 import sys
-from PyQt4 import QtCore
-from PyQt4 import QtGui
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
 
-class Console(QtGui.QTextEdit):
-    def __init__(self, prompt='$> ', startup_message='', parent=None):
-        QtGui.QTextEdit.__init__(self, parent)
+class Console(QTextEdit):
+    def __init__(self, prompt='<font color=#9b59b6>Mirakuru@shell$></font> ', startup_message='', parent=None):
+        QTextEdit.__init__(self, parent)
+        self.setStyleSheet('''
+        background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
+        padding: 5px;
+        ''')
         self.prompt = prompt
         self.history = []
         self.namespace = {}
         self.construct = []
 
         self.setGeometry(50, 75, 600, 400)
-        self.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
+        self.setWordWrapMode(QTextOption.WrapAnywhere)
         self.setUndoRedoEnabled(False)
-        self.document().setDefaultFont(QtGui.QFont("monospace", 10, QtGui.QFont.Normal))
+        self.document().setDefaultFont(QFont("monospace", 10, QFont.Normal))
         self.showMessage(startup_message)
 
     def updateNamespace(self, namespace):
@@ -29,25 +33,25 @@ class Console(QtGui.QTextEdit):
         else:
             prompt = self.prompt
         self.append(prompt)
-        self.moveCursor(QtGui.QTextCursor.End)
+        self.moveCursor(QTextCursor.End)
 
     def getCommand(self):
         doc = self.document()
         curr_line = unicode(doc.findBlockByLineNumber(doc.lineCount() - 1).text())
         curr_line = curr_line.rstrip()
-        curr_line = curr_line[len(self.prompt):]
+        curr_line = curr_line[16:]
         return curr_line
 
     def setCommand(self, command):
         if self.getCommand() == command:
             return
-        self.moveCursor(QtGui.QTextCursor.End)
-        self.moveCursor(QtGui.QTextCursor.StartOfLine, QtGui.QTextCursor.KeepAnchor)
+        self.moveCursor(QTextCursor.End)
+        self.moveCursor(QTextCursor.StartOfLine, QTextCursor.KeepAnchor)
         for i in range(len(self.prompt)):
-            self.moveCursor(QtGui.QTextCursor.Right, QtGui.QTextCursor.KeepAnchor)
+            self.moveCursor(QTextCursor.Right, QTextCursor.KeepAnchor)
         self.textCursor().removeSelectedText()
         self.textCursor().insertText(command)
-        self.moveCursor(QtGui.QTextCursor.End)
+        self.moveCursor(QTextCursor.End)
 
     def getConstruct(self, command):
         if self.construct:
@@ -95,38 +99,37 @@ class Console(QtGui.QTextEdit):
         return self.textCursor().columnNumber() - len(self.prompt)
 
     def setCursorPosition(self, position):
-        self.moveCursor(QtGui.QTextCursor.StartOfLine)
+        self.moveCursor(QTextCursor.StartOfLine)
         for i in range(len(self.prompt) + position):
-            self.moveCursor(QtGui.QTextCursor.Right)
+            self.moveCursor(QTextCursor.Right)
 
     def runCommand(self):
         command = self.getCommand()
         self.addToHistory(command)
+        self.command = self.getConstruct(command)
 
-        command = self.getConstruct(command)
-
-        print command
-
-        self.newPrompt()
+    def command(self):
+        return self.command()
 
     def keyPressEvent(self, event):
-        if event.key() in (QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return):
+        if event.key() in (Qt.Key_Enter, Qt.Key_Return):
             self.runCommand()
+            self.emit(SIGNAL('returnPressed'))
             return
-        if event.key() == QtCore.Qt.Key_Home:
+        if event.key() == Qt.Key_Home:
             self.setCursorPosition(0)
             return
-        if event.key() == QtCore.Qt.Key_PageUp:
+        if event.key() == Qt.Key_PageUp:
             return
-        elif event.key() in (QtCore.Qt.Key_Left, QtCore.Qt.Key_Backspace):
+        elif event.key() in (Qt.Key_Left, Qt.Key_Backspace):
             if self.getCursorPosition() == 0:
                 return
-        elif event.key() == QtCore.Qt.Key_Up:
+        elif event.key() == Qt.Key_Up:
             self.setCommand(self.getPrevHistoryEntry())
             return
-        elif event.key() == QtCore.Qt.Key_Down:
+        elif event.key() == Qt.Key_Down:
             self.setCommand(self.getNextHistoryEntry())
             return
-        elif event.key() == QtCore.Qt.Key_D and event.modifiers() == QtCore.Qt.ControlModifier:
+        elif event.key() == Qt.Key_D and event.modifiers() == Qt.ControlModifier:
             self.close()
         super(Console, self).keyPressEvent(event)

