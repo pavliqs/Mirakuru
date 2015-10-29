@@ -7,20 +7,23 @@ import time
 import ast
 import datetime
 import inspect
-import os
 import hashlib
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from libs import linesnum, gui, style, credits, screencast_ui
+from libs import linesnum, gui, style, credits
 
 
-class ScreencastDialog(QWidget, screencast_ui.Ui_Dialog):
+class ImgWidget(QLabel):
+    def __init__(self, imagepath, parent=None):
+        super(ImgWidget, self).__init__(parent)
 
-    def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
-        self.setupUi(self)
+        pic = QPixmap(imagepath)
+        out = pic.scaled(QSize(32, 32), Qt.KeepAspectRatio)
+        self.setAlignment(Qt.AlignCenter)
+        self.setStyleSheet(style.fileExplorerImg)
+        self.setPixmap(out)
 
 
 class MainDialog(QWidget, gui.Ui_Form):

