@@ -12,7 +12,7 @@ import hashlib
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from libs import linesnum, gui, style, credits
+from libs import linesnum, gui, style, credits, console
 
 
 class MainDialog(QWidget, gui.Ui_Form):
@@ -25,8 +25,10 @@ class MainDialog(QWidget, gui.Ui_Form):
         # init idle with lines
         self.llines = linesnum.LineTextWidget()
         self.LeditorLayout.addWidget(self.llines)
-        self.rlines = linesnum.LineTextWidget()
-        self.ReditorLayout.addWidget(self.rlines)
+        #self.rlines = linesnum.LineTextWidget()
+        #self.ReditorLayout.addWidget(self.rlines)
+        self.console = console.Console()
+        self.ReditorLayout.addWidget(self.console)
 
         self.statusok('Initializing tray', self.lineno())
         # init tray
