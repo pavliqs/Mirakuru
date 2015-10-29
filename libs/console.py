@@ -3,7 +3,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 class Console(QTextEdit):
-    def __init__(self, prompt='<font color=#9b59b6>Mirakuru@shell$></font> ', startup_message='', parent=None):
+    def __init__(self, prompt='Mirakuru@shell$> ', startup_message='', parent=None):
         QTextEdit.__init__(self, parent)
         self.setStyleSheet('''
         background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
@@ -12,7 +12,6 @@ class Console(QTextEdit):
         self.prompt = prompt
         self.history = []
         self.namespace = {}
-        self.construct = []
 
         self.setGeometry(50, 75, 600, 400)
         self.setWordWrapMode(QTextOption.WrapAnywhere)
@@ -28,10 +27,7 @@ class Console(QTextEdit):
         self.newPrompt()
 
     def newPrompt(self):
-        if self.construct:
-            prompt = '.' * len(self.prompt)
-        else:
-            prompt = self.prompt
+        prompt = '<font color=#9b59b6>'+self.prompt+'</font>'
         self.append(prompt)
         self.moveCursor(QTextCursor.End)
 
@@ -52,23 +48,6 @@ class Console(QTextEdit):
         self.textCursor().removeSelectedText()
         self.textCursor().insertText(command)
         self.moveCursor(QTextCursor.End)
-
-    def getConstruct(self, command):
-        if self.construct:
-            prev_command = self.construct[-1]
-            self.construct.append(command)
-            if not prev_command and not command:
-                ret_val = '\n'.join(self.construct)
-                self.construct = []
-                return ret_val
-            else:
-                return ''
-        else:
-            if command and command[-1] == (':'):
-                self.construct.append(command)
-                return ''
-            else:
-                return command
 
     def getHistory(self):
         return self.history
@@ -106,10 +85,10 @@ class Console(QTextEdit):
     def runCommand(self):
         command = self.getCommand()
         self.addToHistory(command)
-        self.command = self.getConstruct(command)
+        self.command = command
 
     def command(self):
-        return self.command()
+        return self.command
 
     def keyPressEvent(self, event):
         if event.key() in (Qt.Key_Enter, Qt.Key_Return):
