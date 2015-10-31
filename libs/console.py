@@ -23,11 +23,12 @@ class Console(QTextEdit):
         self.namespace.update(namespace)
 
     def showMessage(self, message):
+        self.clear()
         self.append(message)
         self.newPrompt()
 
     def newPrompt(self):
-        prompt = '<font color=#9b59b6>'+self.prompt+'</font>'
+        prompt = '<font color="#9b59b6">'+self.prompt+'</font>'
         self.append(prompt)
         self.moveCursor(QTextCursor.End)
 
