@@ -274,11 +274,7 @@ class MainDialog(QWidget, gui.Ui_Form):
                         continue
                     else:
                         self.active = True
-                        self.console.showMessage(message='<br><br><p align="center">'
-                                             '<table style="border-color: #2ECC71; border-style: solid;" border="1" width="300" cellpadding="5">'
-                                             '<tr><td><font size=42 color=#2ECC71><p align="center">'
-                                             'ACCESS GRANTED'
-                                             '</p></font></td></tr></table></p><br>')
+                        self.console.showMessage(message='')
                         self.setWindowTitle('Mirakuru - Client - Connected to %s' % str(self.sockItems[self.sockind]))
                         self.tabWidget.setEnabled(True)
                         self.unlockedSocks.append(self.sockItems[self.sockind])
