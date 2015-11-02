@@ -1,5 +1,5 @@
-# Mad Spider
-Remote Windows management tool (FAN MADE)
+# Mirakuru
+Remote Windows Management Tool (FAN MADE)
 
 > **Features:**
 > - Execute Shell Commands Remotely
