@@ -22,7 +22,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.setupUi(self)
 
         self.statusok('Initializing Py IDLE', self.lineno())
-        # init idle with lines
+        # init idles with lines
         self.llines = linesnum.LineTextWidget()
         self.LeditorLayout.addWidget(self.llines)
         self.rlines = linesnum.LineTextWidget()

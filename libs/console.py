@@ -3,7 +3,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 class Console(QTextEdit):
-    def __init__(self, prompt='Mirakuru@shell$> ', startup_message='', parent=None):
+    def __init__(self, prompt='Mirakuru@shell$>', startup_message='', parent=None):
         QTextEdit.__init__(self, parent)
         self.setStyleSheet('''
         background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
@@ -28,7 +28,7 @@ class Console(QTextEdit):
         self.newPrompt()
 
     def newPrompt(self):
-        prompt = '<font color="#9b59b6">'+self.prompt+'</font>'
+        prompt = '<font color="#9b59b6">'+self.prompt+'</font> '
         self.append(prompt)
         self.moveCursor(QTextCursor.End)
 
