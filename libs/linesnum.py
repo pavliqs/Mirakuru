@@ -86,10 +86,12 @@ class LineTextWidget(QFrame):
         self.edit.setFrameStyle(QFrame.NoFrame)
         self.edit.setAcceptRichText(False)
         self.edit.setTabStopWidth(20)
-        self.edit.setStyleSheet("background-color: rgb(28, 29, 33);\n"
-"color: #92CDCF;\n"
-"font: 10pt \"Courier\";\n"
-"border: 2px solid;")
+        self.edit.setStyleSheet('''
+        background-position: center;
+border: 0px outset;
+border-color: #0F2D40;
+border-radius: 2px;
+background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);''')
         highlight = syntax.MyHighlighter(self.edit, 'Classic')
  
         self.number_bar = self.NumberBar()

