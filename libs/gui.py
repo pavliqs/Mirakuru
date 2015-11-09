@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'GUI.ui'
 #
-# Created: Thu Oct 29 14:09:06 2015
-#      by: PyQt4 UI code generator 4.11.2
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -137,6 +136,65 @@ class Ui_Form(object):
         self.remotepythonTab.setObjectName(_fromUtf8("remotepythonTab"))
         self.gridLayout_2 = QtGui.QGridLayout(self.remotepythonTab)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.plugins = QtGui.QSplitter(self.remotepythonTab)
+        self.plugins.setMinimumSize(QtCore.QSize(180, 0))
+        self.plugins.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.plugins.setOrientation(QtCore.Qt.Vertical)
+        self.plugins.setObjectName(_fromUtf8("plugins"))
+        self.pluginsSearchEdit = QtGui.QLineEdit(self.plugins)
+        self.pluginsSearchEdit.setMaximumSize(QtCore.QSize(16777215, 20))
+        self.pluginsSearchEdit.setStyleSheet(_fromUtf8("background-color:#194759;\n"
+"border: none;\n"
+"padding-left: 5px;"))
+        self.pluginsSearchEdit.setText(_fromUtf8(""))
+        self.pluginsSearchEdit.setObjectName(_fromUtf8("pluginsSearchEdit"))
+        self.pluginsList = QtGui.QListWidget(self.plugins)
+        self.pluginsList.setMaximumSize(QtCore.QSize(180, 16777215))
+        self.pluginsList.setStyleSheet(_fromUtf8("background-color:#194759;\n"
+"border: none;\n"
+"padding-left: 5px;"))
+        self.pluginsList.setObjectName(_fromUtf8("pluginsList"))
+        self.gridLayout_2.addWidget(self.plugins, 1, 0, 1, 1)
+        self.splitter = QtGui.QSplitter(self.remotepythonTab)
+        self.splitter.setStyleSheet(_fromUtf8("border: 1px solid;\n"
+"border-color:#194759;"))
+        self.splitter.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter.setObjectName(_fromUtf8("splitter"))
+        self.layoutWidget = QtGui.QWidget(self.splitter)
+        self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
+        self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.remoteScriptLabel = QtGui.QLabel(self.layoutWidget)
+        self.remoteScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
+        self.remoteScriptLabel.setMaximumSize(QtCore.QSize(16777215, 14))
+        self.remoteScriptLabel.setStyleSheet(_fromUtf8("background-color:#194759;\n"
+"border: none;\n"
+"padding-left: 5px;"))
+        self.remoteScriptLabel.setTextFormat(QtCore.Qt.AutoText)
+        self.remoteScriptLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.remoteScriptLabel.setObjectName(_fromUtf8("remoteScriptLabel"))
+        self.verticalLayout.addWidget(self.remoteScriptLabel)
+        self.LeditorLayout = QtGui.QVBoxLayout()
+        self.LeditorLayout.setObjectName(_fromUtf8("LeditorLayout"))
+        self.verticalLayout.addLayout(self.LeditorLayout)
+        self.layoutWidget1 = QtGui.QWidget(self.splitter)
+        self.layoutWidget1.setObjectName(_fromUtf8("layoutWidget1"))
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.layoutWidget1)
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.localScriptLabel = QtGui.QLabel(self.layoutWidget1)
+        self.localScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
+        self.localScriptLabel.setMaximumSize(QtCore.QSize(16777215, 14))
+        self.localScriptLabel.setStyleSheet(_fromUtf8("background-color:#194759;\n"
+"border: none;\n"
+"padding-left: 5px;"))
+        self.localScriptLabel.setTextFormat(QtCore.Qt.AutoText)
+        self.localScriptLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.localScriptLabel.setObjectName(_fromUtf8("localScriptLabel"))
+        self.verticalLayout_2.addWidget(self.localScriptLabel)
+        self.ReditorLayout = QtGui.QVBoxLayout()
+        self.ReditorLayout.setObjectName(_fromUtf8("ReditorLayout"))
+        self.verticalLayout_2.addLayout(self.ReditorLayout)
+        self.gridLayout_2.addWidget(self.splitter, 1, 1, 1, 1)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.executeButton = QtGui.QPushButton(self.remotepythonTab)
@@ -165,45 +223,7 @@ class Ui_Form(object):
         self.horizontalLayout_3.addWidget(self.executeButton)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
-        self.gridLayout_2.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
-        self.splitter = QtGui.QSplitter(self.remotepythonTab)
-        self.splitter.setOrientation(QtCore.Qt.Horizontal)
-        self.splitter.setObjectName(_fromUtf8("splitter"))
-        self.layoutWidget = QtGui.QWidget(self.splitter)
-        self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
-        self.verticalLayout.setMargin(0)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.remoteScriptLabel = QtGui.QLabel(self.layoutWidget)
-        self.remoteScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
-        self.remoteScriptLabel.setMaximumSize(QtCore.QSize(16777215, 14))
-        self.remoteScriptLabel.setStyleSheet(_fromUtf8("background-color:#194759;\n"
-"border-radius: none;"))
-        self.remoteScriptLabel.setTextFormat(QtCore.Qt.AutoText)
-        self.remoteScriptLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.remoteScriptLabel.setObjectName(_fromUtf8("remoteScriptLabel"))
-        self.verticalLayout.addWidget(self.remoteScriptLabel)
-        self.LeditorLayout = QtGui.QVBoxLayout()
-        self.LeditorLayout.setObjectName(_fromUtf8("LeditorLayout"))
-        self.verticalLayout.addLayout(self.LeditorLayout)
-        self.layoutWidget1 = QtGui.QWidget(self.splitter)
-        self.layoutWidget1.setObjectName(_fromUtf8("layoutWidget1"))
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.layoutWidget1)
-        self.verticalLayout_2.setMargin(0)
-        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.localScriptLabel = QtGui.QLabel(self.layoutWidget1)
-        self.localScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
-        self.localScriptLabel.setMaximumSize(QtCore.QSize(16777215, 14))
-        self.localScriptLabel.setStyleSheet(_fromUtf8("background-color:#194759;\n"
-"border-radius: none;"))
-        self.localScriptLabel.setTextFormat(QtCore.Qt.AutoText)
-        self.localScriptLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.localScriptLabel.setObjectName(_fromUtf8("localScriptLabel"))
-        self.verticalLayout_2.addWidget(self.localScriptLabel)
-        self.ReditorLayout = QtGui.QVBoxLayout()
-        self.ReditorLayout.setObjectName(_fromUtf8("ReditorLayout"))
-        self.verticalLayout_2.addLayout(self.ReditorLayout)
-        self.gridLayout_2.addWidget(self.splitter, 1, 0, 1, 1)
+        self.gridLayout_2.addLayout(self.horizontalLayout_3, 0, 0, 1, 2)
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/python.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.remotepythonTab, icon3, _fromUtf8(""))
@@ -743,6 +763,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(_translate("Form", "Mirakuru Client", None))
+        self.pluginsSearchEdit.setPlaceholderText(_translate("Form", "Search Plugin", None))
         self.remoteScriptLabel.setText(_translate("Form", "Remote Script", None))
         self.localScriptLabel.setText(_translate("Form", "Local Script", None))
         self.label_3.setText(_translate("Form", "FIle", None))
