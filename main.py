@@ -8,6 +8,8 @@ import ast
 import datetime
 import inspect
 import hashlib
+import os
+from xml.dom import minidom
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
@@ -47,13 +49,17 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.port = 0
         self.timeout = 5
         self.gui = QApplication.processEvents
-        #self.cursor = QTextCursor(self.consoleText.document())
         self.displayText(msg=credits.credit)
+
+        # Plugins Variables
+        self.plugins_all = {}
+        self.plugins_dir = os.path.join(os.getcwd(), 'plugins')
+        # Init Plugins List
+        self.pluginsInit()
+
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
-        #self.commandLine.returnPressed.connect(self.runCommand)
-        #self.console.returnPressed.connect(self.runCommand)
         self.socketsList.itemDoubleClicked.connect(self.connectSocket)
         self.runserverButton.clicked.connect(self.scannerStart)
         self.stopserverButton.clicked.connect(self.scannerStop)
@@ -68,6 +74,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
+        self.connect(self.pluginsSearchEdit, SIGNAL('textChanged(QString)'), self.pluginsUpdate)
         self.connect(self.console, SIGNAL("returnPressed"), self.runCommand)
 
         # Initializing combobox change Event
@@ -99,6 +106,35 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.explorerGetlist()
 
     # END: TabWidget functions
+
+    # START: Plugins Functions
+    # Plugins Update
+    def pluginsInit(self):
+        if os.path.exists(self.plugins_dir):
+            for dir in os.listdir(self.plugins_dir):
+                plugin = os.path.join(self.plugins_dir, dir)
+                plugins_files = os.listdir(plugin)
+                if 'settings.xml' in plugins_files and 'RS.py' in plugins_files and 'LS.py' in plugins_files:
+                    xml = minidom.parse(os.path.join(plugin, 'settings.xml'))
+                    name = xml.getElementsByTagName('name')[0].firstChild.nodeValue
+                    self.plugins_all[name] = plugin
+        self.pluginsUpdate()
+
+
+    def pluginsUpdate(self):
+        self.pluginsList.clear()
+        filter_query = self.pluginsSearchEdit.text()
+        for plugin_name, plugin_path in self.plugins_all.iteritems():
+            if str(filter_query).lower() in plugin_name.lower():
+                item = QListWidgetItem(plugin_name)
+                self.pluginsList.addItem(item)
+
+
+    def pluginAdd(self):
+        plugin_name = self.pluginsList.currentItem().text()
+        print self.plugins_all[plugin_name]
+
+    # END: Plugins Functions
     
     # START: socket functions
     # listen for clients

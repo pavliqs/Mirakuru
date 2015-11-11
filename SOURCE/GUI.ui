@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1006</width>
-    <height>672</height>
+    <height>667</height>
    </rect>
   </property>
   <property name="font">
@@ -1118,7 +1118,7 @@ color: #2ecc71;
           </property>
           <property name="styleSheet">
            <string notr="true">background: #0F2D40;
-border: 1px solid #f07e01;</string>
+border: 1px solid #194759;</string>
           </property>
           <property name="title">
            <string/>

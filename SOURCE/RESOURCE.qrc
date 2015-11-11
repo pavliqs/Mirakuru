@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="img">
+    <file>../assets/switch-on-icon.png</file>
     <file>../assets/stop.png</file>
     <file>../assets/start.png</file>
     <file>../assets/log.png</file>
