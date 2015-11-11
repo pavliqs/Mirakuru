@@ -67,7 +67,7 @@ def has_hidden_attribute(filepath):
         result = False
     return result
 
-def set_content_attribute(filepath, hidden):
+def set_content_attribute(filepath):
     if has_hidden_attribute:
         Kernel32.SetFileAttributesW(filepath, 1)
     else:
