@@ -25,10 +25,10 @@ class MainDialog(QWidget, gui.Ui_Form):
 
         self.statusok('Initializing Py IDLE', self.lineno())
         # init idles with lines
-        self.llines = linesnum.LineTextWidget()
-        self.LeditorLayout.addWidget(self.llines)
         self.rlines = linesnum.LineTextWidget()
-        self.ReditorLayout.addWidget(self.rlines)
+        self.LeditorLayout.addWidget(self.rlines)
+        self.llines = linesnum.LineTextWidget()
+        self.ReditorLayout.addWidget(self.llines)
         self.console = console.Console()
         self.shellLayout.addWidget(self.console)
 
@@ -155,7 +155,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Recieve executed scripts output
         dataf = self.Receive()
         # Run Sandbox
-        self.pluginSandbox(self.llines.getTextEdit(), dataf)
+        self.pluginSandbox(self.llines.getTextEdit(), dataf.split('\n\n')[-1])
 
         self.statusok('Update output', self.lineno())
         # Update output console
@@ -163,13 +163,8 @@ class MainDialog(QWidget, gui.Ui_Form):
 
     def pluginSandbox(self, script, data):
         src = str(script)
-        if '<br>' in src:
-            print 'html'
-        elif '\n' in src:
-            print 'py'
         try:
             exec src
-            print 'done'
         except Exception as e:
             print e
 
