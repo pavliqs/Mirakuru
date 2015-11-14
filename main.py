@@ -56,7 +56,9 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.plugins_dir = os.path.join(os.getcwd(), 'plugins')
         # Init Plugins List
         self.pluginsInit()
-
+        # Plugins SIGNALS
+        self.connect(self.pluginsSearchEdit, SIGNAL('textChanged(QString)'), self.pluginsUpdate)
+        self.pluginsList.itemDoubleClicked.connect(self.pluginAdd)
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
@@ -74,7 +76,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
-        self.connect(self.pluginsSearchEdit, SIGNAL('textChanged(QString)'), self.pluginsUpdate)
         self.connect(self.console, SIGNAL("returnPressed"), self.runCommand)
 
         # Initializing combobox change Event
@@ -131,8 +132,19 @@ class MainDialog(QWidget, gui.Ui_Form):
 
 
     def pluginAdd(self):
-        plugin_name = self.pluginsList.currentItem().text()
-        print self.plugins_all[plugin_name]
+        plugin_name = str(self.pluginsList.currentItem().text())
+        rscript_file = os.path.join(self.plugins_all[plugin_name], 'RS.py')
+        lscript_file = os.path.join(self.plugins_all[plugin_name], 'LS.py')
+        try:
+            with open(rscript_file, 'r') as rs:
+                rscript = rs.read()
+            with open(lscript_file, 'r') as ls:
+                lscript = ls.read()
+            self.rlines.setText(rscript)
+            self.llines.setText(lscript)
+        except:
+            self.msg('ERROR', 'Plugin is damaged')
+
 
     # END: Plugins Functions
     
