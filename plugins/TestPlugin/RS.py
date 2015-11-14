@@ -1,4 +1,4 @@
-import sys
+# Test Remote Script
+# Prints test message
 
-
-print sys.executable
+printf = 'test'

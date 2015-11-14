@@ -59,6 +59,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Plugins SIGNALS
         self.connect(self.pluginsSearchEdit, SIGNAL('textChanged(QString)'), self.pluginsUpdate)
         self.pluginsList.itemDoubleClicked.connect(self.pluginAdd)
+        self.executeButton.clicked.connect(self.pluginRun)
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
@@ -72,7 +73,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.mkfileexplorerButton.clicked.connect(self.createFile)
         self.removeexplorerButton.clicked.connect(self.deleteContent)
         self.explorerPathEntry.returnPressed.connect(self.openPath)
-        self.executeButton.clicked.connect(self.executeScript)
         self.connect(self, SIGNAL('triggered()'), self.closeEvent)
 
         self.connect(self.tabWidget, SIGNAL('currentChanged(int)'), self.tabDetector)
@@ -145,6 +145,33 @@ class MainDialog(QWidget, gui.Ui_Form):
         except:
             self.msg('ERROR', 'Plugin is damaged')
 
+    def pluginRun(self):
+
+        self.statusok('Send script to remote host', self.lineno())
+        # Send script to remote host for execute
+        self.Send('runscript ' + str(self.rlines.getTextEdit()))
+
+        self.statusok('Recieve executed scripts output', self.lineno())
+        # Recieve executed scripts output
+        dataf = self.Receive()
+        # Run Sandbox
+        self.pluginSandbox(self.llines.getTextEdit(), dataf)
+
+        self.statusok('Update output', self.lineno())
+        # Update output console
+        #self.outputConsole.setHtml(data.split('</p>')[-1])
+
+    def pluginSandbox(self, script, data):
+        src = str(script)
+        if '<br>' in src:
+            print 'html'
+        elif '\n' in src:
+            print 'py'
+        try:
+            exec src
+            print 'done'
+        except Exception as e:
+            print e
 
     # END: Plugins Functions
     
@@ -410,25 +437,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         return data[:-len(end)].decode('utf-8')
             
     # END: socket functions
-
-
-    # START: remote scripting functions
-    # execute script remotely
-    def executeScript(self):
-
-        self.statusok('Send script to remote host', self.lineno())
-        # Send script to remote host for execute
-        self.Send('runscript ' + str(self.llines.getTextEdit()))
-
-        self.statusok('Recieve executed scripts output', self.lineno())
-        # Recieve executed scripts output
-        data = self.Receive()
-
-        self.statusok('Update output', self.lineno())
-        # Update output console
-        #self.outputConsole.setHtml(data.split('</p>')[-1])
-        
-    # END: remote scripting functions
 
     # START: explorer functions
     # get list of content from remote folder
