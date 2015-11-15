@@ -1,3 +1,7 @@
+
+
+
+
 class PopupDialog(QDialog):
     def __init__(self, parent=None, data=None):
 		QWidget.__init__(self, parent)

@@ -36,6 +36,7 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
 
 
 def Execute(source):
+    printf = ''
     try:
         exec source
         if printf == '':
