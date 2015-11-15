@@ -40,7 +40,7 @@ def Execute(source):
     try:
         exec source
         if data == '':
-            return 'No output<br>example: printf = "SOME TEXT OR VARIABLE"'
+            return 'No output<br>example: data = "SOME TEXT OR VARIABLE"'
         return str(data)
     except Exception as e:
         return str(e)
