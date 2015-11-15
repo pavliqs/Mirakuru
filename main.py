@@ -20,8 +20,14 @@ def pluginSandbox(script, data):
     src = str(script)
     try:
         exec src
-    except Exception as e:
-        print e
+    except Exception as errormsg:
+        msgbox = QMessageBox()
+        msgbox.setStyleSheet(style.msgboxStyle)
+        msgbox.setWindowTitle('Local Script Error')
+        msgbox.setText(errormsg)
+        msgbox.setIcon(QMessageBox.Critical)
+        msgbox.addButton(QPushButton('OK'), QMessageBox.RejectRole)
+        msgbox.exec_()
 
 class MainDialog(QWidget, gui.Ui_Form):
     # noinspection PyUnresolvedReferences
