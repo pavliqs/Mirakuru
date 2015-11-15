@@ -1,8 +1,8 @@
 import platform
 
 def append(string):
-	global printf
-	printf += string + '\n'
+	global data
+	data += string + '\n'
 
 append('USER: ' + platform.node())
 append('PLATFORM: ' + platform.platform())
