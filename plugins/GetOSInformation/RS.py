@@ -1,7 +1,5 @@
 import platform
 
-printf = ''
-
 def append(string):
 	global printf
 	printf += string + '\n'
