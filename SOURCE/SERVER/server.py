@@ -36,12 +36,12 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
 
 
 def Execute(source):
-    printf = ''
+    data = ''
     try:
         exec source
-        if printf == '':
+        if data == '':
             return 'No output<br>example: printf = "SOME TEXT OR VARIABLE"'
-        return str(printf)
+        return str(data)
     except Exception as e:
         return str(e)
 
