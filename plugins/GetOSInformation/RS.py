@@ -1,4 +1,5 @@
 import platform
+import os
 
 def append(string):
     global data
@@ -6,3 +7,5 @@ def append(string):
 
 append('USER: ' + platform.node())
 append('PLATFORM: ' + platform.platform())
+append('ARCHITECTURE: ' + platform.architecture()[0])
+append('WINDOWS DIR: ' + os.environ['WINDIR'])
