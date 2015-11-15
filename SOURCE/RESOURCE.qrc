@@ -1,7 +1,7 @@
 <RCC>
   <qresource prefix="img">
-    <file>../assets/switch-on-icon.png</file>
     <file>../assets/stop.png</file>
+    <file>../assets/erase.png</file>
     <file>../assets/start.png</file>
     <file>../assets/log.png</file>
     <file>../assets/remove.png</file>
@@ -10,9 +10,9 @@
     <file>../assets/terminal.png</file>
     <file>../assets/python.png</file>
     <file>../assets/icon.png</file>
-    <file>../assets/execute.png</file>
-    <file>../assets/clear.png</file>
     <file>../assets/file_manager.png</file>
+    <file>../assets/execute.png</file>
+    <file>../assets/add_windows_template.png</file>
     <file>../assets/up_folder.png</file>
     <file>../assets/refresh.png</file>
   </qresource>

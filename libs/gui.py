@@ -26,7 +26,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.setWindowModality(QtCore.Qt.NonModal)
-        Form.resize(1006, 672)
+        Form.resize(1006, 667)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("MS Shell Dlg 2"))
         font.setPointSize(10)
@@ -83,6 +83,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.tabWidget.setFont(font)
         self.tabWidget.setFocusPolicy(QtCore.Qt.TabFocus)
+        self.tabWidget.setToolTip(_fromUtf8(""))
         self.tabWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.tabWidget.setAutoFillBackground(False)
         self.tabWidget.setStyleSheet(_fromUtf8("\n"
@@ -150,9 +151,22 @@ class Ui_Form(object):
         self.pluginsSearchEdit.setObjectName(_fromUtf8("pluginsSearchEdit"))
         self.pluginsList = QtGui.QListWidget(self.plugins)
         self.pluginsList.setMaximumSize(QtCore.QSize(180, 16777215))
-        self.pluginsList.setStyleSheet(_fromUtf8("background-color:#194759;\n"
+        self.pluginsList.setStyleSheet(_fromUtf8("QListWidget#pluginsList {\n"
+"background-color:#194759;\n"
 "border: none;\n"
-"padding-left: 5px;"))
+"padding: 2px;\n"
+"}\n"
+"QListWidget#pluginsList:item:selected {\n"
+"background-color: #194759;\n"
+"height: 50px;\n"
+"color: #2ecc71;\n"
+"border: none;\n"
+"}\n"
+"QListWidget#pluginsList:item:hover {\n"
+"background-color: #0F2D40;\n"
+"height: 50px;\n"
+"color: #2ecc71;\n"
+"}"))
         self.pluginsList.setObjectName(_fromUtf8("pluginsList"))
         self.gridLayout_2.addWidget(self.plugins, 1, 0, 1, 1)
         self.splitter = QtGui.QSplitter(self.remotepythonTab)
@@ -163,6 +177,7 @@ class Ui_Form(object):
         self.layoutWidget = QtGui.QWidget(self.splitter)
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.layoutWidget)
+        self.verticalLayout.setContentsMargins(5, -1, 5, -1)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.remoteScriptLabel = QtGui.QLabel(self.layoutWidget)
         self.remoteScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
@@ -180,6 +195,7 @@ class Ui_Form(object):
         self.layoutWidget1 = QtGui.QWidget(self.splitter)
         self.layoutWidget1.setObjectName(_fromUtf8("layoutWidget1"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.layoutWidget1)
+        self.verticalLayout_2.setContentsMargins(5, -1, 5, -1)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.localScriptLabel = QtGui.QLabel(self.layoutWidget1)
         self.localScriptLabel.setMinimumSize(QtCore.QSize(0, 14))
@@ -191,6 +207,31 @@ class Ui_Form(object):
         self.localScriptLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.localScriptLabel.setObjectName(_fromUtf8("localScriptLabel"))
         self.verticalLayout_2.addWidget(self.localScriptLabel)
+        self.pluginTemplateInsesrtButton = QtGui.QPushButton(self.layoutWidget1)
+        self.pluginTemplateInsesrtButton.setMinimumSize(QtCore.QSize(24, 24))
+        self.pluginTemplateInsesrtButton.setMaximumSize(QtCore.QSize(24, 24))
+        self.pluginTemplateInsesrtButton.setStyleSheet(_fromUtf8("QPushButton#pluginTemplateInsesrtButton {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            padding: 3px;\n"
+"            border-color: #0F2D40;\n"
+"            text-decoration: none;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
+"            }\n"
+"\n"
+"QPushButton#pluginTemplateInsesrtButton:pressed {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            border-color: #0F2D40;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
+"            }"))
+        self.pluginTemplateInsesrtButton.setText(_fromUtf8(""))
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/add_windows_template.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pluginTemplateInsesrtButton.setIcon(icon2)
+        self.pluginTemplateInsesrtButton.setIconSize(QtCore.QSize(24, 24))
+        self.pluginTemplateInsesrtButton.setObjectName(_fromUtf8("pluginTemplateInsesrtButton"))
+        self.verticalLayout_2.addWidget(self.pluginTemplateInsesrtButton)
         self.ReditorLayout = QtGui.QVBoxLayout()
         self.ReditorLayout.setObjectName(_fromUtf8("ReditorLayout"))
         self.verticalLayout_2.addLayout(self.ReditorLayout)
@@ -215,18 +256,42 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
 "            }"))
         self.executeButton.setText(_fromUtf8(""))
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/execute.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.executeButton.setIcon(icon2)
-        self.executeButton.setIconSize(QtCore.QSize(18, 18))
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/execute.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.executeButton.setIcon(icon3)
+        self.executeButton.setIconSize(QtCore.QSize(24, 24))
         self.executeButton.setObjectName(_fromUtf8("executeButton"))
         self.horizontalLayout_3.addWidget(self.executeButton)
+        self.eraseButton = QtGui.QPushButton(self.remotepythonTab)
+        self.eraseButton.setMinimumSize(QtCore.QSize(32, 32))
+        self.eraseButton.setMaximumSize(QtCore.QSize(32, 32))
+        self.eraseButton.setStyleSheet(_fromUtf8("QPushButton#eraseButton {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            border-color: #0F2D40;\n"
+"            text-decoration: none;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
+"            }\n"
+"\n"
+"QPushButton#eraseButton:pressed {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            border-color: #0F2D40;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
+"            }"))
+        self.eraseButton.setText(_fromUtf8(""))
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/erase.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.eraseButton.setIcon(icon4)
+        self.eraseButton.setIconSize(QtCore.QSize(24, 24))
+        self.eraseButton.setObjectName(_fromUtf8("eraseButton"))
+        self.horizontalLayout_3.addWidget(self.eraseButton)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
         self.gridLayout_2.addLayout(self.horizontalLayout_3, 0, 0, 1, 2)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/python.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.tabWidget.addTab(self.remotepythonTab, icon3, _fromUtf8(""))
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/python.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.tabWidget.addTab(self.remotepythonTab, icon5, _fromUtf8(""))
         self.explorerTab = QtGui.QWidget()
         self.explorerTab.setObjectName(_fromUtf8("explorerTab"))
         self.gridLayout_6 = QtGui.QGridLayout(self.explorerTab)
@@ -259,10 +324,10 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
 "            }"))
         self.refreshexplorerButton.setText(_fromUtf8(""))
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/refresh.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.refreshexplorerButton.setIcon(icon4)
-        self.refreshexplorerButton.setIconSize(QtCore.QSize(20, 20))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/refresh.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.refreshexplorerButton.setIcon(icon6)
+        self.refreshexplorerButton.setIconSize(QtCore.QSize(24, 24))
         self.refreshexplorerButton.setObjectName(_fromUtf8("refreshexplorerButton"))
         self.gridLayout_6.addWidget(self.refreshexplorerButton, 0, 1, 1, 1)
         self.upexplorerButton = QtGui.QPushButton(self.explorerTab)
@@ -283,10 +348,10 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
 "            }"))
         self.upexplorerButton.setText(_fromUtf8(""))
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/up_folder.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.upexplorerButton.setIcon(icon5)
-        self.upexplorerButton.setIconSize(QtCore.QSize(20, 20))
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/up_folder.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.upexplorerButton.setIcon(icon7)
+        self.upexplorerButton.setIconSize(QtCore.QSize(24, 24))
         self.upexplorerButton.setObjectName(_fromUtf8("upexplorerButton"))
         self.gridLayout_6.addWidget(self.upexplorerButton, 0, 2, 1, 1)
         self.mkfileexplorerButton = QtGui.QPushButton(self.explorerTab)
@@ -307,10 +372,10 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
 "            }"))
         self.mkfileexplorerButton.setText(_fromUtf8(""))
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/new_file.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.mkfileexplorerButton.setIcon(icon6)
-        self.mkfileexplorerButton.setIconSize(QtCore.QSize(20, 20))
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/new_file.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.mkfileexplorerButton.setIcon(icon8)
+        self.mkfileexplorerButton.setIconSize(QtCore.QSize(24, 24))
         self.mkfileexplorerButton.setObjectName(_fromUtf8("mkfileexplorerButton"))
         self.gridLayout_6.addWidget(self.mkfileexplorerButton, 0, 3, 1, 1)
         self.mkdirexplorerButton = QtGui.QPushButton(self.explorerTab)
@@ -331,10 +396,10 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
 "            }"))
         self.mkdirexplorerButton.setText(_fromUtf8(""))
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/new_folder.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.mkdirexplorerButton.setIcon(icon7)
-        self.mkdirexplorerButton.setIconSize(QtCore.QSize(20, 20))
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/new_folder.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.mkdirexplorerButton.setIcon(icon9)
+        self.mkdirexplorerButton.setIconSize(QtCore.QSize(24, 24))
         self.mkdirexplorerButton.setObjectName(_fromUtf8("mkdirexplorerButton"))
         self.gridLayout_6.addWidget(self.mkdirexplorerButton, 0, 4, 1, 1)
         self.removeexplorerButton = QtGui.QPushButton(self.explorerTab)
@@ -355,10 +420,10 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
 "            }"))
         self.removeexplorerButton.setText(_fromUtf8(""))
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/remove.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.removeexplorerButton.setIcon(icon8)
-        self.removeexplorerButton.setIconSize(QtCore.QSize(20, 20))
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/remove.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.removeexplorerButton.setIcon(icon10)
+        self.removeexplorerButton.setIconSize(QtCore.QSize(24, 24))
         self.removeexplorerButton.setObjectName(_fromUtf8("removeexplorerButton"))
         self.gridLayout_6.addWidget(self.removeexplorerButton, 0, 5, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(220, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -464,9 +529,9 @@ class Ui_Form(object):
         self.explorerPathEntry.setText(_fromUtf8(""))
         self.explorerPathEntry.setObjectName(_fromUtf8("explorerPathEntry"))
         self.gridLayout_6.addWidget(self.explorerPathEntry, 1, 0, 1, 7)
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/file_manager.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.tabWidget.addTab(self.explorerTab, icon9, _fromUtf8(""))
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/file_manager.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.tabWidget.addTab(self.explorerTab, icon11, _fromUtf8(""))
         self.logTab = QtGui.QWidget()
         self.logTab.setObjectName(_fromUtf8("logTab"))
         self.gridLayout_3 = QtGui.QGridLayout(self.logTab)
@@ -498,9 +563,9 @@ class Ui_Form(object):
         self.statusConsoleText.setCursorWidth(5)
         self.statusConsoleText.setObjectName(_fromUtf8("statusConsoleText"))
         self.gridLayout_3.addWidget(self.statusConsoleText, 0, 0, 1, 1)
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/log.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.tabWidget.addTab(self.logTab, icon10, _fromUtf8(""))
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/log.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.tabWidget.addTab(self.logTab, icon12, _fromUtf8(""))
         self.clientsGroup = QtGui.QGroupBox(self.splitter_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -598,7 +663,7 @@ class Ui_Form(object):
         font.setWeight(50)
         self.serverconfigGroup.setFont(font)
         self.serverconfigGroup.setStyleSheet(_fromUtf8("background: #0F2D40;\n"
-"border: 1px solid #f07e01;"))
+"border: 1px solid #194759;"))
         self.serverconfigGroup.setTitle(_fromUtf8(""))
         self.serverconfigGroup.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.serverconfigGroup.setFlat(False)
@@ -694,9 +759,9 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #1c1d28, stop:1 #1c1d28);\n"
 "            color: grey;\n"
 "            }"))
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.runserverButton.setIcon(icon11)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.runserverButton.setIcon(icon13)
         self.runserverButton.setCheckable(True)
         self.runserverButton.setAutoExclusive(False)
         self.runserverButton.setObjectName(_fromUtf8("runserverButton"))
@@ -726,9 +791,9 @@ class Ui_Form(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #1c1d28, stop:1 #1c1d28);\n"
 "            color: grey;\n"
 "            }"))
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.stopserverButton.setIcon(icon12)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap(_fromUtf8(":/img/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.stopserverButton.setIcon(icon14)
         self.stopserverButton.setCheckable(True)
         self.stopserverButton.setChecked(True)
         self.stopserverButton.setAutoExclusive(False)
@@ -766,6 +831,14 @@ class Ui_Form(object):
         self.pluginsSearchEdit.setPlaceholderText(_translate("Form", "Search Plugin", None))
         self.remoteScriptLabel.setText(_translate("Form", "Remote Script", None))
         self.localScriptLabel.setText(_translate("Form", "Local Script", None))
+        self.pluginTemplateInsesrtButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Add Popup Dialog Template</span></p></body></html>", None))
+        self.executeButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Execute script</span></p></body></html>", None))
+        self.eraseButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Erase Scripts</span></p></body></html>", None))
+        self.refreshexplorerButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Refresh Directory</span></p></body></html>", None))
+        self.upexplorerButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Parrent Directory</span></p></body></html>", None))
+        self.mkfileexplorerButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Create New File</span></p></body></html>", None))
+        self.mkdirexplorerButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Create New Folder</span></p></body></html>", None))
+        self.removeexplorerButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Delete Content</span></p></body></html>", None))
         self.label_3.setText(_translate("Form", "FIle", None))
         self.label_2.setText(_translate("Form", "Directory", None))
         self.label_4.setText(_translate("Form", "Hidden Directory", None))
@@ -784,9 +857,13 @@ class Ui_Form(object):
         self.clientscountLabel.setText(_translate("Form", "0", None))
         self.ipaddressLabel.setText(_translate("Form", "Ip address", None))
         self.portLabel.setText(_translate("Form", "Port", None))
+        self.portLine.setToolTip(_translate("Form", "<html><head/><body><p>Client Port</p></body></html>", None))
         self.portLine.setText(_translate("Form", "4434", None))
+        self.ipaddressLine.setToolTip(_translate("Form", "<html><head/><body><p>Client IP Address</p></body></html>", None))
         self.ipaddressLine.setText(_translate("Form", "0.0.0.0", None))
+        self.runserverButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Start Listening For Servers</span></p></body></html>", None))
         self.runserverButton.setText(_translate("Form", "Start", None))
+        self.stopserverButton.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-weight:600;\">Stop Listening For Servers</span></p></body></html>", None))
         self.stopserverButton.setText(_translate("Form", "Stop", None))
         self.label.setText(_translate("Form", "Client Configuration", None))
         self.byLabel.setText(_translate("Form", "Coded by Uri Patton 2014", None))
