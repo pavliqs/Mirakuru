@@ -197,8 +197,8 @@ class MainDialog(QWidget, gui.Ui_Form):
     def pluginsMenu(self, point):
         self.pMenu = QMenu(self)
 
-        self.pMenu.addAction(QIcon('assets\\new_file.png'), 'Insert Plugin', self.pluginAdd)
-        self.pMenu.addAction(QIcon('assets\\new_folder.png'), 'Show in Explorer', self.pluginShowinExplorer)
+        self.pMenu.addAction(QIcon('assets\\plus.png'), 'Insert Plugin', self.pluginAdd)
+        self.pMenu.addAction(QIcon('assets\\explorer.png'), 'Show in Explorer', self.pluginShowinExplorer)
 
         # Show plugins right click menu
         self.pMenu.exec_(self.pluginsList.mapToGlobal(point))
