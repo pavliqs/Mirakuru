@@ -14,7 +14,7 @@ from xml.dom import minidom
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from libs import linesnum, gui, style, credits, console
+from libs import linesnum, gui, style, credits, console, script_templates
 
 def pluginSandbox(script, data):
     src = str(script)
@@ -72,6 +72,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.connect(self.pluginsSearchEdit, SIGNAL('textChanged(QString)'), self.pluginsUpdate)
         self.pluginsList.itemDoubleClicked.connect(self.pluginAdd)
         self.executeButton.clicked.connect(self.pluginRun)
+        self.eraseButton.clicked.connect(self.pluginErase)
+        self.pluginTemplateInsesrtButton.clicked.connect(self.pluginAddPopupTemplate)
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
@@ -103,8 +105,12 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Initializing explorer right click menu
         self.explorerTable.setContextMenuPolicy(Qt.CustomContextMenu)
         self.connect(self.explorerTable, SIGNAL('customContextMenuRequested(const QPoint&)'), self.explorerMenu)
+        # Initializing Servers lists right click menu
         self.socketsList.setContextMenuPolicy(Qt.CustomContextMenu)
         self.connect(self.socketsList, SIGNAL('customContextMenuRequested(const QPoint&)'), self.serversMenu)
+        # Initializing Plugins right click menu
+        self.pluginsList.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.connect(self.pluginsList, SIGNAL('customContextMenuRequested(const QPoint&)'), self.pluginsMenu)
 
         # Finish initializing
         self.statusok('Initialized', self.lineno())
@@ -175,6 +181,27 @@ class MainDialog(QWidget, gui.Ui_Form):
 
     def pluginSandbox(self, script, data):
         pluginSandbox(script, data)
+
+
+    def pluginErase(self):
+        self.llines.clearText()
+        self.rlines.clearText()
+
+    def pluginAddPopupTemplate(self):
+        self.llines.appendText(script_templates.popupDialogTemplate)
+
+    def pluginShowinExplorer(self):
+        plugin_name = str(self.pluginsList.currentItem().text())
+        os.system('explorer %s' % self.plugins_all[plugin_name])
+
+    def pluginsMenu(self, point):
+        self.pMenu = QMenu(self)
+
+        self.pMenu.addAction(QIcon('assets\\new_file.png'), 'Insert Plugin', self.pluginAdd)
+        self.pMenu.addAction(QIcon('assets\\new_folder.png'), 'Show in Explorer', self.pluginShowinExplorer)
+
+        # Show plugins right click menu
+        self.pMenu.exec_(self.pluginsList.mapToGlobal(point))
 
     # END: Plugins Functions
     
