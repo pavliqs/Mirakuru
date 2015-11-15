@@ -16,6 +16,12 @@ from PyQt4.QtCore import *
 
 from libs import linesnum, gui, style, credits, console
 
+def pluginSandbox(script, data):
+    src = str(script)
+    try:
+        exec src
+    except Exception as e:
+        print e
 
 class MainDialog(QWidget, gui.Ui_Form):
     # noinspection PyUnresolvedReferences
@@ -162,11 +168,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         #self.outputConsole.setHtml(data.split('</p>')[-1])
 
     def pluginSandbox(self, script, data):
-        src = str(script)
-        try:
-            exec src
-        except Exception as e:
-            print e
+        pluginSandbox(script, data)
 
     # END: Plugins Functions
     
