@@ -725,11 +725,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.sMenu = QMenu(self)
 
         self.sMenu.addAction(QIcon('assets\\connect.png'), 'Connect', self.connectSocket)
-        self.sMenu.addSeparator()
-        self.sMenu.addAction(QIcon('assets\\terminal.png'), 'Remote CMD', self.remoteCMD)
-        self.sMenu.addAction(QIcon('assets\\python.png'), 'Remote Python', self.remotePython)
-        self.sMenu.addAction(QIcon('assets\\file_manager.png'), 'Remote File Manager', self.remoteExplorer)
-        self.sMenu.addSeparator()
         self.sMenu.addAction(QIcon('assets\\stop.png'), 'Terminate', self.terminateSock)
 
 
@@ -740,18 +735,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.sMenu.exec_(self.socketsList.mapToGlobal(point))
         except AttributeError:
             pass
-
-    # Switch to CMD tab
-    def remoteCMD(self):
-        self.tabWidget.setCurrentIndex(0)
-
-    # Switch to Python tab
-    def remotePython(self):
-        self.tabWidget.setCurrentIndex(1)
-
-    # Switch to File Manager tab
-    def remoteExplorer(self):
-        self.tabWidget.setCurrentIndex(2)
     
     # START: messages functions
     # popup message
