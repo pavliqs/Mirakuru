@@ -74,6 +74,8 @@ class MainDialog(QWidget, gui.Ui_Form):
         self.executeButton.clicked.connect(self.pluginRun)
         self.eraseButton.clicked.connect(self.pluginErase)
         self.pluginTemplateInsesrtButton.clicked.connect(self.pluginAddPopupTemplate)
+        self.eraseLButton.clicked.connect(self.pluginLErase)
+        self.eraseRButton.clicked.connect(self.pluginRErase)
 
         self.statusok('Initializing signals', self.lineno())
         # Initializing signals
@@ -185,6 +187,12 @@ class MainDialog(QWidget, gui.Ui_Form):
 
     def pluginErase(self):
         self.llines.clearText()
+        self.rlines.clearText()
+
+    def pluginLErase(self):
+        self.llines.clearText()
+
+    def pluginRErase(self):
         self.rlines.clearText()
 
     def pluginAddPopupTemplate(self):
