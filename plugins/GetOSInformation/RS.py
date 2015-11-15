@@ -1,7 +1,7 @@
 import platform
 
 def append(string):
-	global data
+    global data
 	data += string + '\n'
 
 append('USER: ' + platform.node())
