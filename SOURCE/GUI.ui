@@ -140,7 +140,7 @@ QTabWidget::pane {
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="iconSize">
          <size>
@@ -224,9 +224,22 @@ padding-left: 5px;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:#194759;
+              <string notr="true">QListWidget#pluginsList {
+background-color:#194759;
 border: none;
-padding-left: 5px;</string>
+padding: 2px;
+}
+QListWidget#pluginsList:item:selected {
+background-color: #194759;
+height: 50px;
+color: #2ecc71;
+border: none;
+}
+QListWidget#pluginsList:item:hover {
+background-color: #0F2D40;
+height: 50px;
+color: #2ecc71;
+}</string>
              </property>
             </widget>
            </widget>

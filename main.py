@@ -24,7 +24,7 @@ def pluginSandbox(script, data):
         msgbox = QMessageBox()
         msgbox.setStyleSheet(style.msgboxStyle)
         msgbox.setWindowTitle('Local Script Error')
-        msgbox.setText(errormsg)
+        msgbox.setText(str(errormsg))
         msgbox.setIcon(QMessageBox.Critical)
         msgbox.addButton(QPushButton('OK'), QMessageBox.RejectRole)
         msgbox.exec_()
