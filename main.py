@@ -325,6 +325,10 @@ class MainDialog(QWidget, gui.Ui_Form):
                 # Save connected address
                 self.sockItems += [self.a]
 
+                self.Send('whatisyouros', sock=self.s)
+                print self.Receive(sock=self.s)
+
+
                 self.trayIcon.showMessage('New Connection', 'From {}'.format(self.a[0]), self.lineno())
 
                 # Add connection to servers list
@@ -441,23 +445,25 @@ class MainDialog(QWidget, gui.Ui_Form):
             QApplication.exit()
 
     # send socket    
-    def Send(self, cmd, end="[ENDOFMESSAGE]"):
+    def Send(self, cmd, end="[ENDOFMESSAGE]", sock=None):
+        Sock = sock if sock else self.socks[self.sockind]
         try:
             self.statusok('Send bytes', self.lineno())
             # Send bytes
-            self.socks[self.sockind].sendall((cmd + end).encode('utf-8'))
+            Sock.sendall((cmd + end).encode('utf-8'))
         except socket.error:
             self.statusno('Error', 'An existing connection was forcibly closed by the remote host')
 
 
     # recieve socket
-    def Receive(self, end="[ENDOFMESSAGE]"):
+    def Receive(self, end="[ENDOFMESSAGE]", sock=None):
+        Sock = sock if sock else self.socks[self.sockind]
         data = ""
 
         self.statusok('Recieve bytes', self.lineno())
         # Recieve bytes
         try:
-            l = self.socks[self.sockind].recv(1024)
+            l = Sock.recv(1024)
             while l:
                 time.sleep(0.1)
                 data += l
@@ -465,7 +471,8 @@ class MainDialog(QWidget, gui.Ui_Form):
                     break
                 else:
                     self.gui()
-                    l = self.socks[self.sockind].recv(1024)
+                    l = Sock.recv(1024)
+
         except socket.timeout:
             self.tabWidget.setEnabled(False)
             self.tabWidget.setCurrentIndex(0)
