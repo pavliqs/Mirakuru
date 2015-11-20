@@ -276,6 +276,7 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Initializing variables
         self.socks = []
         self.sockItems = []
+        self.socksOs = []
         self.unlockedSocks = []
         self.counter = 0
         self.socketsList.clear()
@@ -326,7 +327,9 @@ class MainDialog(QWidget, gui.Ui_Form):
                 self.sockItems += [self.a]
 
                 self.Send('whatisyouros', sock=self.s)
-                print self.Receive(sock=self.s)
+                os = self.Receive(sock=self.s)
+
+                self.socksOs += [os]
 
 
                 self.trayIcon.showMessage('New Connection', 'From {}'.format(self.a[0]), self.lineno())
@@ -334,13 +337,20 @@ class MainDialog(QWidget, gui.Ui_Form):
                 # Add connection to servers list
                 self.socketListUpdate()
 
+    def osIcon(self, os):
+        if os == "linux" or os == "linux2":
+            return 'linux'
+        elif os == "darwin":
+            return 'mac'
+        elif os == "win32":
+            return 'windows'
 
     def socketListUpdate(self):
         self.socketsList.clear()
-        for __sock__ in self.sockItems:
+        for ind, __sock__ in enumerate(self.sockItems):
             row = QListWidgetItem(' %s ' % __sock__[0])
             if __sock__ in self.unlockedSocks:
-                row.setIcon(QIcon(r'assets/unlocked.png'))
+                row.setIcon(QIcon(r'assets/%s.png' % self.osIcon(self.socksOs[ind])))
             else:
                 row.setIcon(QIcon(r'assets/tick.png'))
             self.socketsList.addItem(row)
