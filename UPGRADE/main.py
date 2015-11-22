@@ -40,6 +40,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.listenthread = Thread(target=self.listenConnections, args=(4434,))
         self.listenthread.setDaemon(True)
         self.listenthread.start()
+        self.statusLabel.setText('Listening')
+        self.statusLabel.setStyleSheet('color: lime; padding: 5px;')
 
 
     # listen for clients
@@ -95,6 +97,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.serversTable.setItem(index, self.index_of_socket, item)
             item = QTableWidgetItem('Windows 7 Service pack 3')
             self.serversTable.setItem(index, self.index_of_os, item)
+        # update servers online counter
+        self.onlineStatus.setText(str(len(self.socks)))
 
 
     # Stop Listen for Servers

@@ -16,124 +16,24 @@
   <property name="styleSheet">
    <string notr="true">background-color: #0F2D40;
 color: #2ecc71;
-border-radius: 3px;
 font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QWidget#centralwidget {
+background: url(:/icons/assets/bg.png) no-repeat center center fixed;
+background-color: #0F2D40;
+color: #2ecc71;
+border-radius: 3px;
+font: 10pt &quot;MS Shell Dlg 2&quot;;
+}</string>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="startListenButton">
-        <property name="minimumSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton#startListenButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#startListenButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="res.qrc">
-          <normaloff>:/icons/assets/start.png</normaloff>:/icons/assets/start.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>22</width>
-          <height>22</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="StopListenButton">
-        <property name="minimumSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton#StopListenButton {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            text-decoration: none;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
-            }
-
-QPushButton#StopListenButton:pressed {
-            background: #194759;
-            border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
-            }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="res.qrc">
-          <normaloff>:/icons/assets/stop.png</normaloff>:/icons/assets/stop.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
+    <item row="1" column="0" colspan="3">
      <widget class="QTabWidget" name="MainTabWidget">
       <property name="styleSheet">
        <string notr="true"> QTabBar::tab {
   background-color: #194759;
-  color: white;
   padding: 10px;
   padding-left: 15px;
   width: 70%;
@@ -146,7 +46,7 @@ QPushButton#StopListenButton:pressed {
  }
 
  QTabBar::pane {
-   background-color: rgb(28, 29, 33);
+   background-color: #194759;
  }
 
 QTabWidget::pane {
@@ -154,7 +54,7 @@ QTabWidget::pane {
 	margin: 0px,1px,1px,1px;
 	border: 1px ridge;
     border-color: #0F2D40;
-	background-color: rgb(28, 29, 33);
+	background-color: #194759;
 	background-position: center;
       }</string>
       </property>
@@ -176,6 +76,7 @@ QTabWidget::pane {
            <string notr="true">QHeaderView::section {
 	background-color: #194759;
     padding: 2px;
+    color: white;
 }
 
 QTableWidget#serversTable {
@@ -284,6 +185,205 @@ border-radius: 2px;</string>
        </layout>
       </widget>
      </widget>
+    </item>
+    <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QLabel" name="creditLabel">
+        <property name="styleSheet">
+         <string notr="true">padding: 5px;</string>
+        </property>
+        <property name="text">
+         <string>Coded By Uri Patton (c) 2015</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="versionLabel">
+        <property name="styleSheet">
+         <string notr="true">padding: 5px;</string>
+        </property>
+        <property name="text">
+         <string>Version 2.0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="clientStatusLabel">
+        <property name="styleSheet">
+         <string notr="true">padding: 5px;</string>
+        </property>
+        <property name="text">
+         <string>Client Status: </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="statusLabel">
+        <property name="styleSheet">
+         <string notr="true">padding: 5px;
+color: red;</string>
+        </property>
+        <property name="text">
+         <string>Not Listening</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="serversOnlineStatus">
+        <property name="styleSheet">
+         <string notr="true">padding: 5px;</string>
+        </property>
+        <property name="text">
+         <string>Servers Online: </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="onlineStatus">
+        <property name="styleSheet">
+         <string notr="true">padding: 5px;</string>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="startListenButton">
+        <property name="minimumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#startListenButton {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            text-decoration: none;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+            }
+
+QPushButton#startListenButton:pressed {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            }</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="res.qrc">
+          <normaloff>:/icons/assets/start.png</normaloff>:/icons/assets/start.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="StopListenButton">
+        <property name="minimumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#StopListenButton {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            text-decoration: none;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+            }
+
+QPushButton#StopListenButton:pressed {
+            background: #194759;
+            border: 1px outset;
+            border-color: #0F2D40;
+            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            }</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="res.qrc">
+          <normaloff>:/icons/assets/stop.png</normaloff>:/icons/assets/stop.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

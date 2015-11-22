@@ -4,5 +4,6 @@
     <file>../assets/server.png</file>
     <file>../assets/start.png</file>
     <file>../assets/stop.png</file>
+    <file>../assets/bg.png</file>
   </qresource>
 </RCC>
