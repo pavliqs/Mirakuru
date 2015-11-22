@@ -249,6 +249,11 @@ border: none;
           </column>
           <column>
            <property name="text">
+            <string>Protection</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
             <string>OS</string>
            </property>
           </column>

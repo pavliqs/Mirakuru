@@ -19,14 +19,16 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # sockets Timeout
         self.timeout = None
 
+        # unlocked servers bank
+        self.unlockedSockets = []
+
         # indexes for servers table
         self.index_of_ipAddress = 0
         self.index_of_location = 1
         self.index_of_socket = 2
         self.index_of_os = 3
-        self.index_for_table = 0
 
-
+        # Triggers
         self.startListenButton.clicked.connect(self.startListen)
 
 
@@ -77,6 +79,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 self.socks[socketIndex]['sock'] = self.sock
                 self.socks[socketIndex]['ip_address'] = self.address[0]
                 self.socks[socketIndex]['socket'] = self.address[1]
+                self.socks[socketIndex]['is_protected'] = True
 
                 self.updateServersTable()
 
@@ -92,7 +95,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.serversTable.setItem(index, self.index_of_socket, item)
             item = QTableWidgetItem('Windows 7 Service pack 3')
             self.serversTable.setItem(index, self.index_of_os, item)
-        print 'done'
 
 
     # Stop Listen for Servers
