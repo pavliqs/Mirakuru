@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>../assets/log.png</file>
+    <file>../assets/server.png</file>
+    <file>../assets/start.png</file>
+    <file>../assets/stop.png</file>
+  </qresource>
+</RCC>
