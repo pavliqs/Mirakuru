@@ -178,7 +178,7 @@ QTabWidget::pane {
     padding: 2px;
 }
 
-QTableWidget#explorerTable {
+QTableWidget#serversTable {
 	background-position: center;
     border: 1px outset;
     border-color: #0F2D40;
@@ -186,12 +186,30 @@ QTableWidget#explorerTable {
     background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
 }
 
-QTableWidget#explorerTable:item:selected {
+QTableWidget#serversTable:item:selected {
 background-color: #194759;
 height: 50px;
 color: #2ecc71;
 border: none;
 }</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="dragDropOverwriteMode">
+           <bool>false</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="textElideMode">
+           <enum>Qt::ElideMiddle</enum>
           </property>
           <property name="showGrid">
            <bool>false</bool>
@@ -200,16 +218,19 @@ border: none;
            <bool>true</bool>
           </property>
           <attribute name="horizontalHeaderCascadingSectionResizes">
-           <bool>false</bool>
+           <bool>true</bool>
           </attribute>
           <attribute name="horizontalHeaderDefaultSectionSize">
            <number>100</number>
           </attribute>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-           <bool>true</bool>
+           <bool>false</bool>
           </attribute>
           <attribute name="horizontalHeaderStretchLastSection">
            <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
           </attribute>
           <column>
            <property name="text">
@@ -243,6 +264,19 @@ border: none;
        <attribute name="title">
         <string>Logs</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QTextEdit" name="textEdit">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
+background-position: center;
+border: 1px ridge;
+border-color: #0F2D40;
+border-radius: 2px;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -290,7 +324,7 @@ border: none;
     <addaction name="actionStartListen_for_connections"/>
     <addaction name="actionStopListen_for_connections"/>
     <addaction name="separator"/>
-    <addaction name="actionClient_Configuration_2"/>
+    <addaction name="actionClient_Configuration"/>
    </widget>
    <addaction name="menuClient"/>
   </widget>
@@ -305,7 +339,7 @@ border: none;
     <string>Stop Listening</string>
    </property>
   </action>
-  <action name="actionClient_Configuration_2">
+  <action name="actionClient_Configuration">
    <property name="text">
     <string>Client Configuration</string>
    </property>
