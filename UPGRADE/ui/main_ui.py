@@ -160,7 +160,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.clientStatusLabel)
         self.statusLabel = QtGui.QLabel(self.centralwidget)
         self.statusLabel.setStyleSheet(_fromUtf8("padding: 5px;\n"
-"color: red;"))
+"color: #e74c3c;"))
         self.statusLabel.setObjectName(_fromUtf8("statusLabel"))
         self.horizontalLayout_2.addWidget(self.statusLabel)
         self.gridLayout.addLayout(self.horizontalLayout_2, 2, 1, 1, 1)

@@ -47,7 +47,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # initialize servers table columns width
         self.serversTable.setColumnWidth(self.index_of_ipAddress, 150)
         self.serversTable.setColumnWidth(self.index_of_socket, 60)
-        self.serversTable.setColumnWidth(self.index_of_lock, 80)
+        self.serversTable.setColumnWidth(self.index_of_lock, 90)
         self.serversTable.setColumnWidth(self.index_of_os, 200)
         self.serversTable.setColumnWidth(self.index_of_user, 150)
         # servers table double click trigger
@@ -170,12 +170,11 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             lock_status = 'LOCKED' if self.socks[obj]['protection'] == 'False' else 'UNLOCKED'
             item = QTableWidgetItem(lock_status)
             if lock_status == 'LOCKED':
-                item.setTextColor(QColor('red'))
+                item.setTextColor(QColor('#e74c3c'))
                 item.setIcon(QIcon(os.path.join(self.assets, 'lock.png')))
             else:
                 item.setTextColor(QColor('lime'))
                 item.setIcon(QIcon(os.path.join(self.assets, 'unlock.png')))
-            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             self.serversTable.setItem(index, self.index_of_lock, item)
 
             # add os version
@@ -190,6 +189,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             # add active windows title
             item = QTableWidgetItem(self.socks[obj]['activewindowtitle'])
             item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            item.setTextColor(QColor('#f39c12'))
             self.serversTable.setItem(index, self.index_of_activeWindowTitle, item)
 
         # update servers online counter

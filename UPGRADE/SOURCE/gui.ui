@@ -246,7 +246,7 @@ border-radius: 2px;</string>
        <widget class="QLabel" name="statusLabel">
         <property name="styleSheet">
          <string notr="true">padding: 5px;
-color: red;</string>
+color: #e74c3c;</string>
         </property>
         <property name="text">
          <string>Not Listening</string>
