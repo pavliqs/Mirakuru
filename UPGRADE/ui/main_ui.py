@@ -82,6 +82,7 @@ class Ui_MainWindow(object):
 "    background-position: center;\n"
 "    border: 1px outset;\n"
 "    padding: 5px;\n"
+"    outline: 0;\n"
 "    border-color: #0F2D40;\n"
 "    border-radius: 2px;\n"
 "    background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);\n"
@@ -89,9 +90,6 @@ class Ui_MainWindow(object):
 "\n"
 "QTableWidget#serversTable:item:selected {\n"
 "background-color: #194759;\n"
-"height: 50px;\n"
-"color: #2ecc71;\n"
-"border: none;\n"
 "}"))
         self.serversTable.setFrameShadow(QtGui.QFrame.Plain)
         self.serversTable.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
@@ -101,7 +99,7 @@ class Ui_MainWindow(object):
         self.serversTable.setTextElideMode(QtCore.Qt.ElideMiddle)
         self.serversTable.setShowGrid(False)
         self.serversTable.setObjectName(_fromUtf8("serversTable"))
-        self.serversTable.setColumnCount(5)
+        self.serversTable.setColumnCount(6)
         self.serversTable.setRowCount(0)
         item = QtGui.QTableWidgetItem()
         self.serversTable.setHorizontalHeaderItem(0, item)
@@ -113,6 +111,8 @@ class Ui_MainWindow(object):
         self.serversTable.setHorizontalHeaderItem(3, item)
         item = QtGui.QTableWidgetItem()
         self.serversTable.setHorizontalHeaderItem(4, item)
+        item = QtGui.QTableWidgetItem()
+        self.serversTable.setHorizontalHeaderItem(5, item)
         self.serversTable.horizontalHeader().setCascadingSectionResizes(True)
         self.serversTable.horizontalHeader().setDefaultSectionSize(100)
         self.serversTable.horizontalHeader().setSortIndicatorShown(False)
@@ -293,6 +293,8 @@ class Ui_MainWindow(object):
         item = self.serversTable.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "OS", None))
         item = self.serversTable.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "User", None))
+        item = self.serversTable.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "Active Window Title", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.serversTab), _translate("MainWindow", "Servers", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.logsTab), _translate("MainWindow", "Logs", None))

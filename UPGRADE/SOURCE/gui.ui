@@ -83,6 +83,7 @@ QTableWidget#serversTable {
 	background-position: center;
     border: 1px outset;
     padding: 5px;
+    outline: 0;
     border-color: #0F2D40;
     border-radius: 2px;
     background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
@@ -90,9 +91,6 @@ QTableWidget#serversTable {
 
 QTableWidget#serversTable:item:selected {
 background-color: #194759;
-height: 50px;
-color: #2ecc71;
-border: none;
 }</string>
           </property>
           <property name="frameShadow">
@@ -152,6 +150,11 @@ border: none;
           <column>
            <property name="text">
             <string>OS</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>User</string>
            </property>
           </column>
           <column>
