@@ -217,20 +217,16 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         while 1:
             if self.serversTable.item(self.serversTable.currentRow(), self.index_of_lock).text() == 'LOCKED':
                 sockind = int(self.serversTable.item(self.serversTable.currentRow(), self.index_of_socket).text())
-                dlg = QInputDialog(self)
-                dlg.setInputMode(QInputDialog.TextInput)
-                dlg.setWindowTitle('Password Protection')
-                dlg.setLabelText('Enter Password: ')
-                dlg.setOkButtonText('Login')
-                dlg.exec_()
-
-                if str(dlg.textValue()) != '':
+                text, ok = QInputDialog.getText(self, 'Password Protection', 'Enter Password: ')
+                if ok:
                     _hash = hashlib.md5()
-                    _hash.update(str(dlg.textValue()))
+                    _hash.update(str(text))
                     self.Send(self.socks[sockind]['sock'], _hash.hexdigest())
                     answer = self.Receive(self.socks[sockind]['sock'])
                     if 'iamactive' in answer:
                         break
+                else:
+                    break
             else:
                 break
 
