@@ -49,9 +49,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.serversTable.setColumnWidth(self.index_of_lock, 80)
         self.serversTable.setColumnWidth(self.index_of_os, 200)
         self.serversTable.setColumnWidth(self.index_of_user, 150)
-        # fix cursor after table update
-        self.cur_server_cursor = 0
-        self.serversTable.clicked.connect(self.saveCursorAfterTableUpdate)
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
@@ -128,10 +125,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 except:
                     continue
 
-    # Save cursor after update
-    def saveCursorAfterTableUpdate(self):
-        self.cur_server_cursor = self.serversTable.currentRow()
-
     # Servers Live Update
     def checkServers(self):
         while self.acceptthreadState:
@@ -193,9 +186,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
-
-        # set cursor after table update
-        self.serversTable.setSelectionBehavior(self.cur_server_cursor)
 
 
     def osIcon(self, os):
