@@ -176,9 +176,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
             self.serversTable.setItem(index, self.index_of_activeWindowTitle, item)
 
-        # adjust table
-        #header = self.serversTable.horizontalHeader()
-        #header.setStretchLastSection(True)
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
 
