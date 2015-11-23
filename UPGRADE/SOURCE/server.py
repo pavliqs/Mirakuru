@@ -119,8 +119,7 @@ def fromAutostart():
 
                     while active:
                         data = Receive(s)
-                        if data == "terminate":
-                            Send(s, "quitted")
+                        if data == "lock":
                             active = False
                             break
                         if data == 'whoareyou':

