@@ -2,6 +2,8 @@
 
 import sys
 import socket
+import pygeoip
+import os
 from threading import Thread
 
 from PyQt4.QtGui import *
@@ -21,6 +23,11 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # unlocked servers bank
         self.unlockedSockets = []
+
+        # initial geo ip database
+        self.geoip = pygeoip.GeoIP('assets\\GeoIP.dat')
+        # initial flags directory
+        self.flags = 'assets\\flags\\'
 
         # indexes for servers table
         self.index_of_ipAddress = 0
@@ -89,7 +96,9 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
     def updateServersTable(self):
         self.serversTable.setRowCount(len(self.socks))
         for index, obj in enumerate(self.socks):
-            item = QTableWidgetItem(self.socks[obj]['ip_address'])
+            ip_address = self.socks[obj]['ip_address']
+            item = QTableWidgetItem(ip_address)
+            item.setIcon(QIcon(self.getIpLocation(ip_address)))
             self.serversTable.setItem(index, self.index_of_ipAddress, item)
             item = QTableWidgetItem('Georgia')
             self.serversTable.setItem(index, self.index_of_location, item)
@@ -100,6 +109,16 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
 
+
+    def getIpLocation(self, ip):
+        try:
+            country_flag = os.path.join(self.flags, self.geoip.country_code_by_addr(ip).lower() + '.png')
+            if os.path.exists(country_flag):
+                return country_flag
+            else:
+                return os.path.join(self.flags, 'blank.png')
+        except:
+            return os.path.join(self.flags, 'blank.png')
 
     # Stop Listen for Servers
     def stopListen(self):
