@@ -171,8 +171,10 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             item = QTableWidgetItem(lock_status)
             if lock_status == 'LOCKED':
                 item.setTextColor(QColor('red'))
+                item.setIcon(QIcon(os.path.join(self.assets, 'lock.png')))
             else:
                 item.setTextColor(QColor('lime'))
+                item.setIcon(QIcon(os.path.join(self.assets, 'unlock.png')))
             item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             self.serversTable.setItem(index, self.index_of_lock, item)
 
@@ -231,6 +233,10 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 break
 
 
+    def lockServer(self):
+        sockind = int(self.serversTable.item(self.serversTable.currentRow(), self.index_of_socket).text())
+        self.Send(self.socks[sockind]['sock'], 'lock')
+
 
     # Stop Listen for Servers
     def stopListen(self):
@@ -243,9 +249,9 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
 
         else:
-            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'lock.png')), 'Lock Server', self.unlockServer)
+            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'lock.png')), 'Lock Server', self.lockServer)
             self.eMenu.addSeparator()
-            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.unlockServer)
+            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
         self.eMenu.exec_(self.serversTable.mapToGlobal(point))
 
     # send socket
