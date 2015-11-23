@@ -81,6 +81,7 @@ class Ui_MainWindow(object):
 "QTableWidget#serversTable {\n"
 "    background-position: center;\n"
 "    border: 1px outset;\n"
+"    padding: 5px;\n"
 "    border-color: #0F2D40;\n"
 "    border-radius: 2px;\n"
 "    background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);\n"
@@ -199,6 +200,7 @@ class Ui_MainWindow(object):
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.startListenButton.setIcon(icon2)
         self.startListenButton.setIconSize(QtCore.QSize(22, 22))
+        self.startListenButton.setCheckable(True)
         self.startListenButton.setObjectName(_fromUtf8("startListenButton"))
         self.horizontalLayout.addWidget(self.startListenButton)
         self.StopListenButton = QtGui.QPushButton(self.centralwidget)
@@ -223,6 +225,7 @@ class Ui_MainWindow(object):
         icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.StopListenButton.setIcon(icon3)
         self.StopListenButton.setIconSize(QtCore.QSize(20, 20))
+        self.StopListenButton.setCheckable(True)
         self.StopListenButton.setObjectName(_fromUtf8("StopListenButton"))
         self.horizontalLayout.addWidget(self.StopListenButton)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -284,13 +287,13 @@ class Ui_MainWindow(object):
         item = self.serversTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Ip Address", None))
         item = self.serversTable.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Location", None))
-        item = self.serversTable.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Socket", None))
-        item = self.serversTable.horizontalHeaderItem(3)
+        item = self.serversTable.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Protection", None))
-        item = self.serversTable.horizontalHeaderItem(4)
+        item = self.serversTable.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "OS", None))
+        item = self.serversTable.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "Active Window Title", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.serversTab), _translate("MainWindow", "Servers", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.logsTab), _translate("MainWindow", "Logs", None))
         self.creditLabel.setText(_translate("MainWindow", "Coded By Uri Patton (c) 2015", None))

