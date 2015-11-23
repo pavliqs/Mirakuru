@@ -7,6 +7,7 @@ import os
 import time
 import ast
 import threading
+import hashlib
 from threading import Thread
 
 from PyQt4.QtGui import *
@@ -49,6 +50,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.serversTable.setColumnWidth(self.index_of_lock, 80)
         self.serversTable.setColumnWidth(self.index_of_os, 200)
         self.serversTable.setColumnWidth(self.index_of_user, 150)
+        # servers table double click trigger
+        self.serversTable.doubleClicked.connect(self.unlockServer)
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
@@ -205,6 +208,30 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 return os.path.join(self.flags, 'blank.png')
         except:
             return os.path.join(self.flags, 'blank.png')
+
+
+    def unlockServer(self):
+        while 1:
+            if self.serversTable.item(self.serversTable.currentRow(), self.index_of_lock).text() == 'LOCKED':
+                sockind = int(self.serversTable.item(self.serversTable.currentRow(), self.index_of_socket).text())
+                dlg = QInputDialog(self)
+                dlg.setInputMode(QInputDialog.TextInput)
+                dlg.setWindowTitle('Password Protection')
+                dlg.setLabelText('Enter Password: ')
+                dlg.setOkButtonText('Login')
+                dlg.exec_()
+
+                if str(dlg.textValue()) != '':
+                    _hash = hashlib.md5()
+                    _hash.update(str(dlg.textValue()))
+                    self.Send(self.socks[sockind]['sock'], _hash.hexdigest())
+                    answer = self.Receive(self.socks[sockind]['sock'])
+                    if 'iamactive' in answer:
+                        break
+            else:
+                break
+
+
 
     # Stop Listen for Servers
     def stopListen(self):
