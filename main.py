@@ -113,7 +113,6 @@ class MainDialog(QWidget, gui.Ui_Form):
         # Initializing Plugins right click menu
         self.pluginsList.setContextMenuPolicy(Qt.CustomContextMenu)
         self.connect(self.pluginsList, SIGNAL('customContextMenuRequested(const QPoint&)'), self.pluginsMenu)
-
         # Finish initializing
         self.statusok('Initialized', self.lineno())
 
@@ -184,7 +183,6 @@ class MainDialog(QWidget, gui.Ui_Form):
     def pluginSandbox(self, script, data):
         pluginSandbox(script, data)
 
-
     def pluginErase(self):
         self.llines.clearText()
         self.rlines.clearText()
@@ -231,7 +229,6 @@ class MainDialog(QWidget, gui.Ui_Form):
             self.stopserverButton.setChecked(False)
             self.statusok('Start scan sockets', self.lineno())
             self.scanSockets(self.port)
-
 
     # stop listening for clients
     def scannerStop(self):
