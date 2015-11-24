@@ -31,6 +31,9 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # unlocked servers bank
         self.unlockedSockets = []
 
+        # listen status
+        self.acceptthreadState = False
+
         # initial geo ip database
         self.geoip = pygeoip.GeoIP('assets\\GeoIP.dat')
         # initial assets directories
@@ -66,15 +69,18 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
     # Start Listen for Servers
     def startListen(self):
         # Initializing variables
-        self.socks = {}
-        self.acceptthreadState = True
-        self.listenthread = Thread(target=self.listenConnections, args=(4434,))
-        self.listenthread.setDaemon(True)
-        self.listenthread.start()
-        self.statusLabel.setText('Listening')
-        self.statusLabel.setStyleSheet('color: lime; padding: 5px;')
-        self.startListenButton.setChecked(True)
-        self.stopListenButton.setChecked(False)
+        if not self.acceptthreadState:
+            self.socks = {}
+            self.acceptthreadState = True
+            self.listenthread = Thread(target=self.listenConnections, args=(4434,))
+            self.listenthread.setDaemon(True)
+            self.listenthread.start()
+            self.statusLabel.setText('Listening')
+            self.statusLabel.setStyleSheet('color: lime; padding: 5px;')
+            self.startListenButton.setChecked(True)
+            self.stopListenButton.setChecked(False)
+        else:
+            self.startListenButton.setChecked(True)
 
 
     # listen for clients
@@ -250,18 +256,22 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
     # Stop Listen for Servers
     def stopListen(self):
-        self.acceptthreadState = False
-        self.serversTable.clearContents()
-        self.startListenButton.setChecked(False)
-        self.stopListenButton.setChecked(True)
-        self.statusLabel.setText('Not Listening')
-        self.statusLabel.setStyleSheet('color: #e74c3c; padding: 5px;')
-        try:
-            self.shd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.shd.connect(('127.0.0.1', 4434))
-            self.shd.close()
-        except:
-            pass
+        if self.acceptthreadState:
+            self.acceptthreadState = False
+            self.serversTable.clearContents()
+            self.startListenButton.setChecked(False)
+            self.stopListenButton.setChecked(True)
+            self.statusLabel.setText('Not Listening')
+            self.statusLabel.setStyleSheet('color: #e74c3c; padding: 5px;')
+            self.onlineStatus.setText('0')
+            try:
+                self.shd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.shd.connect(('127.0.0.1', 4434))
+                self.shd.close()
+            except:
+                pass
+        else:
+            self.stopListenButton.setChecked(True)
 
     def serversMenu(self, point):
         self.eMenu = QMenu(self)
