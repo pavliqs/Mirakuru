@@ -99,7 +99,7 @@ class Ui_MainWindow(object):
         self.serversTable.setTextElideMode(QtCore.Qt.ElideMiddle)
         self.serversTable.setShowGrid(False)
         self.serversTable.setObjectName(_fromUtf8("serversTable"))
-        self.serversTable.setColumnCount(6)
+        self.serversTable.setColumnCount(7)
         self.serversTable.setRowCount(0)
         item = QtGui.QTableWidgetItem()
         self.serversTable.setHorizontalHeaderItem(0, item)
@@ -113,6 +113,8 @@ class Ui_MainWindow(object):
         self.serversTable.setHorizontalHeaderItem(4, item)
         item = QtGui.QTableWidgetItem()
         self.serversTable.setHorizontalHeaderItem(5, item)
+        item = QtGui.QTableWidgetItem()
+        self.serversTable.setHorizontalHeaderItem(6, item)
         self.serversTable.horizontalHeader().setCascadingSectionResizes(True)
         self.serversTable.horizontalHeader().setDefaultSectionSize(100)
         self.serversTable.horizontalHeader().setSortIndicatorShown(False)
@@ -179,8 +181,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.startListenButton = QtGui.QPushButton(self.centralwidget)
-        self.startListenButton.setMinimumSize(QtCore.QSize(32, 32))
-        self.startListenButton.setMaximumSize(QtCore.QSize(32, 32))
+        self.startListenButton.setMinimumSize(QtCore.QSize(70, 32))
+        self.startListenButton.setMaximumSize(QtCore.QSize(70, 32))
         self.startListenButton.setStyleSheet(_fromUtf8("QPushButton#startListenButton {\n"
 "            background: #194759;\n"
 "            border: 1px outset;\n"
@@ -189,13 +191,12 @@ class Ui_MainWindow(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
 "            }\n"
 "\n"
-"QPushButton#startListenButton:pressed {\n"
-"            background: #194759;\n"
+"QPushButton#startListenButton:checked {\n"
+"            background: #0B202E;\n"
+"            color: grey;\n"
 "            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
+"            border-color: #0B202E;\n"
 "            }"))
-        self.startListenButton.setText(_fromUtf8(""))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.startListenButton.setIcon(icon2)
@@ -203,10 +204,10 @@ class Ui_MainWindow(object):
         self.startListenButton.setCheckable(True)
         self.startListenButton.setObjectName(_fromUtf8("startListenButton"))
         self.horizontalLayout.addWidget(self.startListenButton)
-        self.StopListenButton = QtGui.QPushButton(self.centralwidget)
-        self.StopListenButton.setMinimumSize(QtCore.QSize(32, 32))
-        self.StopListenButton.setMaximumSize(QtCore.QSize(32, 32))
-        self.StopListenButton.setStyleSheet(_fromUtf8("QPushButton#StopListenButton {\n"
+        self.stopListenButton = QtGui.QPushButton(self.centralwidget)
+        self.stopListenButton.setMinimumSize(QtCore.QSize(70, 32))
+        self.stopListenButton.setMaximumSize(QtCore.QSize(70, 32))
+        self.stopListenButton.setStyleSheet(_fromUtf8("QPushButton#stopListenButton {\n"
 "            background: #194759;\n"
 "            border: 1px outset;\n"
 "            border-color: #0F2D40;\n"
@@ -214,20 +215,20 @@ class Ui_MainWindow(object):
 "            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
 "            }\n"
 "\n"
-"QPushButton#StopListenButton:pressed {\n"
-"            background: #194759;\n"
+"QPushButton#stopListenButton:checked {\n"
+"            background: #0B202E;\n"
+"            color: grey;\n"
 "            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);\n"
+"            border-color: #0B202E;\n"
 "            }"))
-        self.StopListenButton.setText(_fromUtf8(""))
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.StopListenButton.setIcon(icon3)
-        self.StopListenButton.setIconSize(QtCore.QSize(20, 20))
-        self.StopListenButton.setCheckable(True)
-        self.StopListenButton.setObjectName(_fromUtf8("StopListenButton"))
-        self.horizontalLayout.addWidget(self.StopListenButton)
+        self.stopListenButton.setIcon(icon3)
+        self.stopListenButton.setIconSize(QtCore.QSize(20, 20))
+        self.stopListenButton.setCheckable(True)
+        self.stopListenButton.setChecked(True)
+        self.stopListenButton.setObjectName(_fromUtf8("stopListenButton"))
+        self.horizontalLayout.addWidget(self.stopListenButton)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 3)
@@ -295,6 +296,8 @@ class Ui_MainWindow(object):
         item = self.serversTable.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "User", None))
         item = self.serversTable.horizontalHeaderItem(5)
+        item.setText(_translate("MainWindow", "Server Version", None))
+        item = self.serversTable.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Active Window Title", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.serversTab), _translate("MainWindow", "Servers", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.logsTab), _translate("MainWindow", "Logs", None))
@@ -304,6 +307,8 @@ class Ui_MainWindow(object):
         self.statusLabel.setText(_translate("MainWindow", "Not Listening", None))
         self.serversOnlineStatus.setText(_translate("MainWindow", "Servers Online: ", None))
         self.onlineStatus.setText(_translate("MainWindow", "0", None))
+        self.startListenButton.setText(_translate("MainWindow", "Start", None))
+        self.stopListenButton.setText(_translate("MainWindow", "Stop", None))
         self.menuClient.setTitle(_translate("MainWindow", "Client", None))
         self.actionStartListen_for_connections.setText(_translate("MainWindow", "Start Listening", None))
         self.actionStopListen_for_connections.setText(_translate("MainWindow", "Stop Listening", None))

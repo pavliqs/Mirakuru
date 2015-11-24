@@ -159,6 +159,11 @@ background-color: #194759;
           </column>
           <column>
            <property name="text">
+            <string>Server Version</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
             <string>Active Window Title</string>
            </property>
           </column>
@@ -288,13 +293,13 @@ color: #e74c3c;</string>
        <widget class="QPushButton" name="startListenButton">
         <property name="minimumSize">
          <size>
-          <width>32</width>
+          <width>70</width>
           <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>32</width>
+          <width>70</width>
           <height>32</height>
          </size>
         </property>
@@ -307,15 +312,15 @@ color: #e74c3c;</string>
             background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
             }
 
-QPushButton#startListenButton:pressed {
-            background: #194759;
+QPushButton#startListenButton:checked {
+            background: #0B202E;
+            color: grey;
             border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            border-color: #0B202E;
             }</string>
         </property>
         <property name="text">
-         <string/>
+         <string>Start</string>
         </property>
         <property name="icon">
          <iconset resource="res.qrc">
@@ -333,21 +338,21 @@ QPushButton#startListenButton:pressed {
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="StopListenButton">
+       <widget class="QPushButton" name="stopListenButton">
         <property name="minimumSize">
          <size>
-          <width>32</width>
+          <width>70</width>
           <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>32</width>
+          <width>70</width>
           <height>32</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton#StopListenButton {
+         <string notr="true">QPushButton#stopListenButton {
             background: #194759;
             border: 1px outset;
             border-color: #0F2D40;
@@ -355,15 +360,15 @@ QPushButton#startListenButton:pressed {
             background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
             }
 
-QPushButton#StopListenButton:pressed {
-            background: #194759;
+QPushButton#stopListenButton:checked {
+            background: #0B202E;
+            color: grey;
             border: 1px outset;
-            border-color: #0F2D40;
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #112F3B, stop:1 #1B4C5E);
+            border-color: #0B202E;
             }</string>
         </property>
         <property name="text">
-         <string/>
+         <string>Stop</string>
         </property>
         <property name="icon">
          <iconset resource="res.qrc">
@@ -376,6 +381,9 @@ QPushButton#StopListenButton:pressed {
          </size>
         </property>
         <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
          <bool>true</bool>
         </property>
        </widget>
