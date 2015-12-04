@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>../assets/settings.png</file>
     <file>../assets/stop.png</file>
     <file>../assets/log.png</file>
     <file>../assets/server.png</file>

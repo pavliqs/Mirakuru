@@ -38,8 +38,94 @@ class Ui_MainWindow(object):
 "font: 10pt \"MS Shell Dlg 2\";\n"
 "}"))
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.gridLayout = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout_5 = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout_5.setObjectName(_fromUtf8("gridLayout_5"))
+        self.clientButtonsGroup = QtGui.QGroupBox(self.centralwidget)
+        self.clientButtonsGroup.setStyleSheet(_fromUtf8("border: 1px solid #061014;\n"
+"background-color: #194759;"))
+        self.clientButtonsGroup.setTitle(_fromUtf8(""))
+        self.clientButtonsGroup.setCheckable(False)
+        self.clientButtonsGroup.setObjectName(_fromUtf8("clientButtonsGroup"))
+        self.gridLayout = QtGui.QGridLayout(self.clientButtonsGroup)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.startListenButton = QtGui.QPushButton(self.clientButtonsGroup)
+        self.startListenButton.setMinimumSize(QtCore.QSize(70, 32))
+        self.startListenButton.setMaximumSize(QtCore.QSize(70, 32))
+        self.startListenButton.setStyleSheet(_fromUtf8("QPushButton#startListenButton {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            border-color: #0F2D40;\n"
+"            text-decoration: none;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
+"            }\n"
+"\n"
+"QPushButton#startListenButton:checked {\n"
+"            background: #0B202E;\n"
+"            color: grey;\n"
+"            border: 1px outset;\n"
+"            border-color: #0B202E;\n"
+"            }"))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.startListenButton.setIcon(icon)
+        self.startListenButton.setIconSize(QtCore.QSize(22, 22))
+        self.startListenButton.setCheckable(True)
+        self.startListenButton.setObjectName(_fromUtf8("startListenButton"))
+        self.horizontalLayout.addWidget(self.startListenButton)
+        self.stopListenButton = QtGui.QPushButton(self.clientButtonsGroup)
+        self.stopListenButton.setMinimumSize(QtCore.QSize(70, 32))
+        self.stopListenButton.setMaximumSize(QtCore.QSize(70, 32))
+        self.stopListenButton.setStyleSheet(_fromUtf8("QPushButton#stopListenButton {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            border-color: #0F2D40;\n"
+"            text-decoration: none;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
+"            }\n"
+"\n"
+"QPushButton#stopListenButton:checked {\n"
+"            background: #0B202E;\n"
+"            color: grey;\n"
+"            border: 1px outset;\n"
+"            border-color: #0B202E;\n"
+"            }"))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.stopListenButton.setIcon(icon1)
+        self.stopListenButton.setIconSize(QtCore.QSize(20, 20))
+        self.stopListenButton.setCheckable(True)
+        self.stopListenButton.setChecked(True)
+        self.stopListenButton.setObjectName(_fromUtf8("stopListenButton"))
+        self.horizontalLayout.addWidget(self.stopListenButton)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.clientSettingsButton = QtGui.QPushButton(self.clientButtonsGroup)
+        self.clientSettingsButton.setMinimumSize(QtCore.QSize(120, 32))
+        self.clientSettingsButton.setMaximumSize(QtCore.QSize(120, 32))
+        self.clientSettingsButton.setStyleSheet(_fromUtf8("QPushButton#clientSettingsButton {\n"
+"            background: #194759;\n"
+"            border: 1px outset;\n"
+"            border-color: #0F2D40;\n"
+"            text-decoration: none;\n"
+"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
+"            }\n"
+"\n"
+"QPushButton#clientSettingsButton:pressed {\n"
+"            background: #0B202E;\n"
+"            color: grey;\n"
+"            border: 1px outset;\n"
+"            border-color: #0B202E;\n"
+"            }"))
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/settings.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.clientSettingsButton.setIcon(icon2)
+        self.clientSettingsButton.setIconSize(QtCore.QSize(20, 20))
+        self.clientSettingsButton.setObjectName(_fromUtf8("clientSettingsButton"))
+        self.horizontalLayout.addWidget(self.clientSettingsButton)
+        self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.clientButtonsGroup, 0, 0, 1, 1)
         self.MainTabWidget = QtGui.QTabWidget(self.centralwidget)
         self.MainTabWidget.setStyleSheet(_fromUtf8(" QTabBar::tab {\n"
 "  background-color: #194759;\n"
@@ -122,9 +208,9 @@ class Ui_MainWindow(object):
         self.serversTable.horizontalHeader().setStretchLastSection(True)
         self.serversTable.verticalHeader().setVisible(False)
         self.gridLayout_2.addWidget(self.serversTable, 0, 0, 1, 1)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/server.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MainTabWidget.addTab(self.serversTab, icon, _fromUtf8(""))
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/server.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MainTabWidget.addTab(self.serversTab, icon3, _fromUtf8(""))
         self.logsTab = QtGui.QWidget()
         self.logsTab.setObjectName(_fromUtf8("logsTab"))
         self.gridLayout_3 = QtGui.QGridLayout(self.logsTab)
@@ -137,102 +223,45 @@ class Ui_MainWindow(object):
 "border-radius: 2px;"))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.gridLayout_3.addWidget(self.textEdit, 0, 0, 1, 1)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/log.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.MainTabWidget.addTab(self.logsTab, icon1, _fromUtf8(""))
-        self.gridLayout.addWidget(self.MainTabWidget, 1, 0, 1, 3)
-        self.horizontalLayout_5 = QtGui.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
-        self.creditLabel = QtGui.QLabel(self.centralwidget)
-        self.creditLabel.setStyleSheet(_fromUtf8("padding: 5px;"))
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/log.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.MainTabWidget.addTab(self.logsTab, icon4, _fromUtf8(""))
+        self.gridLayout_5.addWidget(self.MainTabWidget, 1, 0, 1, 1)
+        self.statusGroup = QtGui.QGroupBox(self.centralwidget)
+        self.statusGroup.setStyleSheet(_fromUtf8("border: 1px solid #061014;\n"
+"background-color: #194759;"))
+        self.statusGroup.setTitle(_fromUtf8(""))
+        self.statusGroup.setObjectName(_fromUtf8("statusGroup"))
+        self.gridLayout_4 = QtGui.QGridLayout(self.statusGroup)
+        self.gridLayout_4.setObjectName(_fromUtf8("gridLayout_4"))
+        self.creditLabel = QtGui.QLabel(self.statusGroup)
+        self.creditLabel.setStyleSheet(_fromUtf8("border: none;"))
         self.creditLabel.setObjectName(_fromUtf8("creditLabel"))
-        self.horizontalLayout_5.addWidget(self.creditLabel)
-        self.versionLabel = QtGui.QLabel(self.centralwidget)
-        self.versionLabel.setStyleSheet(_fromUtf8("padding: 5px;"))
+        self.gridLayout_4.addWidget(self.creditLabel, 0, 0, 1, 1)
+        self.versionLabel = QtGui.QLabel(self.statusGroup)
+        self.versionLabel.setStyleSheet(_fromUtf8("border: none;"))
         self.versionLabel.setObjectName(_fromUtf8("versionLabel"))
-        self.horizontalLayout_5.addWidget(self.versionLabel)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_5.addItem(spacerItem)
-        self.gridLayout.addLayout(self.horizontalLayout_5, 2, 0, 1, 1)
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.clientStatusLabel = QtGui.QLabel(self.centralwidget)
-        self.clientStatusLabel.setStyleSheet(_fromUtf8("padding: 5px;"))
+        self.gridLayout_4.addWidget(self.versionLabel, 0, 1, 1, 1)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem1, 0, 2, 1, 1)
+        self.clientStatusLabel = QtGui.QLabel(self.statusGroup)
+        self.clientStatusLabel.setStyleSheet(_fromUtf8("border: none;"))
         self.clientStatusLabel.setObjectName(_fromUtf8("clientStatusLabel"))
-        self.horizontalLayout_2.addWidget(self.clientStatusLabel)
-        self.statusLabel = QtGui.QLabel(self.centralwidget)
-        self.statusLabel.setStyleSheet(_fromUtf8("padding: 5px;\n"
+        self.gridLayout_4.addWidget(self.clientStatusLabel, 0, 3, 1, 1)
+        self.statusLabel = QtGui.QLabel(self.statusGroup)
+        self.statusLabel.setStyleSheet(_fromUtf8("border: none;\n"
 "color: #e74c3c;"))
         self.statusLabel.setObjectName(_fromUtf8("statusLabel"))
-        self.horizontalLayout_2.addWidget(self.statusLabel)
-        self.gridLayout.addLayout(self.horizontalLayout_2, 2, 1, 1, 1)
-        self.horizontalLayout_4 = QtGui.QHBoxLayout()
-        self.horizontalLayout_4.setSpacing(0)
-        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
-        self.serversOnlineStatus = QtGui.QLabel(self.centralwidget)
-        self.serversOnlineStatus.setStyleSheet(_fromUtf8("padding: 5px;"))
+        self.gridLayout_4.addWidget(self.statusLabel, 0, 4, 1, 1)
+        self.serversOnlineStatus = QtGui.QLabel(self.statusGroup)
+        self.serversOnlineStatus.setStyleSheet(_fromUtf8("border: none;"))
         self.serversOnlineStatus.setObjectName(_fromUtf8("serversOnlineStatus"))
-        self.horizontalLayout_4.addWidget(self.serversOnlineStatus)
-        self.onlineStatus = QtGui.QLabel(self.centralwidget)
-        self.onlineStatus.setStyleSheet(_fromUtf8("padding: 5px;"))
+        self.gridLayout_4.addWidget(self.serversOnlineStatus, 0, 5, 1, 1)
+        self.onlineStatus = QtGui.QLabel(self.statusGroup)
+        self.onlineStatus.setStyleSheet(_fromUtf8("border: none;"))
         self.onlineStatus.setObjectName(_fromUtf8("onlineStatus"))
-        self.horizontalLayout_4.addWidget(self.onlineStatus)
-        self.gridLayout.addLayout(self.horizontalLayout_4, 2, 2, 1, 1)
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.startListenButton = QtGui.QPushButton(self.centralwidget)
-        self.startListenButton.setMinimumSize(QtCore.QSize(70, 32))
-        self.startListenButton.setMaximumSize(QtCore.QSize(70, 32))
-        self.startListenButton.setStyleSheet(_fromUtf8("QPushButton#startListenButton {\n"
-"            background: #194759;\n"
-"            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            text-decoration: none;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
-"            }\n"
-"\n"
-"QPushButton#startListenButton:checked {\n"
-"            background: #0B202E;\n"
-"            color: grey;\n"
-"            border: 1px outset;\n"
-"            border-color: #0B202E;\n"
-"            }"))
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/start.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.startListenButton.setIcon(icon2)
-        self.startListenButton.setIconSize(QtCore.QSize(22, 22))
-        self.startListenButton.setCheckable(True)
-        self.startListenButton.setObjectName(_fromUtf8("startListenButton"))
-        self.horizontalLayout.addWidget(self.startListenButton)
-        self.stopListenButton = QtGui.QPushButton(self.centralwidget)
-        self.stopListenButton.setMinimumSize(QtCore.QSize(70, 32))
-        self.stopListenButton.setMaximumSize(QtCore.QSize(70, 32))
-        self.stopListenButton.setStyleSheet(_fromUtf8("QPushButton#stopListenButton {\n"
-"            background: #194759;\n"
-"            border: 1px outset;\n"
-"            border-color: #0F2D40;\n"
-"            text-decoration: none;\n"
-"            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);\n"
-"            }\n"
-"\n"
-"QPushButton#stopListenButton:checked {\n"
-"            background: #0B202E;\n"
-"            color: grey;\n"
-"            border: 1px outset;\n"
-"            border-color: #0B202E;\n"
-"            }"))
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/assets/stop.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.stopListenButton.setIcon(icon3)
-        self.stopListenButton.setIconSize(QtCore.QSize(20, 20))
-        self.stopListenButton.setCheckable(True)
-        self.stopListenButton.setChecked(True)
-        self.stopListenButton.setObjectName(_fromUtf8("stopListenButton"))
-        self.horizontalLayout.addWidget(self.stopListenButton)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem1)
-        self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 3)
+        self.gridLayout_4.addWidget(self.onlineStatus, 0, 6, 1, 1)
+        self.gridLayout_5.addWidget(self.statusGroup, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 791, 24))
@@ -285,6 +314,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "Mirakuru Client", None))
+        self.startListenButton.setText(_translate("MainWindow", "Start", None))
+        self.stopListenButton.setText(_translate("MainWindow", "Stop", None))
+        self.clientSettingsButton.setText(_translate("MainWindow", "Client Settings", None))
         self.serversTable.setSortingEnabled(True)
         item = self.serversTable.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Ip Address", None))
@@ -308,8 +340,6 @@ class Ui_MainWindow(object):
         self.statusLabel.setText(_translate("MainWindow", "Not Listening", None))
         self.serversOnlineStatus.setText(_translate("MainWindow", "Servers Online: ", None))
         self.onlineStatus.setText(_translate("MainWindow", "0", None))
-        self.startListenButton.setText(_translate("MainWindow", "Start", None))
-        self.stopListenButton.setText(_translate("MainWindow", "Stop", None))
         self.menuClient.setTitle(_translate("MainWindow", "Client", None))
         self.actionStartListen_for_connections.setText(_translate("MainWindow", "Start Listening", None))
         self.actionStopListen_for_connections.setText(_translate("MainWindow", "Stop Listening", None))

@@ -76,7 +76,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.listenthread.setDaemon(True)
             self.listenthread.start()
             self.statusLabel.setText('Listening')
-            self.statusLabel.setStyleSheet('color: lime; padding: 5px;')
+            self.statusLabel.setStyleSheet('color: lime; border: none;')
             self.startListenButton.setChecked(True)
             self.stopListenButton.setChecked(False)
         else:
@@ -262,7 +262,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.startListenButton.setChecked(False)
             self.stopListenButton.setChecked(True)
             self.statusLabel.setText('Not Listening')
-            self.statusLabel.setStyleSheet('color: #e74c3c; padding: 5px;')
+            self.statusLabel.setStyleSheet('color: #e74c3c; border: none;')
             self.onlineStatus.setText('0')
             try:
                 self.shd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
