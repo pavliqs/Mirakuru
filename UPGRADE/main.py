@@ -54,7 +54,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.serversTable.setColumnWidth(self.index_of_lock, 90)
         self.serversTable.setColumnWidth(self.index_of_os, 200)
         self.serversTable.setColumnWidth(self.index_of_user, 100)
-        self.serversTable.setColumnWidth(self.index_of_version, 120)
+        self.serversTable.setColumnWidth(self.index_of_version, 60)
         # servers table double click trigger
         self.serversTable.doubleClicked.connect(self.unlockServer)
         # Initializing explorer right click menu

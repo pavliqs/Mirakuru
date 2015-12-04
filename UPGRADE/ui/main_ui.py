@@ -90,6 +90,7 @@ class Ui_MainWindow(object):
 "\n"
 "QTableWidget#serversTable:item:selected {\n"
 "background-color: #194759;\n"
+"color: white;\n"
 "}"))
         self.serversTable.setFrameShadow(QtGui.QFrame.Plain)
         self.serversTable.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
@@ -296,7 +297,7 @@ class Ui_MainWindow(object):
         item = self.serversTable.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "User", None))
         item = self.serversTable.horizontalHeaderItem(5)
-        item.setText(_translate("MainWindow", "Server Version", None))
+        item.setText(_translate("MainWindow", "Version", None))
         item = self.serversTable.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Active Window Title", None))
         self.MainTabWidget.setTabText(self.MainTabWidget.indexOf(self.serversTab), _translate("MainWindow", "Servers", None))

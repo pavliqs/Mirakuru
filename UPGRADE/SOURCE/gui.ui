@@ -91,6 +91,7 @@ QTableWidget#serversTable {
 
 QTableWidget#serversTable:item:selected {
 background-color: #194759;
+color: white;
 }</string>
           </property>
           <property name="frameShadow">
@@ -159,7 +160,7 @@ background-color: #194759;
           </column>
           <column>
            <property name="text">
-            <string>Server Version</string>
+            <string>Version</string>
            </property>
           </column>
           <column>
