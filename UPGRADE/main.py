@@ -15,6 +15,8 @@ from PyQt4.QtCore import *
 
 from ui import main_ui
 
+from communicator.messanger import mSend, mReceive
+
 
 class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
@@ -111,8 +113,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
                 # TEST GET INFO
                 try:
-                    self.Send(self.sock, 'whoareyou')
-                    data = self.Receive(self.sock)
+                    mSend(self.sock, 'whoareyou')
+                    data = mReceive(self.sock)
                     info = ast.literal_eval(data)
 
 
@@ -148,8 +150,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 sock = self.socks[i]['sock']
                 sock.settimeout(3)
                 try:
-                    self.Send(sock, 'whoareyou')
-                    data = self.Receive(sock)
+                    mSend(sock, 'whoareyou')
+                    data = mReceive(sock)
                     info = ast.literal_eval(data)
                     self.socks[i]['protection'] = info['protection']
                     self.socks[i]['user'] = info['user']
@@ -239,8 +241,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 if ok:
                     _hash = hashlib.md5()
                     _hash.update(str(text))
-                    self.Send(self.socks[sockind]['sock'], _hash.hexdigest())
-                    answer = self.Receive(self.socks[sockind]['sock'])
+                    mSend(self.socks[sockind]['sock'], _hash.hexdigest())
+                    answer = mReceive(self.socks[sockind]['sock'])
                     if 'iamactive' in answer:
                         break
                 else:
@@ -251,7 +253,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
     def lockServer(self):
         sockind = int(self.serversTable.item(self.serversTable.currentRow(), self.index_of_socket).text())
-        self.Send(self.socks[sockind]['sock'], 'lock')
+        mSend(self.socks[sockind]['sock'], 'lock')
 
 
     # Stop Listen for Servers
@@ -284,30 +286,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.eMenu.addSeparator()
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
         self.eMenu.exec_(self.serversTable.mapToGlobal(point))
-
-    # send socket
-    def Send(self, Sock, cmd, end="[ENDOFMESSAGE]"):
-        try:
-            Sock.sendall((cmd + end).encode('utf-8'))
-        except socket.error:
-            pass
-
-    # recieve socket
-    def Receive(self, Sock, end="[ENDOFMESSAGE]"):
-        data = ""
-        try:
-            l = Sock.recv(1024)
-            while l:
-                time.sleep(0.1)
-                data += l
-                if data.endswith(end):
-                    break
-                else:
-                    self.gui()
-                    l = Sock.recv(1024)
-        except socket.timeout:
-            pass
-        return data[:-len(end)].decode('utf-8')
 
 # Run Application
 def main():
