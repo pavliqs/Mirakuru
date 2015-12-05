@@ -13,6 +13,9 @@ from threading import Thread
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+import string
+import random
+
 from ui import main_ui
 
 from communicator.messanger import mSend, mReceive
@@ -35,6 +38,9 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # listen status
         self.acceptthreadState = False
+
+        #TEST
+        self.tempVar = {}
 
         # initial geo ip database
         self.geoip = pygeoip.GeoIP('assets\\GeoIP.dat')
@@ -66,6 +72,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # Triggers
         self.startListenButton.clicked.connect(self.startListen)
         self.stopListenButton.clicked.connect(self.stopListen)
+
+        self.clientSettingsButton.clicked.connect(self.runPlugin)
 
 
     # Start Listen for Servers
@@ -286,6 +294,19 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.eMenu.addSeparator()
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
         self.eMenu.exec_(self.serversTable.mapToGlobal(point))
+
+    # Run Plugin
+    def runPlugin(self, plugin="mshell"):
+        def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+            return ''.join(random.choice(chars) for _ in range(size))
+        plugin = 'mshell'
+        exec 'from plugins.%s.main import mainPopup' % plugin
+        tmpid = id_generator(12)
+        self.tempVar[tmpid] = mainPopup()
+        self.tempVar[tmpid].show()
+
+    def closeEvent(self, event):
+        sys.exit(1)
 
 # Run Application
 def main():
