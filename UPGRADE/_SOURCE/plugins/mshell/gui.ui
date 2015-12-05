@@ -13,18 +13,7 @@
   <property name="windowTitle">
    <string>Mirakuru - Remote Shell</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="remoteShellGroup">
-     <property name="styleSheet">
-      <string notr="true">border: none;</string>
-     </property>
-     <property name="title">
-      <string/>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <layout class="QGridLayout" name="gridLayout"/>
  </widget>
  <resources/>
  <connections/>

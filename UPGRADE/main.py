@@ -39,8 +39,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         # listen status
         self.acceptthreadState = False
 
-        #TEST
-        self.tempVar = {}
+        # plugins bank
+        self.pluginsBank = {}
 
         # initial geo ip database
         self.geoip = pygeoip.GeoIP('assets\\GeoIP.dat')
@@ -304,8 +304,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         plugin = 'mshell'
         exec 'from plugins.%s.main import mainPopup' % plugin
         tmpid = self.id_generator()
-        self.tempVar[tmpid] = mainPopup()
-        self.tempVar[tmpid].show()
+        self.pluginsBank[tmpid] = mainPopup()
+        self.pluginsBank[tmpid].show()
 
     def closeEvent(self, event):
         sys.exit(1)
