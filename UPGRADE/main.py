@@ -295,13 +295,15 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
         self.eMenu.exec_(self.serversTable.mapToGlobal(point))
 
+    # id generator for new windows
+    def id_generator(self, size=16, chars=string.ascii_uppercase + string.digits):
+            return ''.join(random.choice(chars) for _ in range(size))
+
     # Run Plugin
     def runPlugin(self, plugin="mshell"):
-        def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-            return ''.join(random.choice(chars) for _ in range(size))
         plugin = 'mshell'
         exec 'from plugins.%s.main import mainPopup' % plugin
-        tmpid = id_generator(12)
+        tmpid = self.id_generator()
         self.tempVar[tmpid] = mainPopup()
         self.tempVar[tmpid].show()
 
