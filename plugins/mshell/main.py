@@ -28,14 +28,14 @@ class mainPopup(QWidget, main_ui.Ui_Form):
     # run shell command
     def runCommand(self):
         try:
-            command = self.console.command
+            command = self.console.command[1:] if self.console.command.startswith(' ') else self.console.command
             mSend(self.sock, command)
             data = mReceive(self.sock)
             while data.startswith('\n'):
                 data = data[1:]
             data = data.replace('\n', '<br>')
 
-            self.console.append('<br><font color=#3CFFFF>'+data+'</font><br>')
+            self.console.append('<br><font color=#3CFFFF>'+data+'</font>')
             self.console.newPrompt()
 
         except socket.error:

