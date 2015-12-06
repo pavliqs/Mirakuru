@@ -40,4 +40,4 @@ class mainPopup(QWidget, main_ui.Ui_Form):
 
         except socket.error:
             # Error with connection
-            self.destroy()
+            self.close()
