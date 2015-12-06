@@ -6,6 +6,8 @@ class Console(QTextEdit):
         QTextEdit.__init__(self, parent)
         self.setStyleSheet('''
         background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #061014, stop:1 #050C0F);
+        color: lime;
+        border: none;
         padding: 5px;
         ''')
         self.prompt = prompt

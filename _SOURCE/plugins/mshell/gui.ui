@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>317</height>
+    <width>703</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Mirakuru - Remote Shell</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #194759;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout"/>
  </widget>

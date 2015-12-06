@@ -1,7 +1,6 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-import time
 import socket
 
 import main_ui
@@ -36,14 +35,9 @@ class mainPopup(QWidget, main_ui.Ui_Form):
                 data = data[1:]
             data = data.replace('\n', '<br>')
 
-            self.console.append('<font color=#3CFFFF>'+data+'</font>')
+            self.console.append('<br><font color=#3CFFFF>'+data+'</font><br>')
             self.console.newPrompt()
 
         except socket.error:
-
-            self.statusno('Error with connection', self.lineno())
             # Error with connection
-            self.socks[self.sockind].close()
-
-            time.sleep(0.8)
-            self.active = False
+            self.destroy()

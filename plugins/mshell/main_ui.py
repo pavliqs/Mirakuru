@@ -25,7 +25,8 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(440, 317)
+        Form.resize(703, 536)
+        Form.setStyleSheet(_fromUtf8("background-color: #194759;"))
         self.gridLayout = QtGui.QGridLayout(Form)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
 
