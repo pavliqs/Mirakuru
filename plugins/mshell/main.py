@@ -30,8 +30,8 @@ class mainPopup(QWidget, main_ui.Ui_Form):
     def runCommand(self):
         try:
             command = self.console.command
-            mSend(command)
-            data = self.Receive().split('>')[-1]
+            mSend(self.sock, command)
+            data = mReceive(self.sock)
             while data.startswith('\n'):
                 data = data[1:]
             data = data.replace('\n', '<br>')

