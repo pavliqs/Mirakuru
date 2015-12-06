@@ -20,6 +20,8 @@ from ui import main_ui
 
 from communicator.messanger import mSend, mReceive
 
+import plugins
+
 
 class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
