@@ -298,11 +298,8 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
                 self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
 
             else:
-
-                # add plugins to menu
-                for name, plugin in self.plugins.iteritems():
-                    self.eMenu.addAction(QIcon(plugin['icon']), plugin['name'], lambda: self.runPlugin(plugin=name))
-
+                for i in self.plugins:
+                    self.eMenu.addAction(QIcon(self.plugins[i]['icon']), self.plugins[i]['name'], lambda plugin_name=i: self.runPlugin(plugin=plugin_name))
 
                 self.eMenu.addSeparator()
                 self.eMenu.addMenu(self.optionsMenu)
@@ -319,12 +316,14 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
     # Run Plugin
     def runPlugin(self, plugin):
         args = {}
+        print plugin
         exec 'from plugins.%s.main import mainPopup' % plugin
 
         sockind = int(self.serversTable.item(self.serversTable.currentRow(), self.index_of_socket).text())
         args['sock'] = self.socks[sockind]['sock']
         args['socket'] = self.socks[sockind]['socket']
         args['ipAddress'] = self.socks[sockind]['ip_address']
+        args['icon'] = self.plugins[plugin]['icon']
 
         tmpid = self.id_generator()
         self.pluginsBank[tmpid] = mainPopup(args)

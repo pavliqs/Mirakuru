@@ -17,8 +17,10 @@ class mainPopup(QWidget, main_ui.Ui_Form):
         self.sock = args[0]['sock']
         self.socket = args[0]['socket']
         self.ipAddress = args[0]['ipAddress']
+        self.icon = args[0]['icon']
 
         self.setWindowTitle('Connected to - %s - Socket #%s' % (self.ipAddress, self.socket))
+        self.setWindowIcon(QIcon(self.icon))
 
         self.console = console.Console()
         self.gridLayout.addWidget(self.console)
