@@ -308,11 +308,17 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             return ''.join(random.choice(chars) for _ in range(size))
 
     # Run Plugin
-    def runPlugin(self, plugin="mshell"):
-        plugin = 'mshell'
+    def runPlugin(self, plugin):
+        args = {}
         exec 'from plugins.%s.main import mainPopup' % plugin
+
+        sockind = int(self.serversTable.item(self.serversTable.currentRow(), self.index_of_socket).text())
+        args['sock'] = self.socks[sockind]['sock']
+        args['socket'] = self.socks[sockind]['socket']
+        args['ipAddress'] = self.socks[sockind]['ip_address']
+
         tmpid = self.id_generator()
-        self.pluginsBank[tmpid] = mainPopup()
+        self.pluginsBank[tmpid] = mainPopup(args)
         self.pluginsBank[tmpid].show()
 
     def closeEvent(self, event):
