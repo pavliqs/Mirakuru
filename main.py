@@ -42,6 +42,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
         self.acceptthreadState = False
 
         # plugins bank
+        self.plugins = plugins.__plugins__
         self.pluginsBank = {}
 
         # initial geo ip database
@@ -292,6 +293,11 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
 
         else:
+
+            # add plugins to menu
+            for name, plugin in self.plugins.iteritems():
+                self.eMenu.addAction(QIcon(plugin['icon']), plugin['name'], lambda: self.runPlugin(plugin=name))
+
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'lock.png')), 'Lock Server', self.lockServer)
             self.eMenu.addSeparator()
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)

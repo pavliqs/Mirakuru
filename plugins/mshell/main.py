@@ -10,6 +10,7 @@ import console
 from communicator.messanger import mSend, mReceive
 
 class mainPopup(QWidget, main_ui.Ui_Form):
+
     def __init__(self, **kwargs):
         QWidget.__init__(self)
         self.setupUi(self)
