@@ -288,6 +288,7 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
 
     def serversMenu(self, point):
         self.eMenu = QMenu(self)
+        self.optionsMenu = QMenu('Server Options' ,self)
 
         if self.serversTable.item(self.serversTable.currentRow(), self.index_of_lock).text() == 'LOCKED':
             self.eMenu.addAction(QIcon(os.path.join(self.assets, 'unlock.png')), 'Unlock Server', self.unlockServer)
@@ -298,9 +299,11 @@ class MainDialog(QMainWindow, main_ui.Ui_MainWindow):
             for name, plugin in self.plugins.iteritems():
                 self.eMenu.addAction(QIcon(plugin['icon']), plugin['name'], lambda: self.runPlugin(plugin=name))
 
-            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'lock.png')), 'Lock Server', self.lockServer)
+
             self.eMenu.addSeparator()
-            self.eMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
+            self.eMenu.addMenu(self.optionsMenu)
+            self.optionsMenu.addAction(QIcon(os.path.join(self.assets, 'lock_2.png')), 'Lock Server', self.lockServer)
+            self.optionsMenu.addAction(QIcon(os.path.join(self.assets, 'stop.png')), 'Terminate Server', self.lockServer)
         self.eMenu.exec_(self.serversTable.mapToGlobal(point))
 
     # id generator for new windows
