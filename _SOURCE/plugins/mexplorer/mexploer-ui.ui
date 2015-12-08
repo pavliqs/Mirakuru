@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>660</width>
-    <height>486</height>
+    <width>766</width>
+    <height>479</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@ color: #2ecc71;</string>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QComboBox" name="explorerDrivesDrop">
+        <widget class="QComboBox" name="lexplorerDrivesDrop">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -76,7 +76,11 @@ QPushButton#lrefreshButton:pressed {
             }</string>
          </property>
          <property name="text">
-          <string>R</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/refresh.png</normaloff>assets/refresh.png</iconset>
          </property>
         </widget>
        </item>
@@ -111,7 +115,11 @@ QPushButton#lupButton:pressed {
             }</string>
          </property>
          <property name="text">
-          <string>up</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/up.png</normaloff>assets/up.png</iconset>
          </property>
         </widget>
        </item>
@@ -132,21 +140,25 @@ QPushButton#lupButton:pressed {
         <widget class="QPushButton" name="uploadButton">
          <property name="minimumSize">
           <size>
-           <width>64</width>
+           <width>80</width>
            <height>32</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
+           <width>80</width>
            <height>32</height>
           </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton#uploadButton {
             background: #194759;
             border: 1px outset;
             border-color: #0F2D40;
+			padding-right: 5px;
             text-decoration: none;
             background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
             }
@@ -161,9 +173,35 @@ QPushButton#uploadButton:pressed {
          <property name="text">
           <string>upload</string>
          </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/upload.png</normaloff>assets/upload.png</iconset>
+         </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lexplorerPathEntry">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>28</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 1px ridge;
+border-color: #0F2D40;
+border-radius: none;
+height: 15px;
+font-size: 12px;
+background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+padding-left: 5px;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QTableWidget" name="lexplorerTable">
@@ -289,13 +327,13 @@ border: none;
         <widget class="QPushButton" name="downloadButton">
          <property name="minimumSize">
           <size>
-           <width>64</width>
+           <width>80</width>
            <height>32</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
+           <width>80</width>
            <height>32</height>
           </size>
          </property>
@@ -304,6 +342,7 @@ border: none;
             background: #194759;
             border: 1px outset;
             border-color: #0F2D40;
+			padding-left: 5px;
             text-decoration: none;
             background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
             }
@@ -317,6 +356,10 @@ QPushButton#downloadButton:pressed {
          </property>
          <property name="text">
           <string>download</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/download.png</normaloff>assets/download.png</iconset>
          </property>
         </widget>
        </item>
@@ -334,7 +377,7 @@ QPushButton#downloadButton:pressed {
         </spacer>
        </item>
        <item>
-        <widget class="QComboBox" name="explorerDrivesDrop_2">
+        <widget class="QComboBox" name="rexplorerDrivesDrop">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -387,7 +430,11 @@ QPushButton#rrefreshButton:pressed {
             }</string>
          </property>
          <property name="text">
-          <string>R</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/refresh.png</normaloff>assets/refresh.png</iconset>
          </property>
         </widget>
        </item>
@@ -422,11 +469,37 @@ QPushButton#rupButton:pressed {
             }</string>
          </property>
          <property name="text">
-          <string>up</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/up.png</normaloff>assets/up.png</iconset>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="rexplorerPathEntry">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>28</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 1px ridge;
+border-color: #0F2D40;
+border-radius: none;
+height: 15px;
+font-size: 12px;
+background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 #194759, stop:1 #225E75);
+padding-left: 5px;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QTableWidget" name="rexplorerTable">
